@@ -69,15 +69,14 @@ const SearchResults = React.createClass({
 
   selectHouse(look) {
     console.log('selectHouse');
-
-    // this.props.navigator.push({
-    //   component: HouseDetails,
-    //   title: 'Details',
-    //   passProps: {
-    //     look,
-    //     form: this.state.form
-    //   },
-    // });
+    this.props.navigator.push({
+      component: HouseDetails,
+      title: 'Details',
+      passProps: {
+        user:look.look.user,
+        form: this.state.form
+      },
+    });
   },
 
   renderRow(look) {

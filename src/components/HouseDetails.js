@@ -1,76 +1,43 @@
 import React from 'react-native';
 const {
-  ScrollView,
   StyleSheet,
   Image,
   Text,
   View,
-  MapView,
+  ListView,
 } = React;
 
-import _ from 'lodash';
 import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');
-
 import HouseDetailsCaroselImage from './HouseDetailsCaroselImage.js';
-import SpecIconBox from './SpecIconBox.js';
-import KVBox from './KVBox.js';
-
-import SaveButton from './SaveButton.js';
-
-import parse from '../parsing/index.js';
-
 import globalVariables from '../globalVariables.js';
-
 
 const HouseDetails = React.createClass({
 
   getInitialState() {
     return {
       searchPending: false,
-      houseKV: {},
-      images: null,
-      latitude: 0,
-      longitude: 0,
-      latitudeDelta: 0,
-      longitudeDelta: 0,
+      user: {},
+      uid:0,
     };
   },
 
   getDefaultProps() {
     return {
-      form: {},
-      house: {},
-      houseKV: null,
-      images: null,
+      form: "",
+      user: {},
+      uid:0,
     };
   },
 
   componentDidMount() {
-    this.getRMLSDetail();
-    this.geocodeAddress();
+    // this.getRMLSDetail();
+    this.processResults();
   },
 
-// user: {
-// "id": 2344575,
-// "first_name": "Michelle",
-// "last_name": "Madsen",
-// "username": "takeaim",
-// "created_at": "2012-11-12T02:19:04-05:00",
-// "name": "Michelle M.",
-// "byline": "Designer 来自 Los Angeles, United States",
-// "byline_str": "Designer",
-// "location_str": "United States",
-// "photo": "http://cdn12.lbstatic.nu/files/users/large/2344575_DSC_8968.jpg?1381427695",
-// "cover_photo_url": null,
-// "karma_count": 79422,
-// "looks_count": 383,
-// "fans_count": 26328
-// }
   getRMLSDetail() {
-    console.log('get detail', this.props.house.id);
+    // console.log('get detail', this.props.house.id);
     this.setState({ searchPending: true });
-    // http://api.lookbook.nu/v1/user/64838/looks?page=1&view=full
     // http://api.lookbook.nu/v1/user/64838
     fetch('http://api.lookbook.nu/v1/look/hot/'+(page||1)+'/?view=full',{
       method: 'get',
@@ -97,214 +64,111 @@ const HouseDetails = React.createClass({
   },
 
   processResults(data) {
-
+    if(!data){
+      data=this.props;
+    }
     this.setState({
-      houseKV: data.house,
+      user: data.user,
       searchPending: false,
       form: data.form
     });
-
-    if (data.photosID) this.getRMLSImages(data.photosID);
   },
-
-
-
-
-
-  getRMLSImages(photosID) {
-    console.log('get images', photosID);
-    this.setState({ searchPending: true });
-
-    fetch('http://www.rmls.com/RC2/UI/photoViewer.asp?ml=' + photosID, {
-      method: 'get',
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36",
-        "Referer": "http://www.rmls.com/rc2/UI/search_residential.asp",
-      }
-    })
-    .then((response) => response.text())
-    .then((responseText) => {
-      console.log('GOT RMLS IMAGES');
-      // console.log(responseText);
-
-      this.processImageResults(responseText);
-    })
-    .catch(function (error) {
-      console.error('An error occured');
-      console.error(error.message);
-    });
-  },
-
-  processImageResults(html) {
-    const data = parse.housePhotos(html);
-    // console.log(data);
-
-    this.setState({
-      images: data,
-      searchPending: false
-    });
-  },
-
-
-  geocodeAddress(address) {
-    fetch(globalVariables.geocodeServer + '?address='+encodeURIComponent(address))
-    .then((response) => response.json())
-    .then((response) => {
-      console.log(response);
-
-      if (!_.isArray(response.results)) return;
-
-      const location = response.results[0].geometry.location;
-
-      this.setState({
-        latitude: location.lat,
-        longitude: location.lng,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      });
-    })
-    .catch(function (error) {
-      console.error('An error occured');
-      console.error(error.message);
-    });
-  },
-
 
   render() {
-
     return (
-      // ListView wraps ScrollView and so takes on its properties.
-      // With that in mind you can use the ScrollView's contentContainerStyle prop to style the items.
-      <ListView
-        contentContainerStyle={styles.list}
-        dataSource={this.state.dataSource}
-        initialListSize={21}
-        pageSize={3} // should be a multiple of the no. of visible cells per row
-        scrollRenderAheadDistance={500}
-        renderRow={this._renderRow}
-      />
-    );
-  },
-
-  _renderRow: function(rowData: string, sectionID: number, rowID: number) {
-    var rowHash = Math.abs(hashCode(rowData));
-    var imgSource = THUMB_URLS[rowHash % THUMB_URLS.length];
-    return (
-      <TouchableHighlight onPress={() => this._pressRow(rowID)} underlayColor="transparent">
-        <View>
-          <View style={styles.row}>
-            <Image style={styles.thumb} source={imgSource} />
-            <Text style={styles.text}>
-              {rowData}
+       <View style={styles.container}>
+        <View style={styles.headerContent}>
+            <Image source={{uri:this.props.user.photo}} style={styles.playerAvatar} />
+            <Text style={styles.shotTitle}>{this.props.user.name}</Text>
+            <Text style={styles.playerContent}>
+                <Text >{this.props.user.byline}</Text>
             </Text>
-          </View>
         </View>
-      </TouchableHighlight>
+
+        <View style={styles.mainSection}>
+            <View style={styles.shotDetailsRow}>
+                <View style={styles.shotCounter}>
+
+                    <Text style={styles.shotCounterText}> {this.props.user.fans_count} </Text>
+                </View>
+                <View style={styles.shotCounter}>
+
+                    <Text style={styles.shotCounterText}> {this.props.user.looks_count} </Text>
+                </View>
+                <View style={styles.shotCounter}>
+
+                    <Text style={styles.shotCounterText}> {this.props.user.karma_count} </Text>
+                </View>
+            </View>
+          </View>
+          <HouseDetailsCaroselImage uid={this.props.user.id}/>
+        </View>
+
     );
   },
 });
 
 const styles = StyleSheet.create({
   container: {
+    // flex: 1,
+    paddingTop: 64,
     backgroundColor: globalVariables.background,
   },
 
-  map: {
-    height: 150,
-    margin: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
+  headerContent: {
+    flex: 2,
+    paddingBottom: 20,
+    paddingTop: 84,
+    alignItems: "center",
+    width: width,
+    backgroundColor: "#fff"
   },
-
-  // CAROSEL
-  carosel: {
-    width,
-    height: 245,
-    // borderColor: 'red',
-    // borderWidth: 1
+  shotTitle: {
+    fontSize: 16,
+    fontWeight: "400",
+    color: "#574e53",
+    lineHeight: 18
   },
-
-
-  // PRICE
-  priceContainer: {
-    position: 'absolute',
-    backgroundColor: globalVariables.green,
-    padding: 5,
-    top: 190,
-    left: 0,
-    height: 30,
-    shadowColor: 'black',
-    shadowOffset: {height: 2, width: 1  },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
-  },
-
-  priceText: {
-    color: 'white',
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-
-  // ADDRESS BOX
-  addressContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: 'white',
-    padding: 10,
-    shadowColor: 'black',
-    shadowOffset: {height: 2, width: 1  },
-    shadowOpacity: 0.1,
-    shadowRadius: 1,
-  },
-
-  addressText: {
-    color: globalVariables.textColor,
-    fontSize: 14,
-    marginTop: 5,
-    marginBottom: 5,
-    textAlign: 'center'
-  },
-
-  mapPin: {
-    width: 10,
-    height: 17,
-    margin: 5
-  },
-
-
-  // ICON BOX
-  iconContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-
-
-  // DESC BOX
-  descContainer: {
-    padding: 20
-  },
-
-  descLabel: {
+  playerContent: {
     fontSize: 12,
-    fontWeight: '400',
-    color: globalVariables.textColor
+    color: "#d8d2d6",
+    fontWeight: "400",
+    lineHeight: 18
   },
 
-  descText: {
-    fontSize: 14,
-    fontWeight: '200',
-    color: globalVariables.textColor,
-    lineHeight: 20
+  playerAvatar: {
+    borderRadius: 40,
+    width: 80,
+    height: 80,
+    position: "absolute",
+    bottom: 60,
+    left: width / 2 - 40,
+    borderWidth: 2,
+    borderColor: "#fff"
   },
 
-
-  // KV BOX
-  kvContainer: {
-    padding: 20,
-    paddingTop: 0,
+  shotDetailsRow: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+    flexDirection: "row"
   },
+  shotCounter: {
+    flex: 2,
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  shotCounterText: {
+    color: "#333"
+  },
+  mainSection: {
+    flex: 1,
+    alignItems: "stretch",
+    padding: 10,
+    backgroundColor: "white"
+  },
+
 });
 
 export default HouseDetails;
