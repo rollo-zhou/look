@@ -79,7 +79,7 @@ const HouseDetailsCaroselImage = React.createClass({
       <TouchableHighlight >
           <View style={styles.row}>
             <Image source={{uri:look.look.photos.small}}
-            style={{height: (width/3)-2,width: (width/3)-2}}/>
+            style={{height: (width/2)-2,width: (width/2)-2}}/>
           </View>
       </TouchableHighlight>
 
@@ -98,9 +98,6 @@ const HouseDetailsCaroselImage = React.createClass({
           renderFooter={this.renderFooter}
           renderRow={this.renderRow}
           onEndReached={this.onEndReached}
-
-          pageSize={3} // should be a multiple of the no. of visible cells per row
-
           automaticallyAdjustContentInsets={false}
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps={false}
