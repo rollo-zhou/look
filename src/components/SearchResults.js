@@ -7,6 +7,8 @@ const {
   Text,
   TextInput,
   View,
+  RefreshControl,
+  ScrollView
 } = React;
 
 import HouseCell from './HouseCell.js';
@@ -22,6 +24,7 @@ const SearchResults = React.createClass({
       looks: [],
       filter: '',
       searchPending: true,
+      isRefreshing:false,
       next:1
     };
   },
@@ -48,6 +51,7 @@ const SearchResults = React.createClass({
   },
 
   renderFooter() {
+    console.log('onEndReached');
     if (!this.state.next && !this.state.searchPending) {
       return (
         <View style={styles.doneView}>
@@ -99,13 +103,15 @@ const SearchResults = React.createClass({
     }
 
     return (
-      <View style={styles.container}>
+      <View style={styles.container}
+        >
         <ListView
           ref='listview'
           dataSource={this.state.dataSource}
           renderFooter={this.renderFooter}
           renderRow={this.renderRow}
           onEndReached={this.onEndReached}
+          onEndReachedThreshold={40}
           automaticallyAdjustContentInsets={false}
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps={false}
@@ -117,7 +123,7 @@ const SearchResults = React.createClass({
 
   queryRMLS(page, form) {
     // const search = this.props.search;
-
+    console.log('queryRMLS');
     this.setState({ searchPending: true });
 
     fetch('http://api.lookbook.nu/v1/look/hot/'+(page||1)+'/?view=full',{
@@ -140,6 +146,19 @@ const SearchResults = React.createClass({
       console.error('An error occured');
       console.error(error.message);
     });
+  },
+
+  _onRefresh() {
+    this.setState({isRefreshing: true});
+    setTimeout(() => {
+      // prepend 10 items
+
+      this.setState({
+
+        isRefreshing: false,
+
+      });
+    }, 3000);
   },
 
   processsResults(data) {

@@ -5,6 +5,7 @@ const {
   Text,
   View,
   ListView,
+  ScrollView
 } = React;
 
 import Dimensions from 'Dimensions';
@@ -76,16 +77,16 @@ const HouseDetails = React.createClass({
 
   render() {
     return (
-       <View style={styles.container}>
-        <View style={styles.headerContent}>
+       <ScrollView style={styles.container}>
+          <View style={styles.headerContent}>
             <Image source={{uri:this.props.user.photo}} style={styles.playerAvatar} />
             <Text style={styles.shotTitle}>{this.props.user.name}</Text>
             <Text style={styles.playerContent}>
                 <Text >{this.props.user.byline}</Text>
             </Text>
-        </View>
+          </View>
 
-        <View style={styles.mainSection}>
+          <View style={styles.mainSection}>
             <View style={styles.shotDetailsRow}>
                 <View style={styles.shotCounter}>
 
@@ -102,8 +103,7 @@ const HouseDetails = React.createClass({
             </View>
           </View>
           <HouseDetailsCaroselImage uid={this.props.user.id}/>
-        </View>
-
+        </ScrollView>
     );
   },
 });
@@ -111,14 +111,14 @@ const HouseDetails = React.createClass({
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    paddingTop: 64,
+    paddingTop: 0,
     backgroundColor: globalVariables.background,
   },
 
   headerContent: {
-    flex: 2,
+    // flex: 2,
     paddingBottom: 20,
-    paddingTop: 84,
+    paddingTop: 94,
     alignItems: "center",
     width: width,
     backgroundColor: "#fff"

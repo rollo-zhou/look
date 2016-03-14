@@ -6,6 +6,7 @@ const {
   Text,
   View,
   ListView,
+  TouchableHighlight
 } = React;
 
 import Dimensions from 'Dimensions';
@@ -35,10 +36,12 @@ const HouseDetailsCaroselImage = React.createClass({
   },
 
   getDataSource(looks) {
+    console.log('getDataSource');
     return this.state.dataSource.cloneWithRows(looks);
   },
 
   renderFooter() {
+    console.log('renderFooter');
     if (!this.state.next && !this.state.searchPending) {
       return (
         <View style={styles.doneView}>
@@ -73,9 +76,13 @@ const HouseDetailsCaroselImage = React.createClass({
   renderRow(look) {
 
      return (
-     <Image source={{uri:look.look.photos.medium}}
-            style={{height: (width/3)-5,width: (width/3)-5}}
-     />
+      <TouchableHighlight >
+          <View style={styles.row}>
+            <Image source={{uri:look.look.photos.medium}}
+            style={{height: (width/3)-2,width: (width/3)-2}}/>
+          </View>
+      </TouchableHighlight>
+
     );
   },
 
@@ -84,25 +91,28 @@ const HouseDetailsCaroselImage = React.createClass({
     }
 
     return (
-      <View style={styles.container}>
         <ListView
-          ref='listview'
+          contentContainerStyle={styles.list}
+
           dataSource={this.state.dataSource}
           renderFooter={this.renderFooter}
           renderRow={this.renderRow}
           onEndReached={this.onEndReached}
+
+          pageSize={3} // should be a multiple of the no. of visible cells per row
+
           automaticallyAdjustContentInsets={false}
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps={false}
           showsVerticalScrollIndicator={true}
         />
-      </View>
+
     );
   },
 
   queryRMLS(uid ,page, form) {
     // const search = this.props.search;
-
+    console.log('queryRMLS');
     this.setState({ searchPending: true });
 
     fetch('http://api.lookbook.nu/v1/user/'+(uid||this.props.uid)+'/looks?page='+(page||1)+'&view=full',{
@@ -148,6 +158,27 @@ const HouseDetailsCaroselImage = React.createClass({
 });
 
 const styles = StyleSheet.create({
+  list: {
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  },
+  row: {
+    // justifyContent: 'center',
+    padding: 1,
+    // margin: 3,
+    // width: 100,
+    // height: 100,
+    // backgroundColor: '#F6F6F6',
+    // alignItems: 'center',
+    // borderWidth: 1,
+    // borderRadius: 5,
+    // borderColor: '#CCC'
+  },
+  thumb: {
+    // width: 64,
+    // height: 64
+  },
   container: {
     flex: 1,
     paddingTop: 64,
@@ -156,9 +187,7 @@ const styles = StyleSheet.create({
   centerText: {
     alignItems: 'center',
   },
-  spinner: {
-    width: 30,
-  },
+
   scrollSpinner: {
     marginVertical: 20,
   },
