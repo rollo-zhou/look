@@ -78,7 +78,7 @@ const HouseDetailsCaroselImage = React.createClass({
      return (
       <TouchableHighlight >
           <View style={styles.row}>
-            <Image source={{uri:look.look.photos.medium}}
+            <Image source={{uri:look.look.photos.small}}
             style={{height: (width/3)-2,width: (width/3)-2}}/>
           </View>
       </TouchableHighlight>
