@@ -34,6 +34,7 @@ const Den = React.createClass({
               title='HOT'
               component={SearchResults}
               navigationBarHidden={true}
+               key="HOT"
              />
           </View>
           <View tabLabel='NEW' key="NEW"  style={{ flex: 1 }}>
@@ -41,13 +42,15 @@ const Den = React.createClass({
               title='NEW'
               component={SearchResults}
               navigationBarHidden={true}
+              key="NEW"
              />
           </View>
           <View tabLabel='TOP' key="TOP"  style={{ flex: 1 }}>
             <ScreenNavigator
-              title='NEW'
+              title='TOP'
               component={SearchResults}
               navigationBarHidden={true}
+               key="TOP"
              />
           </View>
         </ScrollableTabView>
