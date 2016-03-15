@@ -14,41 +14,50 @@ const {width, height} = Dimensions.get('window');
 import ScreenNavigator from './ScreenNavigator.js';
 import globalVariables from './globalVariables.js';
 import SearchResults from './components/SearchResults.js';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
+import ScrollableTabView, { DefaultTabBar, ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 
 const Den = React.createClass({
 
   getInitialState() {
     return {
-      propertyType: 'DETACHD',
-      builtRange: [1900, 2020],
-      priceRange: [300, 800],
-      zipCodes: ['97202'],
-      bedrooms: 3,
-      bathrooms: 1
+
     };
   },
 
   render() {
-    let screenElement = (
-      <ScreenNavigator
-          title='LookBook Hot'
-          component={SearchResults}
-          key='search'
-          navigationBarHidden={true}
-        />
-    );
 
-  return (
-    <View style={styles.app}>
-      {screenElement}
-    </View>
-    );
-  }
+    return (
+      <View style={styles.app}>
+        <ScrollableTabView initialPage={0} style={{marginTop: 20}} >
+          <View tabLabel='HOT' key="HOT"  style={{ flex: 1 }}>
+          <ScreenNavigator
+              title='HOT'
+              component={SearchResults}
+              navigationBarHidden={true}
+             />
+          </View>
+          <View tabLabel='NEW' key="NEW"  style={{ flex: 1 }}>
+            <ScreenNavigator
+              title='NEW'
+              component={SearchResults}
+              navigationBarHidden={true}
+             />
+          </View>
+          <View tabLabel='TOP' key="TOP"  style={{ flex: 1 }}>
+            <ScreenNavigator
+              title='NEW'
+              component={SearchResults}
+              navigationBarHidden={true}
+             />
+          </View>
+        </ScrollableTabView>
+      </View>
+      );
+    },
 });
 
 const styles = StyleSheet.create({
-  app: { width, height },
+  // app: { width, height },
 });
 
 export default Den;

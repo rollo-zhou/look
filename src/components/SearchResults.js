@@ -32,13 +32,7 @@ const SearchResults = React.createClass({
 
   getDefaultProps() {
     return {
-      // search: {
-      //   priceRange : [],
-      //   builtRange : [],
-      //   bedrooms   : [],
-      //   bathrooms  : [],
-      //   zipCodes   : []
-      // }
+      key:""
     };
   },
 
@@ -187,7 +181,7 @@ const SearchResults = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 64,
+    // paddingTop: 64,
     backgroundColor: globalVariables.background,
   },
   centerText: {
