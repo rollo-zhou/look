@@ -11,7 +11,8 @@
     "events": "^1.1.0",
     "lodash": "^4.0.0",
     "moment": "^2.11.1",
-    "react-native": "^0.17.0",
+    "react-native": "^0.21.0",
+    "react-native-scrollable-tab-view": "^0.4.0",
     "stream": "0.0.2",
     "string": "^3.3.1"
   }

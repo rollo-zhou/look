@@ -14,7 +14,7 @@ const {width, height} = Dimensions.get('window');
 import ScreenNavigator from './ScreenNavigator.js';
 import globalVariables from './globalVariables.js';
 import SearchResults from './components/SearchResults.js';
-
+import ScrollableTabView from 'react-native-scrollable-tab-view';
 
 const Den = React.createClass({
 
@@ -35,6 +35,7 @@ const Den = React.createClass({
           title='LookBook Hot'
           component={SearchResults}
           key='search'
+          navigationBarHidden={true}
         />
     );
 

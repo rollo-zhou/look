@@ -6,7 +6,7 @@ const {
   Text,
   View,
   ListView,
-  TouchableHighlight
+  TouchableOpacity
 } = React;
 
 import Dimensions from 'Dimensions';
@@ -36,12 +36,10 @@ const HouseDetailsCaroselImage = React.createClass({
   },
 
   getDataSource(looks) {
-    console.log('getDataSource');
     return this.state.dataSource.cloneWithRows(looks);
   },
 
   renderFooter() {
-    console.log('renderFooter');
     if (!this.state.next && !this.state.searchPending) {
       return (
         <View style={styles.doneView}>
@@ -58,7 +56,6 @@ const HouseDetailsCaroselImage = React.createClass({
     if (this.state.next && !this.state.searchPending) {
       this.queryRMLS(this.props.uid, this.state.next, this.state.form);
     }
-     // this.queryRMLS(pageNO, this.state.form);
   },
 
   selectHouse(look) {
@@ -76,12 +73,12 @@ const HouseDetailsCaroselImage = React.createClass({
   renderRow(look) {
 
      return (
-      <TouchableHighlight >
+      <TouchableOpacity activeOpacity={0.7} >
           <View style={styles.row}>
             <Image source={{uri:look.look.photos.small}}
-            style={{height: (width/2)-2,width: (width/2)-2}}/>
+            style={{height: (width/3)-2,width: (width/3)-2}}/>
           </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
 
     );
   },
@@ -92,12 +89,14 @@ const HouseDetailsCaroselImage = React.createClass({
 
     return (
         <ListView
+          ref='listview'
           contentContainerStyle={styles.list}
-
           dataSource={this.state.dataSource}
           renderFooter={this.renderFooter}
           renderRow={this.renderRow}
           onEndReached={this.onEndReached}
+
+          onEndReachedThreshold={10}
           automaticallyAdjustContentInsets={false}
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps={false}
@@ -108,7 +107,6 @@ const HouseDetailsCaroselImage = React.createClass({
   },
 
   queryRMLS(uid ,page, form) {
-    // const search = this.props.search;
     console.log('queryRMLS');
     this.setState({ searchPending: true });
 
@@ -135,15 +133,12 @@ const HouseDetailsCaroselImage = React.createClass({
   },
 
   processsResults(data) {
-    // const data = parse.searchResults(html);
-    // console.log(data);
+
     if (!data.length) return;
     data=JSON.parse(data)
-    // cancel out if no looks were found
     if (!data.looks.length) return;
 
     const newLooks = this.state.looks.concat(data.looks);
-
     this.setState({
       looks: newLooks,
       searchPending: false,
@@ -161,26 +156,14 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap'
   },
   row: {
-    // justifyContent: 'center',
+
     padding: 1,
-    // margin: 3,
-    // width: 100,
-    // height: 100,
-    // backgroundColor: '#F6F6F6',
-    // alignItems: 'center',
-    // borderWidth: 1,
-    // borderRadius: 5,
-    // borderColor: '#CCC'
   },
   thumb: {
     // width: 64,
     // height: 64
   },
-  container: {
-    flex: 1,
-    paddingTop: 64,
-    backgroundColor: globalVariables.background,
-  },
+
   centerText: {
     alignItems: 'center',
   },

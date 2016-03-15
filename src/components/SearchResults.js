@@ -7,8 +7,7 @@ const {
   Text,
   TextInput,
   View,
-  RefreshControl,
-  ScrollView
+  RefreshControl
 } = React;
 
 import HouseCell from './HouseCell.js';
@@ -17,6 +16,8 @@ import SearchNoResults from './SearchNoResults.js';
 import parse from '../parsing/index.js';
 import globalVariables from '../globalVariables.js';
 
+const _this="";
+
 const SearchResults = React.createClass({
   getInitialState() {
     return {
@@ -24,7 +25,7 @@ const SearchResults = React.createClass({
       looks: [],
       filter: '',
       searchPending: true,
-      isRefreshing:false,
+      refreshing:false,
       next:1
     };
   },
@@ -43,7 +44,7 @@ const SearchResults = React.createClass({
 
   componentDidMount() {
     // console.log(this.props.search);
-    this.queryRMLS();
+    this.queryRMLS(1);
   },
 
   getDataSource(looks) {
@@ -51,7 +52,6 @@ const SearchResults = React.createClass({
   },
 
   renderFooter() {
-    console.log('onEndReached');
     if (!this.state.next && !this.state.searchPending) {
       return (
         <View style={styles.doneView}>
@@ -59,16 +59,15 @@ const SearchResults = React.createClass({
         </View>
       );
     }
-
     return <ActivityIndicatorIOS style={styles.scrollSpinner} />;
   },
 
   onEndReached() {
     console.log('onEndReached');
     if (this.state.next && !this.state.searchPending) {
+      this.setState({ searchPending: true });
       this.queryRMLS(this.state.next, this.state.form);
     }
-     // this.queryRMLS(pageNO, this.state.form);
   },
 
   selectHouse(look) {
@@ -94,6 +93,7 @@ const SearchResults = React.createClass({
   },
 
   render() {
+    _this=this;
     if (!this.state.searchPending && !this.state.looks.length) {
       return (
         <View style={styles.container}>
@@ -103,28 +103,37 @@ const SearchResults = React.createClass({
     }
 
     return (
-      <View style={styles.container}
-        >
+      <View style={styles.container}>
         <ListView
           ref='listview'
           dataSource={this.state.dataSource}
-          renderFooter={this.renderFooter}
           renderRow={this.renderRow}
           onEndReached={this.onEndReached}
-          onEndReachedThreshold={40}
+          renderFooter={this.renderFooter}
+          onEndReachedThreshold={10}
           automaticallyAdjustContentInsets={false}
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps={false}
           showsVerticalScrollIndicator={true}
+          refreshControl={
+            <RefreshControl
+            onRefresh={this.reFreshQueryRMLS}
+            tintColor='#aaaaaa'
+            refreshing={this.state.refreshing}
+            progressBackgroundColor='#aaaaaa'
+          />}
         />
       </View>
     );
+  },
+  reFreshQueryRMLS(page, form) {
+    this.queryRMLS(1);
+    this.setState({ refreshing: true });
   },
 
   queryRMLS(page, form) {
     // const search = this.props.search;
     console.log('queryRMLS');
-    this.setState({ searchPending: true });
 
     fetch('http://api.lookbook.nu/v1/look/hot/'+(page||1)+'/?view=full',{
       method: 'get',
@@ -140,7 +149,7 @@ const SearchResults = React.createClass({
     .then((response) => response.text())
     .then((responseText) => {
       // console.log(responseText);
-      this.processsResults(responseText);
+      _this.processsResults(responseText);
     })
     .catch(function (error) {
       console.error('An error occured');
@@ -148,32 +157,26 @@ const SearchResults = React.createClass({
     });
   },
 
-  _onRefresh() {
-    this.setState({isRefreshing: true});
-    setTimeout(() => {
-      // prepend 10 items
-
-      this.setState({
-
-        isRefreshing: false,
-
-      });
-    }, 3000);
-  },
-
   processsResults(data) {
-    // const data = parse.searchResults(html);
-    // console.log(data);
-    if (!data.length) return;
+
+    if (!data.length){
+      if(this.state.refreshing)
+        this.setState({ refreshing: false });
+      return;
+    }
     data=JSON.parse(data)
-    // cancel out if no looks were found
     if (!data.looks.length) return;
 
-    const newLooks = this.state.looks.concat(data.looks);
-
+    var newLooks ='';
+    if(this.state.refreshing){
+      newLooks= data.looks;
+    }else{
+      newLooks= this.state.looks.concat(data.looks);
+    }
     this.setState({
       looks: newLooks,
       searchPending: false,
+      refreshing:false,
       dataSource: this.getDataSource(newLooks),
       form: data.form,
       next: this.state.next+1
@@ -194,7 +197,7 @@ const styles = StyleSheet.create({
     width: 30,
   },
   scrollSpinner: {
-    marginVertical: 20,
+    marginVertical: 36,
   },
 
   doneView: {
