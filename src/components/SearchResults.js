@@ -15,6 +15,7 @@ import HouseDetails from './HouseDetails.js';
 import SearchNoResults from './SearchNoResults.js';
 import parse from '../parsing/index.js';
 import globalVariables from '../globalVariables.js';
+import ScrollableTabView, { DefaultTabBar, ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 
 const _this="";
 
@@ -85,7 +86,9 @@ const SearchResults = React.createClass({
       />
     );
   },
-
+  onChangeTab(index,ref){
+    // alert(index);
+  },
   render() {
     _this=this;
     if (!this.state.searchPending && !this.state.looks.length) {
@@ -97,27 +100,71 @@ const SearchResults = React.createClass({
     }
 
     return (
-      <View style={styles.container}>
-        <ListView
-          ref='listview'
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow}
-          onEndReached={this.onEndReached}
-          renderFooter={this.renderFooter}
-          onEndReachedThreshold={10}
-          automaticallyAdjustContentInsets={false}
-          keyboardDismissMode='on-drag'
-          keyboardShouldPersistTaps={false}
-          showsVerticalScrollIndicator={true}
-          refreshControl={
-            <RefreshControl
-            onRefresh={this.reFreshQueryRMLS}
-            tintColor='#aaaaaa'
-            refreshing={this.state.refreshing}
-            progressBackgroundColor='#aaaaaa'
-          />}
-        />
-      </View>
+      <ScrollableTabView initialPage={0} style={{marginTop: 20}}  onChangeTab={this.onChangeTab}>
+            <View tabLabel='HOT' ref='listviewHot' style={styles.container}>
+              <ListView
+                ref='listviewHot'
+                dataSource={this.state.dataSource}
+                renderRow={this.renderRow}
+                onEndReached={this.onEndReached}
+                renderFooter={this.renderFooter}
+                onEndReachedThreshold={10}
+                automaticallyAdjustContentInsets={false}
+                keyboardDismissMode='on-drag'
+                keyboardShouldPersistTaps={false}
+                showsVerticalScrollIndicator={true}
+                refreshControl={
+                  <RefreshControl
+                  onRefresh={this.reFreshQueryRMLS}
+                  tintColor='#aaaaaa'
+                  refreshing={this.state.refreshing}
+                  progressBackgroundColor='#aaaaaa'
+                />}
+              />
+            </View>
+          <View tabLabel='NEW' ref='listviewNew' style={{ flex: 1 }}>
+          <ListView
+                ref='listviewNew'
+                dataSource={this.state.dataSource}
+                renderRow={this.renderRow}
+                onEndReached={this.onEndReached}
+                renderFooter={this.renderFooter}
+                onEndReachedThreshold={10}
+                automaticallyAdjustContentInsets={false}
+                keyboardDismissMode='on-drag'
+                keyboardShouldPersistTaps={false}
+                showsVerticalScrollIndicator={true}
+                refreshControl={
+                  <RefreshControl
+                  onRefresh={this.reFreshQueryRMLS}
+                  tintColor='#aaaaaa'
+                  refreshing={this.state.refreshing}
+                  progressBackgroundColor='#aaaaaa'
+                />}
+              />
+          </View>
+          <View tabLabel='TOP' ref='listviewNew' style={{ flex: 1 }}>
+          <ListView
+                ref='listviewTop'
+                dataSource={this.state.dataSource}
+                renderRow={this.renderRow}
+                onEndReached={this.onEndReached}
+                renderFooter={this.renderFooter}
+                onEndReachedThreshold={10}
+                automaticallyAdjustContentInsets={false}
+                keyboardDismissMode='on-drag'
+                keyboardShouldPersistTaps={false}
+                showsVerticalScrollIndicator={true}
+                refreshControl={
+                  <RefreshControl
+                  onRefresh={this.reFreshQueryRMLS}
+                  tintColor='#aaaaaa'
+                  refreshing={this.state.refreshing}
+                  progressBackgroundColor='#aaaaaa'
+                />}
+              />
+          </View>
+        </ScrollableTabView>
     );
   },
   reFreshQueryRMLS(page, form) {
