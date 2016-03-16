@@ -11,14 +11,14 @@ const {width, height} = Dimensions.get('window');
 
 import globalVariables from '../globalVariables.js';
 
-const SearchNoResults = React.createClass({
+const LookListNoResults = React.createClass({
 
   render() {
     return (
       <View style={styles.view}>
         <Image source={require('../images/sad-foxy.png')} style={styles.image} />
         <Text style={styles.text}>
-          Oh no! There aren’t any houses 
+          Oh no! There aren’t any houses
           that match your search!
         </Text>
       </View>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 
   image: {
     flex: 1,
-    width: 263, 
+    width: 263,
     height: 218,
   },
 
@@ -53,4 +53,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default SearchNoResults;
+export default LookListNoResults;

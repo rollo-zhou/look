@@ -1,42 +1,55 @@
 import React from 'react-native';
 const {
   ActivityIndicatorIOS,
+  ListView,
   StyleSheet,
   Image,
   Text,
+  TextInput,
   View,
-  ListView,
-  TouchableOpacity
+  RefreshControl
 } = React;
 
-import Dimensions from 'Dimensions';
-const {width, height} = Dimensions.get('window');
+import LookCell from './LookCell.js';
+import User from './User.js';
+import LookListNoResults from './LookListNoResults.js';
 import globalVariables from '../globalVariables.js';
+import ScrollableTabView, { DefaultTabBar, ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 
-const HouseDetailsCaroselImage = React.createClass({
+const _this="";
+
+const LookListItem = React.createClass({
   getInitialState() {
     return {
-      searchPending: true,
       dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
       looks: [],
-      uid:0,
+      searchPending: true,
+      refreshing:false,
       next:1
     };
   },
 
   getDefaultProps() {
     return {
-      uid: 0,
-      frome:""
+      type:"hot",
+      loadDate:false
     };
   },
+
   componentDidMount() {
-    // console.log(this.props.search);
-    this.queryRMLS();
+    this.dataModel.apiTypeUrl=this.props.type=="hot"?"hot":(this.props.type=="new"?"new":"top/week")
+    if(this.props.loadDate){
+      this.queryRMLS(1);
+    }
   },
 
   getDataSource(looks) {
     return this.state.dataSource.cloneWithRows(looks);
+  },
+
+  dataModel:{
+    pageIndex:1,
+    apiTypeUrl:"hot"
   },
 
   renderFooter() {
@@ -47,70 +60,81 @@ const HouseDetailsCaroselImage = React.createClass({
         </View>
       );
     }
-
     return <ActivityIndicatorIOS style={styles.scrollSpinner} />;
   },
 
   onEndReached() {
     console.log('onEndReached');
     if (this.state.next && !this.state.searchPending) {
-      this.queryRMLS(this.props.uid, this.state.next, this.state.form);
+      this.setState({ searchPending: true });
+      this.queryRMLS(this.state.next);
     }
   },
 
   selectHouse(look) {
     console.log('selectHouse');
-    // this.props.navigator.push({
-    //   component: HouseDetails,
-    //   title: 'Details',
-    //   passProps: {
-    //     user:look.look.user,
-    //     form: this.state.form
-    //   },
-    // });
+    this.props.navigator.push({
+      component: User,
+      title: 'Details',
+      passProps: {
+        user:look.look.user,
+      },
+    });
   },
 
   renderRow(look) {
-
-     return (
-      <TouchableOpacity activeOpacity={0.7} >
-          <View style={styles.row}>
-            <Image source={{uri:look.look.photos.small}}
-            style={{height: (width/3)-2,width: (width/3)-2}}/>
-          </View>
-      </TouchableOpacity>
-
+    return (
+      <LookCell
+        onSelect={() => this.selectHouse(look)}
+        key={look.look.id}
+        look={look.look}
+      />
     );
   },
 
   render() {
+    _this=this;
     if (!this.state.searchPending && !this.state.looks.length) {
+      return (
+        <View style={styles.container}>
+          <LookListNoResults />
+        </View>
+      );
     }
-
+    if(this.props.type!="hot"){
+      return (<Text>aa</Text>);
+    }
     return (
-        <ListView
-          ref='listview'
-          contentContainerStyle={styles.list}
-          dataSource={this.state.dataSource}
-          renderFooter={this.renderFooter}
-          renderRow={this.renderRow}
-          onEndReached={this.onEndReached}
+      <ListView
 
-          onEndReachedThreshold={10}
-          automaticallyAdjustContentInsets={false}
-          keyboardDismissMode='on-drag'
-          keyboardShouldPersistTaps={false}
-          showsVerticalScrollIndicator={true}
-        />
-
+        dataSource={this.state.dataSource}
+        renderRow={this.renderRow}
+        onEndReached={this.onEndReached}
+        renderFooter={this.renderFooter}
+        onEndReachedThreshold={10}
+        automaticallyAdjustContentInsets={false}
+        keyboardDismissMode='on-drag'
+        keyboardShouldPersistTaps={false}
+        showsVerticalScrollIndicator={true}
+        refreshControl={
+          <RefreshControl
+          onRefresh={this.reFreshQueryRMLS}
+          tintColor='#aaaaaa'
+          refreshing={this.state.refreshing}
+          progressBackgroundColor='#aaaaaa'
+        />}
+      />
     );
   },
+  reFreshQueryRMLS(page) {
+    this.queryRMLS(1);
+    this.setState({ refreshing: true });
+  },
 
-  queryRMLS(uid ,page, form) {
+  queryRMLS(page) {
     console.log('queryRMLS');
-    this.setState({ searchPending: true });
 
-    fetch('http://api.lookbook.nu/v1/user/'+(uid||this.props.uid)+'/looks?page='+(page||1)+'&view=full',{
+    fetch('http://api.lookbook.nu/v1/look/'+this.dataModel.apiTypeUrl+'/'+(page||1)+'/?view=full',{
       method: 'get',
       headers: {
         "Host": "api.lookbook.nu",
@@ -123,8 +147,7 @@ const HouseDetailsCaroselImage = React.createClass({
     })
     .then((response) => response.text())
     .then((responseText) => {
-      // console.log(responseText);
-      this.processsResults(responseText);
+      _this.processsResults(responseText);
     })
     .catch(function (error) {
       console.error('An error occured');
@@ -133,43 +156,44 @@ const HouseDetailsCaroselImage = React.createClass({
   },
 
   processsResults(data) {
-
-    if (!data.length) return;
+    if (!data.length){
+      if(this.state.refreshing)
+        this.setState({ refreshing: false });
+      return;
+    }
     data=JSON.parse(data)
     if (!data.looks.length) return;
 
-    const newLooks = this.state.looks.concat(data.looks);
+    var newLooks ='';
+    if(this.state.refreshing){
+      newLooks= data.looks;
+    }else{
+      newLooks= this.state.looks.concat(data.looks);
+    }
     this.setState({
       looks: newLooks,
       searchPending: false,
+      refreshing:false,
       dataSource: this.getDataSource(newLooks),
-      form: data.form,
       next: this.state.next+1
     });
   }
 });
 
 const styles = StyleSheet.create({
-  list: {
-    justifyContent: 'space-around',
-    flexDirection: 'row',
-    flexWrap: 'wrap'
+  container: {
+    flex: 1,
+    // paddingTop: 64,
+    backgroundColor: globalVariables.background,
   },
-  row: {
-
-    padding: 1,
-  },
-  thumb: {
-    // width: 64,
-    // height: 64
-  },
-
   centerText: {
     alignItems: 'center',
   },
-
+  spinner: {
+    width: 30,
+  },
   scrollSpinner: {
-    marginVertical: 20,
+    marginVertical: 36,
   },
 
   doneView: {
@@ -183,4 +207,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HouseDetailsCaroselImage;
+export default LookListItem;

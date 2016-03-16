@@ -13,7 +13,7 @@ import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');
 import globalVariables from '../globalVariables.js';
 
-const HouseDetails = React.createClass({
+const User = React.createClass({
   getInitialState() {
     return {
       searchPending: true,
@@ -289,4 +289,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HouseDetails;
+export default User;

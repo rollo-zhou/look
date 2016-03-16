@@ -13,7 +13,7 @@ const {width, height} = Dimensions.get('window');
 
 import ScreenNavigator from './ScreenNavigator.js';
 import globalVariables from './globalVariables.js';
-import SearchResults from './components/SearchResults.js';
+import LookList from './components/LookList.js';
 
 const Den = React.createClass({
 
@@ -29,7 +29,7 @@ const Den = React.createClass({
       <View style={styles.app}>
           <ScreenNavigator
               title='HOT'
-              component={SearchResults}
+              component={LookList}
               navigationBarHidden={true}
              />
       </View>

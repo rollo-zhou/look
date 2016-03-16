@@ -15,7 +15,7 @@ import globalVariables from '../globalVariables.js';
 import moment from 'moment';
 const { width, height } = Dimensions.get('window');
 
-const HouseCell = React.createClass({
+var LookCell = React.createClass({
   getDefaultProps() {
     return {
       look: {},
@@ -163,4 +163,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default HouseCell;
+export default LookCell;
