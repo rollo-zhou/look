@@ -34,6 +34,7 @@ const UserInfo = React.createClass({
         looks_count:"",
         karma_count:""
       },
+      onSelect:function(){}
     };
   },
   componentDidMount() {
@@ -64,6 +65,20 @@ const UserInfo = React.createClass({
                 <View style={styles.shotCounter}>
 
                     <Text style={styles.shotCounterText}> {this.props.user.karma_count} </Text>
+                </View>
+            </View>
+          </View>
+          <View style={styles.mainSection}>
+            <View style={styles.shotDetailsRow}>
+                <View style={styles.shotCounter}>
+                    <Text style={styles.shotCounterText}
+                      onSelect={() => this.selectLook("list")}
+                    > 缩略图 </Text>
+                </View>
+                <View style={styles.shotCounter}>
+                    <Text style={styles.shotCounterText}
+                    onSelect={() => this.selectLook("thumb")}
+                    > 列表 </Text>
                 </View>
             </View>
           </View>

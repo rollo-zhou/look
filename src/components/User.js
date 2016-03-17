@@ -15,6 +15,7 @@ import globalVariables from '../globalVariables.js';
 import LookCellThumbnail from './LookCellThumbnail.js';
 import UserInfo from './UserInfo.js';
 import DoneFooter from './DoneFooter.js';
+import LookCell from './LookCell.js';
 
 const User = React.createClass({
   getInitialState() {
@@ -24,7 +25,8 @@ const User = React.createClass({
       looks: [],
       uid:0,
       user: {},
-      next:1
+      next:1,
+      showImagType:"thumb",
     };
   },
 
@@ -52,10 +54,18 @@ const User = React.createClass({
   getDataSource(looks) {
     return this.state.dataSource.cloneWithRows(looks);
   },
-
+  setShowImagType(showImagType){
+    if(showImagType!=this.state.showImagType){
+      this.state.setState({
+        showImagType:showImagType
+      });
+    }
+  },
   renderHeader() {
     return (
-      <UserInfo user={this.props.user} uid={this.props.uid}/>
+      <UserInfo user={this.props.user}
+        onSelect={this.setShowImagType}
+        uid={this.props.uid}/>
     );
   },
   renderFooter() {
@@ -65,7 +75,7 @@ const User = React.createClass({
       );
     }
 
-    return <ActivityIndicatorIOS style={styles.scrollSpinner} />;
+    return (<ActivityIndicatorIOS style={styles.scrollSpinner} />);
   },
 
   onEndReached() {
@@ -76,9 +86,13 @@ const User = React.createClass({
   },
 
   renderRow(look) {
-     return (
-      <LookCellThumbnail photo={look.look.photos.small}/>
-    );
+     if(this.state.showImagType=="list"){
+        return (<LookCell
+            key={look.look.id}
+            look={look.look}
+          />);
+      }
+     return  (<LookCellThumbnail photo={look.look.photos.small}/>);
   },
 
   render() {
@@ -103,6 +117,7 @@ const User = React.createClass({
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps={false}
           showsVerticalScrollIndicator={true}
+          setShowImagType={this.state.setShowImagType}
         />
       </View>
     );
@@ -173,10 +188,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     flexDirection: 'row',
     flexWrap: 'wrap'
-  },
-
-  centerText: {
-    alignItems: 'center',
   },
 
   scrollSpinner: {
