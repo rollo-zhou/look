@@ -13,11 +13,15 @@ import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');
 import globalVariables from '../globalVariables.js';
 import LookCellThumbnail from './LookCellThumbnail.js';
-import UserInfo from './UserInfo.js';
 import DoneFooter from './DoneFooter.js';
 import LookCell from './LookCell.js';
 
-const User = React.createClass({
+const UserLookList = React.createClass({
+  statics(){
+    setShowImagType(type){
+      this.setShowImagType(type);
+    }
+  },
   getInitialState() {
     return {
       searchPending: true,
@@ -43,7 +47,8 @@ const User = React.createClass({
         looks_count:"",
         karma_count:""
       },
-      frome:""
+      frome:"looks",
+      renderHeader:function(){},
     };
   },
   componentDidMount() {
@@ -74,13 +79,7 @@ const User = React.createClass({
       });
     }
   },
-  renderHeader() {
-    return (
-      <UserInfo user={this.props.user}
-        onSelect={this.setShowImagType}
-        uid={this.props.uid}/>
-    );
-  },
+
   renderFooter() {
     if (!this.state.next && !this.state.searchPending) {
       return (
@@ -113,7 +112,6 @@ const User = React.createClass({
     }
 
     return (
-      <View style={styles.container}>
         <ListView
           ref='listview'
           contentContainerStyle={this.state.listRowStyle}
@@ -121,7 +119,7 @@ const User = React.createClass({
           renderFooter={this.renderFooter}
           renderRow={this.renderRow}
           onEndReached={this.onEndReached}
-          renderHeader={this.renderHeader}
+          renderHeader={this.props.renderHeader}
           onEndReachedThreshold={10}
           // initialListSize={15}
           pageSize={15}
@@ -131,7 +129,6 @@ const User = React.createClass({
           keyboardShouldPersistTaps={false}
           showsVerticalScrollIndicator={true}
         />
-      </View>
     );
   },
 
@@ -150,7 +147,7 @@ const User = React.createClass({
     console.log('queryRMLS');
     this.setState({ searchPending: true });
 
-    fetch('http://api.lookbook.nu/v1/user/'+(uid||this.props.user.id)+'/looks?page='+(page||1)+'&view=full',{
+    fetch('http://api.lookbook.nu/v1/user/'+(uid||this.props.user.id)+'/'+this.props.frome+'?page='+(page||1)+'&view=full',{
       method: 'get',
       headers: {
         "Host": "api.lookbook.nu",
@@ -210,4 +207,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default User;
+export default UserLookList;

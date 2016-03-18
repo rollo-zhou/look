@@ -72,12 +72,12 @@ const UserInfo = React.createClass({
             <View style={styles.shotDetailsRow}>
                 <View style={styles.shotCounter}>
                     <Text style={styles.shotCounterText}
-                      onSelect={() => this.selectLook("list")}
+                      onPress={() => this.selectLook("thumb")}
                     > 缩略图 </Text>
                 </View>
                 <View style={styles.shotCounter}>
                     <Text style={styles.shotCounterText}
-                    onSelect={() => this.selectLook("thumb")}
+                    onPress={() => this.selectLook("list")}
                     > 列表 </Text>
                 </View>
             </View>
@@ -85,7 +85,9 @@ const UserInfo = React.createClass({
           </View>
     );
   },
-
+  selectLook(type){
+    this.props.onSelect(type);
+  },
   queryRMLS(uid ,page, form) {
     this.setState({ searchPending: true });
 
