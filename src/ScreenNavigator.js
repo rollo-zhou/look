@@ -32,7 +32,7 @@ const ScreenNavigator = React.createClass({
 const styles = StyleSheet.create({
   container: {
     width,
-    height: height - 0
+    height
   },
 });
 

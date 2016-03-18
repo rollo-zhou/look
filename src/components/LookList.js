@@ -38,13 +38,13 @@ const LookList = React.createClass({
     return (
       <ScrollableTabView initialPage={0} style={{marginTop: 20}} >
           <View tabLabel='HOT' ref='listviewHot' style={styles.container}>
-            <LookListItem type="hot" loadDate={true}/>
+            <LookListItem type="hot" apiTypeUrl="hot" navigator={this.props.navigator} loadDate={true}/>
           </View>
           <View tabLabel='NEW' ref='listviewNew' style={styles.container}>
-            <LookListItem type="new" loadDate={false}/>
+            <LookListItem type="new" apiTypeUrl="new" navigator={this.props.navigator} loadDate={true}/>
           </View>
-          <View tabLabel='TOP' ref='listviewNew' style={styles.container}>
-            <LookListItem type="top" loadDate={false}/>
+          <View tabLabel='TOP' ref='listviewTop' style={styles.container}>
+            <LookListItem type="top" apiTypeUrl="top/week" navigator={this.props.navigator} loadDate={true}/>
           </View>
         </ScrollableTabView>
     );

@@ -12,6 +12,10 @@ const {
 import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');
 import globalVariables from '../globalVariables.js';
+import LookCellThumbnail from './LookCellThumbnail.js';
+import UserInfo from './UserInfo.js';
+import DoneFooter from './DoneFooter.js';
+import LookCell from './LookCell.js';
 
 const User = React.createClass({
   getInitialState() {
@@ -21,14 +25,23 @@ const User = React.createClass({
       looks: [],
       uid:0,
       user: {},
-      next:1
+      next:1,
+      showImagType:"thumb",
     };
   },
 
   getDefaultProps() {
     return {
       uid: 0,
-      user: {},
+      user: {
+        uid: 0,
+        photo:"",
+        name:"",
+        byline:"",
+        fans_count:"",
+        looks_count:"",
+        karma_count:""
+      },
       frome:""
     };
   },
@@ -41,45 +54,28 @@ const User = React.createClass({
   getDataSource(looks) {
     return this.state.dataSource.cloneWithRows(looks);
   },
-
+  setShowImagType(showImagType){
+    if(showImagType!=this.state.showImagType){
+      this.state.setState({
+        showImagType:showImagType
+      });
+    }
+  },
   renderHeader() {
-    return (<View>
-          <View style={styles.headerContent}>
-            <Image source={{uri:this.props.user.photo}} style={styles.playerAvatar} />
-            <Text style={styles.shotTitle}>{this.props.user.name}</Text>
-            <Text style={styles.playerContent}>
-                <Text >{this.props.user.byline}</Text>
-            </Text>
-          </View>
-          <View style={styles.mainSection}>
-            <View style={styles.shotDetailsRow}>
-                <View style={styles.shotCounter}>
-
-                    <Text style={styles.shotCounterText}> {this.props.user.fans_count} </Text>
-                </View>
-                <View style={styles.shotCounter}>
-
-                    <Text style={styles.shotCounterText}> {this.props.user.looks_count} </Text>
-                </View>
-                <View style={styles.shotCounter}>
-
-                    <Text style={styles.shotCounterText}> {this.props.user.karma_count} </Text>
-                </View>
-            </View>
-          </View>
-          </View>
+    return (
+      <UserInfo user={this.props.user}
+        onSelect={this.setShowImagType}
+        uid={this.props.uid}/>
     );
   },
   renderFooter() {
     if (!this.state.next && !this.state.searchPending) {
       return (
-        <View style={styles.doneView}>
-          <Image source={require('../images/foxy.png')} style={styles.doneImage} />
-        </View>
+       <DoneFooter/>
       );
     }
 
-    return <ActivityIndicatorIOS style={styles.scrollSpinner} />;
+    return (<ActivityIndicatorIOS style={styles.scrollSpinner} />);
   },
 
   onEndReached() {
@@ -89,28 +85,14 @@ const User = React.createClass({
     }
   },
 
-  selectHouse(look) {
-    console.log('selectHouse');
-    // this.props.navigator.push({
-    //   component: HouseDetails,
-    //   title: 'Details',
-    //   passProps: {
-    //     user:look.look.user,
-    //     form: this.state.form
-    //   },
-    // });
-  },
-
   renderRow(look) {
-     return (
-      <TouchableOpacity activeOpacity={0.7} >
-          <View style={styles.row}>
-            <Image source={{uri:look.look.photos.small}}
-            style={{height: (width/3)-2,width: (width/3)-2}}/>
-          </View>
-      </TouchableOpacity>
-
-    );
+     if(this.state.showImagType=="list"){
+        return (<LookCell
+            key={look.look.id}
+            look={look.look}
+          />);
+      }
+     return  (<LookCellThumbnail photo={look.look.photos.small}/>);
   },
 
   render() {
@@ -135,6 +117,7 @@ const User = React.createClass({
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps={false}
           showsVerticalScrollIndicator={true}
+          setShowImagType={this.state.setShowImagType}
         />
       </View>
     );
@@ -201,91 +184,14 @@ const styles = StyleSheet.create({
     backgroundColor: globalVariables.background,
   },
 
-  headerContent: {
-    // flex: 2,
-    paddingBottom: 20,
-    paddingTop: 94,
-    alignItems: "center",
-    width: width,
-    // backgroundColor: "#fff"
-  },
-  shotTitle: {
-    fontSize: 16,
-    fontWeight: "400",
-    color: "#574e53",
-    lineHeight: 18
-  },
-  playerContent: {
-    fontSize: 12,
-    color: "#d8d2d6",
-    fontWeight: "400",
-    lineHeight: 18
-  },
-
-  playerAvatar: {
-    borderRadius: 40,
-    width: 80,
-    height: 80,
-    position: "absolute",
-    bottom: 60,
-    left: width / 2 - 40,
-    borderWidth: 2,
-    borderColor: "#fff"
-  },
-
-  shotDetailsRow: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    // backgroundColor: "white",
-    flexDirection: "row",
-     width: width,
-  },
-  shotCounter: {
-    flex: 2,
-    alignItems: "center",
-    justifyContent: "space-between"
-  },
-  shotCounterText: {
-    color: "#333"
-  },
-  mainSection: {
-    flex: 1,
-    alignItems: "stretch",
-    padding: 10,
-    // backgroundColor: "white"
-  },
-
   list: {
     justifyContent: 'space-around',
     flexDirection: 'row',
     flexWrap: 'wrap'
   },
-  row: {
-
-    padding: 1,
-  },
-  thumb: {
-    // width: 64,
-    // height: 64
-  },
-
-  centerText: {
-    alignItems: 'center',
-  },
 
   scrollSpinner: {
     marginVertical: 20,
-  },
-
-  doneView: {
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-
-  doneImage: {
-    width: 302 / 5,
-    height: 252 / 5
   },
 });
 

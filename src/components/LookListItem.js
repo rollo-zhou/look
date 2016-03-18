@@ -15,8 +15,7 @@ import User from './User.js';
 import LookListNoResults from './LookListNoResults.js';
 import globalVariables from '../globalVariables.js';
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar, } from 'react-native-scrollable-tab-view';
-
-const _this="";
+import DoneFooter from './DoneFooter.js';
 
 const LookListItem = React.createClass({
   getInitialState() {
@@ -32,12 +31,12 @@ const LookListItem = React.createClass({
   getDefaultProps() {
     return {
       type:"hot",
-      loadDate:false
+      loadDate:false,
+      apiTypeUrl:"hot"
     };
   },
 
   componentDidMount() {
-    this.dataModel.apiTypeUrl=this.props.type=="hot"?"hot":(this.props.type=="new"?"new":"top/week")
     if(this.props.loadDate){
       this.queryRMLS(1);
     }
@@ -47,17 +46,10 @@ const LookListItem = React.createClass({
     return this.state.dataSource.cloneWithRows(looks);
   },
 
-  dataModel:{
-    pageIndex:1,
-    apiTypeUrl:"hot"
-  },
-
   renderFooter() {
     if (!this.state.next && !this.state.searchPending) {
       return (
-        <View style={styles.doneView}>
-          <Image source={require('../images/foxy.png')} style={styles.doneImage} />
-        </View>
+       <DoneFooter/>
       );
     }
     return <ActivityIndicatorIOS style={styles.scrollSpinner} />;
@@ -71,8 +63,8 @@ const LookListItem = React.createClass({
     }
   },
 
-  selectHouse(look) {
-    console.log('selectHouse');
+  selectLook(look) {
+    console.log('selectLook');
     this.props.navigator.push({
       component: User,
       title: 'Details',
@@ -85,7 +77,7 @@ const LookListItem = React.createClass({
   renderRow(look) {
     return (
       <LookCell
-        onSelect={() => this.selectHouse(look)}
+        onSelect={() => this.selectLook(look)}
         key={look.look.id}
         look={look.look}
       />
@@ -93,7 +85,7 @@ const LookListItem = React.createClass({
   },
 
   render() {
-    _this=this;
+    // _this=this;
     if (!this.state.searchPending && !this.state.looks.length) {
       return (
         <View style={styles.container}>
@@ -101,12 +93,9 @@ const LookListItem = React.createClass({
         </View>
       );
     }
-    if(this.props.type!="hot"){
-      return (<Text>aa</Text>);
-    }
+
     return (
       <ListView
-
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
         onEndReached={this.onEndReached}
@@ -127,14 +116,16 @@ const LookListItem = React.createClass({
     );
   },
   reFreshQueryRMLS(page) {
-    this.queryRMLS(1);
-    this.setState({ refreshing: true });
+    if (!this.state.searchPending) {
+      this.queryRMLS(1);
+      this.setState({ refreshing: true });
+    }
   },
 
   queryRMLS(page) {
     console.log('queryRMLS');
 
-    fetch('http://api.lookbook.nu/v1/look/'+this.dataModel.apiTypeUrl+'/'+(page||1)+'/?view=full',{
+    fetch('http://api.lookbook.nu/v1/look/'+this.props.apiTypeUrl+'/'+(page||1)+'/?view=full',{
       method: 'get',
       headers: {
         "Host": "api.lookbook.nu",
@@ -147,7 +138,7 @@ const LookListItem = React.createClass({
     })
     .then((response) => response.text())
     .then((responseText) => {
-      _this.processsResults(responseText);
+      this.processsResults(responseText);
     })
     .catch(function (error) {
       console.error('An error occured');
@@ -194,16 +185,6 @@ const styles = StyleSheet.create({
   },
   scrollSpinner: {
     marginVertical: 36,
-  },
-
-  doneView: {
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-
-  doneImage: {
-    width: 302 / 5,
-    height: 252 / 5
   },
 });
 

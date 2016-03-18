@@ -19,12 +19,10 @@ const Den = React.createClass({
 
   getInitialState() {
     return {
-
     };
   },
 
   render() {
-
     return (
       <View style={styles.app}>
           <ScreenNavigator
