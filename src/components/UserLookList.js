@@ -17,9 +17,10 @@ import DoneFooter from './DoneFooter.js';
 import LookCell from './LookCell.js';
 
 const UserLookList = React.createClass({
-  statics(){
+  statics:{
     setShowImagType(type){
-      this.setShowImagType(type);
+      // that.setShowImagType(type);
+      // alert(type);
     }
   },
   getInitialState() {
