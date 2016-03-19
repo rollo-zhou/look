@@ -34,7 +34,9 @@ const UserInfo = React.createClass({
         looks_count:"",
         karma_count:""
       },
-      onSelect:function(){}
+      showImagListOrThumb:function(){},
+      toLookedPage:function(){},
+      toUserListPage:function(){},
     };
   },
   componentDidMount() {
@@ -56,15 +58,11 @@ const UserInfo = React.createClass({
             <View style={styles.shotDetailsRow}>
                 <View style={styles.shotCounter}>
 
-                    <Text style={styles.shotCounterText}> {this.props.user.fans_count} </Text>
+                    <Text style={styles.shotCounterText} onPress={() => this.toUserListPage("fans")}> {this.props.user.fans_count} </Text>
                 </View>
                 <View style={styles.shotCounter}>
 
-                    <Text style={styles.shotCounterText}> {this.props.user.looks_count} </Text>
-                </View>
-                <View style={styles.shotCounter}>
-
-                    <Text style={styles.shotCounterText}> {this.props.user.karma_count} </Text>
+                    <Text style={styles.shotCounterText} onPress={() => this.toUserListPage("fanned")}> {this.props.user.looks_count} </Text>
                 </View>
             </View>
           </View>
@@ -72,35 +70,44 @@ const UserInfo = React.createClass({
             <View style={styles.shotDetailsRow}>
                 <View style={styles.shotCounter}>
                     <Text style={styles.shotCounterText}
-                      onPress={() => this.selectLook("thumb")}
+                      onPress={() => this.showImagListOrThumb("thumb")}
                     > 缩略图 </Text>
                 </View>
                 <View style={styles.shotCounter}>
                     <Text style={styles.shotCounterText}
-                    onPress={() => this.selectLook("list")}
+                    onPress={() => this.showImagListOrThumb("list")}
                     > 列表 </Text>
+                </View>
+                <View style={styles.shotCounter}>
+                    <Text style={styles.shotCounterText}
+                      onPress={() => this.toLookedPage("HYPED")}
+                    > HYPED({this.state.user.hyped_looks_count}) </Text>
+                </View>
+                <View style={styles.shotCounter}>
+                    <Text style={styles.shotCounterText}
+                    onPress={() => this.toLookedPage("LOVED")}
+                    > LOVED({this.state.user.hyped_looks_count}) </Text>
                 </View>
             </View>
           </View>
           </View>
     );
   },
-  selectLook(type){
-    this.props.onSelect(type);
+  showImagListOrThumb(type){
+    this.props.showImagListOrThumb(type);
+  },
+  toLookedPage(type){
+    this.props.toLookedPage(type);
+  },
+  toUserListPage(type){
+    this.props.toUserListPage(type);
   },
   queryRMLS(uid ,page, form) {
     this.setState({ searchPending: true });
 
-    fetch('http://api.lookbook.nu/v1/user/'+(uid||this.props.user.id)+'/looks?page='+(page||1)+'&view=full',{
+    fetch(globalVariables.apiUserServer+(uid||this.props.user.id),{
       method: 'get',
-      headers: {
-        "Host": "api.lookbook.nu",
-        "Cookie":"_lookbook_session=BAh7CUkiD3Nlc3Npb25faWQGOgZFVEkiJTMzYzAxODNlMzdiNTVhYWYxMTUxY2NlNmJiZmEwMmY5BjsAVEkiEG1vYmlsZV92aWV3BjsARkZJIgpnZW9pcAY7AEZ7DToRY291bnRyeV9jb2RlIgdjbjoSY291bnRyeV9jb2RlMyIIQ0hOOhFjb3VudHJ5X25hbWUiCkNoaW5hOgtyZWdpb24iBzAyOhByZWdpb25fbmFtZSINWmhlamlhbmc6CWNpdHkiDUhhbmd6aG91Og1sYXRpdHVkZWYWMzAuMjkzNjAwMDgyMzk3NDY6DmxvbmdpdHVkZWYWMTIwLjE2MTM5OTg0MTMwODZJIgtsb2NhbGUGOwBGSSIHY24GOwBU--29e77b70102f412d9bec0be23095aec47b646ac2",
-        "Content-Type": "application/json; charset=utf-8",
-        "User-Agent": "Lookbook/1.7.3 CFNetwork/711.3.18 Darwin/14.0.0",
-        "Accept-Encoding":"gzip, deflate",
-        "Connection":"keep-alive"
-      }
+      headers: globalVariables.apiServerHeaders
     })
     .then((response) => response.text())
     .then((responseText) => {

@@ -17,12 +17,12 @@ import DoneFooter from './DoneFooter.js';
 import LookCell from './LookCell.js';
 
 const UserLookList = React.createClass({
-  statics:{
-    setShowImagType(type){
-      // that.setShowImagType(type);
-      // alert(type);
-    }
-  },
+  // statics:{
+  //   setShowImagType(type){
+  //     // that.setShowImagType(type);
+  //     // alert(type);
+  //   }
+  // },
   getInitialState() {
     return {
       searchPending: true,
@@ -48,7 +48,7 @@ const UserLookList = React.createClass({
         looks_count:"",
         karma_count:""
       },
-      frome:"looks",
+      from:"looks",
       renderHeader:function(){},
     };
   },
@@ -101,7 +101,6 @@ const UserLookList = React.createClass({
   renderRow(look) {
      if(this.state.showImagType=="list"){
         return (<LookCell
-            key={look.look.id}
             look={look.look}
           />);
       }
@@ -148,16 +147,9 @@ const UserLookList = React.createClass({
     console.log('queryRMLS');
     this.setState({ searchPending: true });
 
-    fetch('http://api.lookbook.nu/v1/user/'+(uid||this.props.user.id)+'/'+this.props.frome+'?page='+(page||1)+'&view=full',{
+    fetch(globalVariables.apiUserServer+(uid||this.props.user.id)+'/'+this.props.from+'?page='+(page||1),{
       method: 'get',
-      headers: {
-        "Host": "api.lookbook.nu",
-        "Cookie":"_lookbook_session=BAh7CUkiD3Nlc3Npb25faWQGOgZFVEkiJTMzYzAxODNlMzdiNTVhYWYxMTUxY2NlNmJiZmEwMmY5BjsAVEkiEG1vYmlsZV92aWV3BjsARkZJIgpnZW9pcAY7AEZ7DToRY291bnRyeV9jb2RlIgdjbjoSY291bnRyeV9jb2RlMyIIQ0hOOhFjb3VudHJ5X25hbWUiCkNoaW5hOgtyZWdpb24iBzAyOhByZWdpb25fbmFtZSINWmhlamlhbmc6CWNpdHkiDUhhbmd6aG91Og1sYXRpdHVkZWYWMzAuMjkzNjAwMDgyMzk3NDY6DmxvbmdpdHVkZWYWMTIwLjE2MTM5OTg0MTMwODZJIgtsb2NhbGUGOwBGSSIHY24GOwBU--29e77b70102f412d9bec0be23095aec47b646ac2",
-        "Content-Type": "application/json; charset=utf-8",
-        "User-Agent": "Lookbook/1.7.3 CFNetwork/711.3.18 Darwin/14.0.0",
-        "Accept-Encoding":"gzip, deflate",
-        "Connection":"keep-alive"
-      }
+      headers: globalVariables.apiServerHeaders
     })
     .then((response) => response.text())
     .then((responseText) => {

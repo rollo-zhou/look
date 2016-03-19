@@ -14,11 +14,10 @@ import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');
 import globalVariables from '../globalVariables.js';
 import UserInfo from './UserInfo.js';
-import UserLookList from './UserLookList.js';
-import UserLooked from './UserLooked.js';
-import UserList from './UserList.js';
 
-const User = React.createClass({
+import UserLookList from './UserLookList.js';
+
+const UserLooked = React.createClass({
   // mixins:[UserLookList],
   getDefaultProps() {
     return {
@@ -32,40 +31,26 @@ const User = React.createClass({
         looks_count:"",
         karma_count:""
       },
+      from:"hyped_looks"
     };
   },
   showImagListOrThumb(type){
       this.refs.UserLookList.setShowImagType(type);
   },
-  toLookedPage(type){
-    this.props.navigator.push({
-      component: UserLooked,
-      title: type,
-      passProps: {
-        user:this.props.user,
-        uid:this.props.uid,
-        from:type=="HYPED"?"hyped_looks":"loved_looks"
-      },
-    });
-  },
-  toUserListPage:function(type){
-    this.props.navigator.push({
-      component: UserList,
-      title: type,
-      passProps: {
-        user:this.props.user,
-        uid:this.props.uid,
-        from:type=="fans"?"fans":"fanned"
-      },
-    });
-  },
   renderHeader() {
     return (
-      <UserInfo user={this.props.user}
-        showImagListOrThumb={this.showImagListOrThumb}
-        toLookedPage={this.toLookedPage}
-        toUserListPage={this.toUserListPage}
-        uid={this.props.uid}/>
+      <View style={styles.mainSection}>
+            <View style={styles.shotCounter}>
+                    <Text style={styles.shotCounterText}
+                      onPress={() => this.showImagListOrThumb("thumb")}
+                    > 缩略图 </Text>
+                </View>
+                <View style={styles.shotCounter}>
+                    <Text style={styles.shotCounterText}
+                    onPress={() => this.showImagListOrThumb("list")}
+                    > 列表 </Text>
+                </View>
+          </View>
     );
   },
 
@@ -75,7 +60,7 @@ const User = React.createClass({
         <UserLookList renderHeader={this.renderHeader}
           user={this.props.user}
           uid={this.props.uid}
-          from="looks"
+          from={this.props.from}
           ref="UserLookList"/>
       </View>
     );
@@ -88,6 +73,28 @@ const styles = StyleSheet.create({
     paddingTop: 64,
     backgroundColor: globalVariables.background,
   },
+   shotDetailsRow: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    // backgroundColor: "white",
+    flexDirection: "row",
+     width: width,
+  },
+  shotCounter: {
+    flex: 2,
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  shotCounterText: {
+    color: "#333"
+  },
+  mainSection: {
+    flex: 3,
+    alignItems: "stretch",
+    padding: 10,
+    // backgroundColor: "white"
+  },
 });
 
-export default User;
+export default UserLooked;

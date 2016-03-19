@@ -19,7 +19,8 @@ var LookCell = React.createClass({
   getDefaultProps() {
     return {
       look: {},
-      type: 'search'
+      onSelect:function () {},
+      onSelectUser:function () {},
     };
   },
 
@@ -28,35 +29,35 @@ var LookCell = React.createClass({
       <View style={styles.item}>
         <ActivityIndicatorIOS style={styles.spinner} />
 
-        <TouchableOpacity activeOpacity={0.7} onPress={this.props.onSelect}>
+        <TouchableOpacity activeOpacity={0.8} onPress={this.props.onSelect}>
           <Image
             style={{height: (this.props.look.photo_height*width)/this.props.look.photo_width,resizeMode: 'cover',}}
-            source={{uri: this.props.look.photos.medium}}>
-
-            <View style={styles.detailContainer}>
-              <View style={styles.iconContainer}>
-                <View style={[styles.iconItem, styles.bedBoxIcons]}>
-                  <Image style={styles.iconImage} source={require('../images/bed-icon.png')} />
-                  <Text style={styles.iconText}>{this.props.look.hypes_count}</Text>
-                </View>
-
-                <View style={[styles.iconItem, styles.bedBoxIcons]}>
-                  <Image style={styles.iconImage} source={require('../images/bath-icon.png')} />
-                  <Text style={styles.iconText}>{this.props.look.comments_count}</Text>
-                </View>
-
-                <View style={styles.iconItem}>
-                  <Image style={styles.iconImage} source={require('../images/ruler-icon.png')} />
-                  <Text style={styles.iconText}>{this.props.look.loves_count}</Text>
-                </View>
-
-                <View style={styles.iconItem}>
-                  <Image style={styles.iconImage} source={require('../images/crane-icon.png')} />
-                  <Text style={styles.iconText}>{this.props.look.items_count}</Text>
-                </View>
-              </View>
+            source={{uri: this.props.look.photos.medium}}/>
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.8} onPress={this.props.onSelectUser}>
+        <View style={styles.detailContainer}>
+          <View style={styles.iconContainer}>
+            <View style={[styles.iconItem, styles.bedBoxIcons]}>
+              <Image style={styles.iconImage} source={require('../images/bed-icon.png')} />
+              <Text style={styles.iconText}>{this.props.look.hypes_count}</Text>
             </View>
-          </Image>
+
+            <View style={[styles.iconItem, styles.bedBoxIcons]}>
+              <Image style={styles.iconImage} source={require('../images/bath-icon.png')} />
+              <Text style={styles.iconText}>{this.props.look.comments_count}</Text>
+            </View>
+
+            <View style={styles.iconItem}>
+              <Image style={styles.iconImage} source={require('../images/ruler-icon.png')} />
+              <Text style={styles.iconText}>{this.props.look.loves_count}</Text>
+            </View>
+
+            <View style={styles.iconItem}>
+              <Image style={styles.iconImage} source={require('../images/crane-icon.png')} />
+              <Text style={styles.iconText}>{this.props.look.items_count}</Text>
+            </View>
+          </View>
+        </View>
         </TouchableOpacity>
       </View>
     );
