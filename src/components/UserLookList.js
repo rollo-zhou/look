@@ -103,6 +103,7 @@ const UserLookList = React.createClass({
      if(this.state.showImagType=="list"){
         return (<LookCell
             look={look.look}
+            onSelectUser={()=>this.onSelectUser(look.user)}
           />);
       }
      return  (
@@ -110,7 +111,16 @@ const UserLookList = React.createClass({
           onSelect={() => this.selectLook(look)}
       />);
   },
-
+  onSelectUser(user) {
+    this.props.navigator.push({
+      component: User,
+      title: 'User',
+      passProps: {
+        user:user,
+        navigator:this.props.navigator,
+      },
+    });
+  },
   selectLook(look) {
     this.props.navigator.push({
       component: LookDetail,
