@@ -16,12 +16,13 @@ import globalVariables from '../globalVariables.js';
 const LookCellThumbnail = React.createClass({
   getDefaultProps() {
     return {
-      photo:""
+      photo:"",
+      onSelect:function(){},
     };
   },
   render() {
     return(
-      <TouchableOpacity activeOpacity={0.7} >
+      <TouchableOpacity activeOpacity={0.8} onPress={this.props.onSelect}>
           <View style={styles.row}>
             <Image source={{uri:this.props.photo}}
             style={{height: (width/3)-2,width: (width/3)-2}}/>

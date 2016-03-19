@@ -14,8 +14,6 @@ import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');
 import globalVariables from '../globalVariables.js';
 import UserInfo from './UserInfo.js';
-import UserLookList from './UserLookList.js';
-import UserLooked from './UserLooked.js';
 import LookCell from './LookCell.js';
 import User from './User.js';
 
@@ -54,10 +52,10 @@ const LookDetail = React.createClass({
     return (
       <LookCell
         look={this.props.look}
+        onSelectUser={()=>this.onSelectUser(this.props.look.user)}
       />
     );
   },
-
   onEndReached() {
     if (this.state.next && !this.state.searchPending) {
       this.setState({ searchPending: true });
@@ -68,19 +66,19 @@ const LookDetail = React.createClass({
   selectLook(comment) {
 
   },
-  onSelectUser(comment) {
+  onSelectUser(user) {
     this.props.navigator.push({
       component: User,
       title: 'User',
       passProps: {
-        user:comment.comment.user,
+        user:user,
         navigator:this.props.navigator,
       },
     });
   },
   renderRow(comment) {
     return (
-      <TouchableOpacity activeOpacity={0.8} onPress={()=>this.onSelectUser(comment)}>
+      <TouchableOpacity activeOpacity={0.8} onPress={()=>this.onSelectUser(comment.comment.user)}>
       <View >
           <View style={styles.commentContent}>
               <Image source={{uri:comment.comment.user.photo}}

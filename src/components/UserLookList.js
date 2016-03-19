@@ -15,6 +15,7 @@ import globalVariables from '../globalVariables.js';
 import LookCellThumbnail from './LookCellThumbnail.js';
 import DoneFooter from './DoneFooter.js';
 import LookCell from './LookCell.js';
+import LookDetail from './LookDetail.js';
 
 const UserLookList = React.createClass({
   // statics:{
@@ -104,7 +105,22 @@ const UserLookList = React.createClass({
             look={look.look}
           />);
       }
-     return  (<LookCellThumbnail photo={look.look.photos.small}/>);
+     return  (
+      <LookCellThumbnail photo={look.look.photos.small}
+          onSelect={() => this.selectLook(look)}
+      />);
+  },
+
+  selectLook(look) {
+    this.props.navigator.push({
+      component: LookDetail,
+      title: 'Details',
+      passProps: {
+        look:look.look,
+        user:look.look.user,
+        navigator:this.props.navigator,
+      },
+    });
   },
 
   render() {

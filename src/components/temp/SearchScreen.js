@@ -43,7 +43,7 @@ const SearchScreen = React.createClass({
           <ZipCodeEntry value={this.state.zipCodes} onChange={this.saveQueryOptions} />
           <NumberPicker varName='bedrooms' label='Bedrooms (at least)' value={this.state.bedrooms} onChange={this.saveQueryOptions} />
           <NumberPicker varName='bathrooms' label='Bathrooms (at least)' value={this.state.bathrooms} onChange={this.saveQueryOptions} />
-          <TouchableOpacity onPress={this.onSearch} activeOpacity={0.5}>
+          <TouchableOpacity onPress={this.onSearch} activeOpacity={0.8}>
             <View style={styles.searchButton}>
               <Text style={styles.searchButtonText}>
                 Search

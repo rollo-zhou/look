@@ -44,6 +44,7 @@ const User = React.createClass({
       passProps: {
         user:this.props.user,
         uid:this.props.uid,
+        navigator:this.props.navigator,
         from:type=="HYPED"?"hyped_looks":"loved_looks"
       },
     });
@@ -75,6 +76,7 @@ const User = React.createClass({
         <UserLookList renderHeader={this.renderHeader}
           user={this.props.user}
           uid={this.props.uid}
+          navigator={this.props.navigator}
           from="looks"
           ref="UserLookList"/>
       </View>
