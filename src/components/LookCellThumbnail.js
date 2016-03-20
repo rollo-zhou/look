@@ -12,23 +12,40 @@ const {
 import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');
 import globalVariables from '../globalVariables.js';
+import LookDetail from './LookDetail.js';
 
 const LookCellThumbnail = React.createClass({
   getDefaultProps() {
     return {
-      photo:"",
-      onSelect:function(){},
+      look: {},
+      onSelect:false,
+      navigator:"",
     };
   },
   render() {
     return(
-      <TouchableOpacity activeOpacity={0.8} onPress={this.props.onSelect}>
+      <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect}>
           <View style={styles.row}>
-            <Image source={{uri:this.props.photo}}
+            <Image source={{uri:this.props.look.photos.small}}
             style={{height: (width/3)-2,width: (width/3)-2}}/>
           </View>
       </TouchableOpacity>
     );
+  },
+  onSelect() {
+    if(this.props.onSelect){
+      this.props.onSelect(this.props.look);
+    }else{
+      this.props.navigator.push({
+        component: LookDetail,
+        title: 'Details',
+        passProps: {
+          look:this.props.look,
+          user:this.props.look.user,
+          navigator:this.props.navigator,
+        },
+      });
+    }
   },
 });
 

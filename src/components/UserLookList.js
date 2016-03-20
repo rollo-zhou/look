@@ -15,15 +15,8 @@ import globalVariables from '../globalVariables.js';
 import LookCellThumbnail from './LookCellThumbnail.js';
 import DoneFooter from './DoneFooter.js';
 import LookCell from './LookCell.js';
-import LookDetail from './LookDetail.js';
 
 const UserLookList = React.createClass({
-  // statics:{
-  //   setShowImagType(type){
-  //     // that.setShowImagType(type);
-  //     // alert(type);
-  //   }
-  // },
   getInitialState() {
     return {
       searchPending: true,
@@ -51,12 +44,13 @@ const UserLookList = React.createClass({
       },
       from:"looks",
       renderHeader:function(){},
+      navigator:"",
     };
   },
   componentDidMount() {
     // console.log(this.props.search);
     this.processResults();
-    this.queryRMLS();
+    this.queryRromServer();
   },
 
   getDataSource(looks) {
@@ -95,42 +89,23 @@ const UserLookList = React.createClass({
   onEndReached() {
     console.log('onEndReached');
     if (this.state.next && !this.state.searchPending) {
-      this.queryRMLS(this.props.uid, this.state.next, this.state.form);
+      this.queryRromServer(this.props.uid, this.state.next, this.state.form);
     }
   },
 
-  renderRow(look) {
+  renderRow(looks) {
      if(this.state.showImagType=="list"){
         return (<LookCell
-            look={look.look}
-            onSelectUser={()=>this.onSelectUser(look.user)}
+            look={looks.look}
+            navigator={this.props.navigator}
+            onUserSelect={function(){}}
           />);
       }
      return  (
-      <LookCellThumbnail photo={look.look.photos.small}
-          onSelect={() => this.selectLook(look)}
+      <LookCellThumbnail look={looks.look}
+          navigator={this.props.navigator}
+          onUserSelect={function(){}}
       />);
-  },
-  onSelectUser(user) {
-    this.props.navigator.push({
-      component: User,
-      title: 'User',
-      passProps: {
-        user:user,
-        navigator:this.props.navigator,
-      },
-    });
-  },
-  selectLook(look) {
-    this.props.navigator.push({
-      component: LookDetail,
-      title: 'Details',
-      passProps: {
-        look:look.look,
-        user:look.look.user,
-        navigator:this.props.navigator,
-      },
-    });
   },
 
   render() {
@@ -169,30 +144,12 @@ const UserLookList = React.createClass({
     });
   },
 
-  queryRMLS(uid ,page, form) {
-    console.log('queryRMLS');
-    this.setState({ searchPending: true });
-
-    fetch(globalVariables.apiUserServer+(uid||this.props.user.id)+'/'+this.props.from+'?page='+(page||1),{
-      method: 'get',
-      headers: globalVariables.apiServerHeaders
-    })
-    .then((response) => response.text())
-    .then((responseText) => {
-      // console.log(responseText);
-      this.processsResults(responseText);
-    })
-    .catch(function (error) {
-      console.error('An error occured');
-      console.error(error.message);
-    });
+  queryRromServer(page) {
+    globalVariables.queryRromServer(globalVariables.apiUserServer+this.props.user.id+'/'+this.props.from+'?page='+(page||1),this.processsResults);
   },
 
   processsResults(data) {
-
-    if (!data.length) return;
-    data=JSON.parse(data)
-    if (!data.looks.length) return;
+    if (!data||!data.looks||!data.looks.length) return;
 
     const newLooks = this.state.looks.concat(data.looks);
     this.setState({

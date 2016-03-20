@@ -41,7 +41,7 @@ const UserInfo = React.createClass({
   },
   componentDidMount() {
     if(!this.props.user.id){
-      this.queryRMLS();
+      this.queryRromServer();
     }
   },
 
@@ -102,27 +102,12 @@ const UserInfo = React.createClass({
   toUserListPage(type){
     this.props.toUserListPage(type);
   },
-  queryRMLS(uid ,page, form) {
-    this.setState({ searchPending: true });
 
-    fetch(globalVariables.apiUserServer+(uid||this.props.user.id),{
-      method: 'get',
-      headers: globalVariables.apiServerHeaders
-    })
-    .then((response) => response.text())
-    .then((responseText) => {
-      // console.log(responseText);
-      this.processsResults(responseText);
-    })
-    .catch(function (error) {
-      console.error('An error occured');
-      console.error(error.message);
-    });
+  queryRromServer() {
+    globalVariables.queryRromServer(globalVariables.apiUserServer+(uid||this.props.user.id),this.processsResults);
   },
-
   processsResults(data) {
     if (!data) return;
-    data=JSON.parse(data)
     this.setState({
       user: data,
       searchPending: false,

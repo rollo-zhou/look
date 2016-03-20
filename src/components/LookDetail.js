@@ -13,7 +13,6 @@ const {
 import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');
 import globalVariables from '../globalVariables.js';
-import UserInfo from './UserInfo.js';
 import LookCell from './LookCell.js';
 import User from './User.js';
 
@@ -29,10 +28,11 @@ const LookDetail = React.createClass({
   getDefaultProps() {
     return {
       look:{},
+      navigator:"",
     };
   },
   componentDidMount() {
-      this.queryRMLS(1);
+      this.queryRromServer(1);
   },
 
   getDataSource(comments) {
@@ -52,20 +52,18 @@ const LookDetail = React.createClass({
     return (
       <LookCell
         look={this.props.look}
-        onSelectUser={()=>this.onSelectUser(this.props.look.user)}
+        navigator={this.props.navigator}
+        onSelect={function(){}}
       />
     );
   },
   onEndReached() {
     if (this.state.next && !this.state.searchPending) {
       this.setState({ searchPending: true });
-      this.queryRMLS(this.state.next);
+      this.queryRromServer(this.state.next);
     }
   },
 
-  selectLook(comment) {
-
-  },
   onSelectUser(user) {
     this.props.navigator.push({
       component: User,
@@ -76,19 +74,19 @@ const LookDetail = React.createClass({
       },
     });
   },
-  renderRow(comment) {
+  renderRow(comments) {
     return (
-      <TouchableOpacity activeOpacity={0.8} onPress={()=>this.onSelectUser(comment.comment.user)}>
+      <TouchableOpacity activeOpacity={0.8} onPress={()=>this.onSelectUser(comments.comment.user)}>
       <View >
           <View style={styles.commentContent}>
-              <Image source={{uri:comment.comment.user.photo}}
+              <Image source={{uri:comments.comment.user.photo}}
                      style={styles.avatar}/>
             <View style={styles.commentBody}>
               <Text style={styles.userName}>
-                {comment.comment.user.name}
+                {comments.comment.user.name}
               </Text>
               <Text style={styles.commentText}>
-                {comment.comment.body}
+                {comments.comment.body}
               </Text>
             </View>
           </View>
@@ -115,28 +113,13 @@ const LookDetail = React.createClass({
     );
   },
 
-  queryRMLS(page) {
-
-    fetch(globalVariables.apiLookServer+this.props.look.id+'/comments/'+(page||1),{
-      method: 'get',
-      headers: globalVariables.apiServerHeaders
-    })
-    .then((response) => response.text())
-    .then((responseText) => {
-      this.processsResults(responseText);
-    })
-    .catch(function (error) {
-      console.error('An error occured');
-      console.error(error.message);
-    });
+  queryRromServer(page) {
+    globalVariables.queryRromServer(globalVariables.apiLookServer+this.props.look.id+'/comments/'+(page||1),this.processsResults);
   },
 
   processsResults(data) {
-    data=JSON.parse(data)
-    if (!data.comments.length) return;
-
+    if (!data||!data.comments||!data.comments.length) return;
     var newComments= this.state.comments.concat(data.comments);
-
     this.setState({
       comments: newComments,
       searchPending: false,

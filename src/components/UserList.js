@@ -13,8 +13,8 @@ const {
 import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');
 import globalVariables from '../globalVariables.js';
-
 import User from './User.js';
+import UserCell from './UserCell.js';
 
 const LookDetail = React.createClass({
   getInitialState() {
@@ -38,10 +38,11 @@ const LookDetail = React.createClass({
         karma_count:""
       },
       frome:"fans",
+      navigator:""
     };
   },
   componentDidMount() {
-      this.queryRMLS(1);
+      this.queryRromServer(1);
   },
 
   getDataSource(users) {
@@ -60,39 +61,13 @@ const LookDetail = React.createClass({
   onEndReached() {
     if (this.state.next && !this.state.searchPending) {
       this.setState({ searchPending: true });
-      this.queryRMLS(this.state.next);
+      this.queryRromServer(this.state.next);
     }
   },
 
-  onSelectUser(users) {
-    this.props.navigator.push({
-      component: User,
-      title: 'User',
-      passProps: {
-        user:users.user,
-        navigator:this.props.navigator,
-      },
-    });
-  },
   renderRow(users) {
     return (
-      <TouchableOpacity activeOpacity={0.8} onPress={()=>this.onSelectUser(users)}>
-      <View >
-          <View style={styles.commentContent}>
-              <Image source={{uri:users.user.photo}}
-                     style={styles.avatar}/>
-            <View style={styles.commentBody}>
-              <Text style={styles.userName}>
-                {users.user.name}
-              </Text>
-              <Text style={styles.commentText}>
-                {users.user.byline}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.cellBorder} />
-        </View>
-        </TouchableOpacity>
+      <UserCell user={users.user} navigator={this.props.navigator}/>
     );
   },
 
@@ -112,25 +87,12 @@ const LookDetail = React.createClass({
     );
   },
 
-  queryRMLS(page) {
-
-    fetch(globalVariables.apiUserServer+this.props.user.id+'/'+this.props.from+'?page='+(page||1),{
-      method: 'get',
-      headers: globalVariables.apiServerHeaders
-    })
-    .then((response) => response.text())
-    .then((responseText) => {
-      this.processsResults(responseText);
-    })
-    .catch(function (error) {
-      console.error('An error occured');
-      console.error(error.message);
-    });
+  queryRromServer(page) {
+    globalVariables.queryRromServer(globalVariables.apiUserServer+this.props.user.id+'/'+this.props.from+'?page='+(page||1),this.processsResults);
   },
 
   processsResults(data) {
-    data=JSON.parse(data)
-    if (!data.users.length) return;
+    if (!data||!data.users||!data.users.length) return;
 
     var newUsers= this.state.users.concat(data.users);
 

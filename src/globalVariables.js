@@ -1,5 +1,4 @@
 module.exports = {
-  geocodeServer: 'https://maps.googleapis.com/maps/api/geocode/json',
   blue: '#22B8D8',
   green: '#19CAB6',
   orange: '#ff6204',
@@ -7,7 +6,7 @@ module.exports = {
   textColor: '#666',
   apiUserServer:'http://api.lookbook.nu/v1/user/',
   apiLookServer:'http://api.lookbook.nu/v1/look/',
-  apiServerheaders:{
+  apiServerHeaders:{
         "Host": "api.lookbook.nu",
         "Cookie":"_lookbook_session=BAh7CUkiD3Nlc3Npb25faWQGOgZFVEkiJTMzYzAxODNlMzdiNTVhYWYxMTUxY2NlNmJiZmEwMmY5BjsAVEkiEG1vYmlsZV92aWV3BjsARkZJIgpnZW9pcAY7AEZ7DToRY291bnRyeV9jb2RlIgdjbjoSY291bnRyeV9jb2RlMyIIQ0hOOhFjb3VudHJ5X25hbWUiCkNoaW5hOgtyZWdpb24iBzAyOhByZWdpb25fbmFtZSINWmhlamlhbmc6CWNpdHkiDUhhbmd6aG91Og1sYXRpdHVkZWYWMzAuMjkzNjAwMDgyMzk3NDY6DmxvbmdpdHVkZWYWMTIwLjE2MTM5OTg0MTMwODZJIgtsb2NhbGUGOwBGSSIHY24GOwBU--29e77b70102f412d9bec0be23095aec47b646ac2",
         "Content-Type": "application/json; charset=utf-8",
@@ -15,4 +14,20 @@ module.exports = {
         "Accept-Encoding":"gzip, deflate",
         "Connection":"keep-alive"
       },
+  queryRromServer(apiUrl,callBack) {
+    fetch(
+    apiUrl,
+    {
+      method: 'get',
+      headers: this.apiServerHeaders
+    })
+    .then((response) => response.text())
+    .then((responseText) => {
+      callBack&&callBack(JSON.parse(responseText));
+    })
+    .catch(function (error) {
+      console.error('An error occured');
+      console.error(error.message);
+    });
+  },
 }

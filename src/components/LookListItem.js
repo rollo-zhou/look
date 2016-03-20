@@ -11,12 +11,9 @@ const {
 } = React;
 
 import LookCell from './LookCell.js';
-import User from './User.js';
 import LookListNoResults from './LookListNoResults.js';
 import globalVariables from '../globalVariables.js';
-import ScrollableTabView, { DefaultTabBar, ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 import DoneFooter from './DoneFooter.js';
-import LookDetail from './LookDetail.js';
 
 const LookListItem = React.createClass({
   getInitialState() {
@@ -25,7 +22,8 @@ const LookListItem = React.createClass({
       looks: [],
       searchPending: true,
       refreshing:false,
-      next:1
+      next:1,
+      navigator:"",
     };
   },
 
@@ -39,7 +37,7 @@ const LookListItem = React.createClass({
 
   componentDidMount() {
     if(this.props.loadDate){
-      this.queryRMLS(1);
+      this.queryRromServer(1);
     }
   },
 
@@ -59,45 +57,20 @@ const LookListItem = React.createClass({
   onEndReached() {
     if (this.state.next && !this.state.searchPending) {
       this.setState({ searchPending: true });
-      this.queryRMLS(this.state.next);
+      this.queryRromServer(this.state.next);
     }
   },
 
-  selectLook(look) {
-    this.props.navigator.push({
-      component: LookDetail,
-      title: 'Details',
-      passProps: {
-        look:look.look,
-        user:look.look.user,
-        navigator:this.props.navigator,
-      },
-    });
-  },
-
-  onSelectUser(look) {
-    this.props.navigator.push({
-      component: User,
-      title: 'User',
-      passProps: {
-        user:look.look.user,
-        navigator:this.props.navigator,
-      },
-    });
-  },
-
-  renderRow(look) {
+  renderRow(looks) {
     return (
       <LookCell
-        onSelect={() => this.selectLook(look)}
-        onSelectUser={() => this.onSelectUser(look)}
-        look={look.look}
+        look={looks.look}
+        navigator={this.props.navigator}
       />
     );
   },
 
   render() {
-    // _this=this;
     if (!this.state.searchPending && !this.state.looks.length) {
       return (
         <View style={styles.container}>
@@ -129,36 +102,21 @@ const LookListItem = React.createClass({
   },
   reFreshQueryRMLS(page) {
     if (!this.state.searchPending) {
-      this.queryRMLS(1);
+      this.queryRromServer(1);
       this.setState({ refreshing: true });
     }
   },
 
-  queryRMLS(page) {
-    console.log('queryRMLS');
-
-    fetch(globalVariables.apiLookServer+this.props.apiTypeUrl+'/'+(page||1),{
-      method: 'get',
-      headers: globalVariables.apiServerHeaders
-    })
-    .then((response) => response.text())
-    .then((responseText) => {
-      this.processsResults(responseText);
-    })
-    .catch(function (error) {
-      console.error('An error occured');
-      console.error(error.message);
-    });
+  queryRromServer(page) {
+    globalVariables.queryRromServer(globalVariables.apiLookServer+this.props.apiTypeUrl+'/'+(page||1),this.processsResults);
   },
 
   processsResults(data) {
-    if (!data.length){
+    if (!data||!data.looks||!data.looks.length){
       if(this.state.refreshing)
         this.setState({ refreshing: false });
       return;
     }
-    data=JSON.parse(data)
-    if (!data.looks.length) return;
 
     var newLooks ='';
     if(this.state.refreshing){

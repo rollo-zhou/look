@@ -31,7 +31,8 @@ const UserLooked = React.createClass({
         looks_count:"",
         karma_count:""
       },
-      from:"hyped_looks"
+      from:"hyped_looks",
+      navigator:"",
     };
   },
   showImagListOrThumb(type){

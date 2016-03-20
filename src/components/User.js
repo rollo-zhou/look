@@ -32,6 +32,7 @@ const User = React.createClass({
         looks_count:"",
         karma_count:""
       },
+      navigator:"",
     };
   },
   showImagListOrThumb(type){
@@ -66,7 +67,8 @@ const User = React.createClass({
         showImagListOrThumb={this.showImagListOrThumb}
         toLookedPage={this.toLookedPage}
         toUserListPage={this.toUserListPage}
-        uid={this.props.uid}/>
+        uid={this.props.uid}
+        navigator={this.props.navigator}/>
     );
   },
 

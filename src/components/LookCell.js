@@ -11,16 +11,19 @@ const {
 } = React;
 
 import globalVariables from '../globalVariables.js';
-
+import UserCell from './UserCell.js';
 import moment from 'moment';
+import LookDetail from './LookDetail.js';
+
 const { width, height } = Dimensions.get('window');
 
 var LookCell = React.createClass({
   getDefaultProps() {
     return {
       look: {},
-      onSelect:function () {},
-      onSelectUser:function () {},
+      onSelect:false,
+      onUserSelect:false,
+      navigator:"",
     };
   },
 
@@ -28,40 +31,30 @@ var LookCell = React.createClass({
     return (
       <View style={styles.item}>
         <ActivityIndicatorIOS style={styles.spinner} />
-
-        <TouchableOpacity activeOpacity={0.8} onPress={this.props.onSelect}>
+        <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect}>
           <Image
             style={{height: (this.props.look.photo_height*width)/this.props.look.photo_width,resizeMode: 'cover',}}
             source={{uri: this.props.look.photos.medium}}/>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.8} onPress={this.props.onSelectUser}>
-        <View style={styles.detailContainer}>
-          <View style={styles.iconContainer}>
-            <View style={[styles.iconItem, styles.bedBoxIcons]}>
-              <Image style={styles.iconImage} source={require('../images/bed-icon.png')} />
-              <Text style={styles.iconText}>{this.props.look.hypes_count}</Text>
-            </View>
-
-            <View style={[styles.iconItem, styles.bedBoxIcons]}>
-              <Image style={styles.iconImage} source={require('../images/bath-icon.png')} />
-              <Text style={styles.iconText}>{this.props.look.comments_count}</Text>
-            </View>
-
-            <View style={styles.iconItem}>
-              <Image style={styles.iconImage} source={require('../images/ruler-icon.png')} />
-              <Text style={styles.iconText}>{this.props.look.loves_count}</Text>
-            </View>
-
-            <View style={styles.iconItem}>
-              <Image style={styles.iconImage} source={require('../images/crane-icon.png')} />
-              <Text style={styles.iconText}>{this.props.look.items_count}</Text>
-            </View>
-          </View>
-        </View>
-        </TouchableOpacity>
+        <UserCell user={this.props.look.user} onSelect={this.props.onUserSelect} navigator={this.props.navigator}/>
       </View>
     );
-  }
+  },
+  onSelect() {
+    if(this.props.onSelect){
+      this.props.onSelect(this.props.look);
+    }else{
+      this.props.navigator.push({
+        component: LookDetail,
+        title: 'Details',
+        passProps: {
+          look:this.props.look,
+          user:this.props.look.user,
+          navigator:this.props.navigator,
+        },
+      });
+    }
+  },
 });
 
 const styles = StyleSheet.create({
@@ -83,85 +76,6 @@ const styles = StyleSheet.create({
     left: (width/2)-20,
     top: 90
   },
-
-  image: {
-    height: 260,
-    resizeMode: 'cover',
-  },
-
-  priceContainer: {
-    position: 'absolute',
-    backgroundColor: globalVariables.green,
-    padding: 5,
-    top: 6,
-    left: 0,
-    height: 30,
-    shadowColor: 'black',
-    shadowOffset: {height: 2, width: 1  },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
-  },
-
-  dateContainer: {
-    backgroundColor: globalVariables.orange,
-  },
-
-  priceText: {
-    color: '#fff',
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-
-  dateText: {
-    fontSize: 13,
-  },
-
-  detailContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'white',
-    height: 50,
-    padding: 10
-  },
-
-  addressText: {
-    color: globalVariables.textColor,
-    fontSize: 14,
-    marginTop: 5,
-    marginBottom: 5,
-    textAlign: 'center'
-  },
-
-  iconContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-
-  iconItem: {
-    flex: 3,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-
-  iconImage: {
-    width: 24,
-    height: 24,
-  },
-
-  iconText: {
-    fontSize: 14,
-    color: globalVariables.textColor,
-    lineHeight: 20,
-    marginLeft: 3,
-  },
-
-  bedBoxIcons: {
-    flex: 2,
-  },
-
 });
 
 export default LookCell;
