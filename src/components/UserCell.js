@@ -13,6 +13,7 @@ const {
 import globalVariables from '../globalVariables.js';
 import User from './User.js';
 import moment from 'moment';
+import Icon from 'react-native-vector-icons/FontAwesome';
 const { width, height } = Dimensions.get('window');
 
 var UserCell = React.createClass({
@@ -32,7 +33,7 @@ var UserCell = React.createClass({
                      style={styles.avatar}/>
             <View style={styles.commentBody}>
               <Text style={styles.userName}>
-                {this.props.user.name}
+                {this.props.user.name}      <Icon name="bullhorn" color="#4F8EF7" />
               </Text>
               <Text style={styles.commentText}>
                 {this.props.user.byline}
