@@ -30,6 +30,7 @@ const Den = React.createClass({
           <ScreenNavigator
               title='HOT'
               component={LookList}
+              backButtonTitle=''
               navigationBarHidden={true}
              />
       </View>
