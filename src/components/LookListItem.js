@@ -108,7 +108,7 @@ const LookListItem = React.createClass({
   },
 
   queryRromServer(page) {
-    globalVariables.queryRromServer(globalVariables.apiLookServer+this.props.apiTypeUrl+'/'+(page||1),this.processsResults);
+    globalVariables.queryRromServer(globalVariables.apiServer+this.props.apiTypeUrl+'/'+(page||1),this.processsResults);
   },
 
   processsResults(data) {

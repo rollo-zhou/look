@@ -89,7 +89,7 @@ const UserLookList = React.createClass({
   onEndReached() {
     console.log('onEndReached');
     if (this.state.next && !this.state.searchPending) {
-      this.queryRromServer(this.props.uid, this.state.next, this.state.form);
+      this.queryRromServer();
     }
   },
 
@@ -146,7 +146,7 @@ const UserLookList = React.createClass({
   },
 
   queryRromServer(page) {
-    globalVariables.queryRromServer(globalVariables.apiUserServer+this.props.user.id+'/'+this.props.from+'?page='+(page||1),this.processsResults);
+    globalVariables.queryRromServer(globalVariables.apiUserServer+this.props.user.id+'/'+this.props.from+'?page='+(this.state.next||1),this.processsResults);
   },
 
   processsResults(data) {
