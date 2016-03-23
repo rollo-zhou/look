@@ -22,10 +22,15 @@ var UserCell = React.createClass({
       user: {},
       navigator:"",
       onSelect:false,
+      showByline:false,
     };
   },
 
   render() {
+    var byline=(<Text style={styles.commentText}>
+                  {this.props.user.byline}
+                       <Icon name="bullhorn" color="#4F8EF7" />
+                </Text>);
     return (
       <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect}>
           <View style={styles.commentContent}>
@@ -33,11 +38,9 @@ var UserCell = React.createClass({
                      style={styles.avatar}/>
             <View style={styles.commentBody}>
               <Text style={styles.userName}>
-                {this.props.user.name}      <Icon name="bullhorn" color="#4F8EF7" />
+                {this.props.user.name}
               </Text>
-              <Text style={styles.commentText}>
-                {this.props.user.byline}
-              </Text>
+
             </View>
           </View>
         </TouchableOpacity>
@@ -50,6 +53,7 @@ var UserCell = React.createClass({
       this.props.navigator.push({
         component: User,
         title: 'User',
+        backButtonTitle:' ',
         passProps: {
           user:this.props.user,
           navigator:this.props.navigator,

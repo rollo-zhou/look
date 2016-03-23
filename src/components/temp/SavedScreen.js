@@ -105,6 +105,7 @@ const SavedScreen = React.createClass({
     this.props.navigator.push({
       component: HouseDetails,
       title: 'Details',
+      backButtonTitle:' ',
       passProps: {
         house: data.house,
         images: data.images,

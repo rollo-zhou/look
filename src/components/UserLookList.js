@@ -129,6 +129,7 @@ const UserLookList = React.createClass({
           keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps={false}
           showsVerticalScrollIndicator={true}
+          style={styles.container}
         />
     );
   },

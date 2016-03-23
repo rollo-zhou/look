@@ -68,6 +68,7 @@ const LookDetail = React.createClass({
     this.props.navigator.push({
       component: User,
       title: 'User',
+      backButtonTitle:' ',
       passProps: {
         user:user,
         navigator:this.props.navigator,
@@ -109,6 +110,7 @@ const LookDetail = React.createClass({
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps={false}
         showsVerticalScrollIndicator={true}
+        style={styles.container}
       />
     );
   },

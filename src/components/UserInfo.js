@@ -117,7 +117,6 @@ const UserInfo = React.createClass({
 });
 
 const styles = StyleSheet.create({
-
   headerContent: {
     // flex: 2,
     paddingBottom: 20,

@@ -39,6 +39,7 @@ const LookCellThumbnail = React.createClass({
       this.props.navigator.push({
         component: LookDetail,
         title: 'Details',
+        backButtonTitle:' ',
         passProps: {
           look:this.props.look,
           user:this.props.look.user,

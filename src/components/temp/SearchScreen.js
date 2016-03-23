@@ -59,6 +59,7 @@ const SearchScreen = React.createClass({
     this.props.navigator.push({
       component: SearchResults,
       title: 'Search Results',
+      backButtonTitle:' ',
       passProps: {
         search: this.state
       },

@@ -72,17 +72,10 @@ const UserLooked = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 64,
+    // paddingTop: 64,
     backgroundColor: globalVariables.background,
   },
-   shotDetailsRow: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    // backgroundColor: "white",
-    flexDirection: "row",
-     width: width,
-  },
+
   shotCounter: {
     flex: 2,
     alignItems: "center",
@@ -92,7 +85,7 @@ const styles = StyleSheet.create({
     color: "#333"
   },
   mainSection: {
-    flex: 3,
+    flex: 1,
     alignItems: "stretch",
     padding: 10,
     // backgroundColor: "white"

@@ -42,6 +42,7 @@ const User = React.createClass({
     this.props.navigator.push({
       component: UserLooked,
       title: type,
+      backButtonTitle:' ',
       passProps: {
         user:this.props.user,
         uid:this.props.uid,
@@ -54,6 +55,7 @@ const User = React.createClass({
     this.props.navigator.push({
       component: UserList,
       title: type,
+      backButtonTitle:' ',
       passProps: {
         user:this.props.user,
         uid:this.props.uid,
@@ -89,9 +91,10 @@ const User = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 64,
+    // paddingTop: 64,
     backgroundColor: globalVariables.background,
   },
+
 });
 
 export default User;
