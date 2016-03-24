@@ -14,7 +14,7 @@ const {
 import LookListItem from './LookListItem.js';
 import globalVariables from '../globalVariables.js';
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar, } from 'react-native-scrollable-tab-view';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const LookList = React.createClass({
   getInitialState() {
@@ -38,15 +38,14 @@ const LookList = React.createClass({
     return (
        <TabBarIOS
         tintColor={globalVariables.green}
-
         shadowHidden={true}
         translucent={true}
         >
+        <Icon.TabBarItemIOS
 
-        <TabBarIOS.Item
-          title="LookBook"
-          iconName="ios-home-outline"
-          selectedIconName="ios-home"
+          iconName="home"
+          selectedIconName="home"
+          iconSize={23}
           selected={this.state.selectedTab === 'lookbook'}
           onPress={() => {
             this.setState({
@@ -64,9 +63,12 @@ const LookList = React.createClass({
               <LookListItem type="top" apiTypeUrl="look/top/week" navigator={this.props.navigator} loadDate={true}/>
             </View>
           </ScrollableTabView>
-        </TabBarIOS.Item>
-        <TabBarIOS.Item
-          title="Feed"
+        </Icon.TabBarItemIOS>
+        <Icon.TabBarItemIOS
+
+          iconName="feed"
+          selectedIconName="feed"
+          iconSize={23}
           selected={this.state.selectedTab === 'feed'}
           onPress={() => {
             this.setState({
@@ -76,19 +78,39 @@ const LookList = React.createClass({
           <View tabLabel='FEED' ref='listviewFeed' style={styles.container}>
               <LookListItem type="feed" apiTypeUrl="feed/looks" navigator={this.props.navigator} loadDate={true}/>
           </View>
-        </TabBarIOS.Item>
-        <TabBarIOS.Item
-          title="Me"
-          selected={this.state.selectedTab === 'me'}
+        </Icon.TabBarItemIOS>
+        <Icon.TabBarItemIOS
+
+          iconName="safari"
+          selectedIconName="safari"
+          iconSize={23}
+          selected={this.state.selectedTab === 'streams'}
           onPress={() => {
             this.setState({
-              selectedTab: 'me',
+              selectedTab: 'streams',
             });
           }}>
           <View>
+          <Icon name="bullhorn" color="#4F8EF7" />
             <Text style={styles.tabText}>re-renders of the </Text>
           </View>
-        </TabBarIOS.Item>
+        </Icon.TabBarItemIOS>
+        <Icon.TabBarItemIOS
+
+          iconName="user"
+          selectedIconName="user"
+          iconSize={23}
+          selected={this.state.selectedTab === 'user'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'user',
+            });
+          }}>
+          <View>
+          <Icon name="bullhorn" color="#4F8EF7" />
+            <Text style={styles.tabText}>re-renders of the </Text>
+          </View>
+        </Icon.TabBarItemIOS>
       </TabBarIOS>
 
     );

@@ -30,6 +30,7 @@
 		99087C5A1CA2482200046DB1 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99087C521CA2482200046DB1 /* MaterialIcons.ttf */; };
 		99087C5B1CA2482200046DB1 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99087C531CA2482200046DB1 /* Octicons.ttf */; };
 		99087C5C1CA2482200046DB1 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99087C541CA2482200046DB1 /* Zocial.ttf */; };
+		990DEEE71CA3A53800B761D7 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 990DEEE61CA3A47100B761D7 /* libRNVectorIcons.a */; };
 		995A09AC1C965A8E0097842B /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 995A09AB1C965A8E0097842B /* main.jsbundle */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +112,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		990DEEE51CA3A47100B761D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 990DEED71CA3A47100B761D7 /* RNVectorIcons.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
+			remoteInfo = RNVectorIcons;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -142,6 +150,7 @@
 		99087C521CA2482200046DB1 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		99087C531CA2482200046DB1 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		99087C541CA2482200046DB1 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
+		990DEED71CA3A47100B761D7 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		995A09AB1C965A8E0097842B /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -157,6 +166,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				990DEEE71CA3A53800B761D7 /* libRNVectorIcons.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -279,6 +289,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				990DEED71CA3A47100B761D7 /* RNVectorIcons.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
@@ -336,6 +347,14 @@
 				99087C541CA2482200046DB1 /* Zocial.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		990DEED81CA3A47100B761D7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				990DEEE61CA3A47100B761D7 /* libRNVectorIcons.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -444,6 +463,10 @@
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
+				{
+					ProductGroup = 990DEED81CA3A47100B761D7 /* Products */;
+					ProjectRef = 990DEED71CA3A47100B761D7 /* RNVectorIcons.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -522,6 +545,13 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		990DEEE61CA3A47100B761D7 /* libRNVectorIcons.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNVectorIcons.a;
+			remoteRef = 990DEEE51CA3A47100B761D7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
