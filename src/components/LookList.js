@@ -52,7 +52,7 @@ const LookList = React.createClass({
               selectedTab: 'lookbook',
             });
           }}>
-          <ScrollableTabView initialPage={0} style={{marginTop: 20}} >
+          <ScrollableTabView initialPage={0}>
             <View tabLabel='HOT' ref='listviewHot' style={styles.container}>
               <LookListItem type="hot" apiTypeUrl="look/hot" navigator={this.props.navigator} loadDate={true}/>
             </View>
@@ -76,7 +76,11 @@ const LookList = React.createClass({
             });
           }}>
           <View tabLabel='FEED' ref='listviewFeed' style={styles.container}>
-              <LookListItem type="feed" apiTypeUrl="feed/looks" navigator={this.props.navigator} loadDate={true}/>
+
+            <View  style={{height: 44,backgroundColor:'white'}}>
+             <Text>Feed</Text>
+            </View>
+            <LookListItem type="feed" apiTypeUrl="feed/looks" navigator={this.props.navigator} loadDate={true} />
           </View>
         </Icon.TabBarItemIOS>
         <Icon.TabBarItemIOS

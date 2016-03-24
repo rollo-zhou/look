@@ -68,7 +68,9 @@ const styles = StyleSheet.create({
     padding: 10,
     flex: 1,
     flexDirection: "row",
-    alignItems: "flex-start"
+    alignItems: "flex-start",
+    //backgroundColor: "transparent",
+    //opacity:0.8
   },
   userName: {
     fontWeight: "700"

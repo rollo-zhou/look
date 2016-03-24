@@ -224,6 +224,7 @@ module.exports = ScrollableTabView;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:' rgb(250, 250, 250) transparent',
   },
   scrollableContentContainerIOS: {
     flex: 1,

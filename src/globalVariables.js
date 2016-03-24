@@ -9,7 +9,7 @@ module.exports = {
   apiServer:'http://api.lookbook.nu/v1/',
   apiServerHeaders:{
         "Host": "api.lookbook.nu",
-        "Cookie":"",
+        "Cookie":"_lookbook_session=BAh7C0kiD3Nlc3Npb25faWQGOgZFVEkiJTFhYWQ4ODZlZTRhODNkOGE2MDQ1ODExMjA0ODQxMmNlBjsAVEkiEG1vYmlsZV92aWV3BjsARkZJIgpnZW9pcAY7AEZ7DToRY291bnRyeV9jb2RlIgdjbjoSY291bnRyeV9jb2RlMyIIQ0hOOhFjb3VudHJ5X25hbWUiCkNoaW5hOgtyZWdpb24iBzIzOhByZWdpb25fbmFtZSINU2hhbmdoYWk6CWNpdHkiDVNoYW5naGFpOg1sYXRpdHVkZWYWMzEuMDQ1NjAwODkxMTEzMjg6DmxvbmdpdHVkZWYXMTIxLjM5OTY5NjM1MDA5NzY2SSILbG9jYWxlBjsARkkiB2NuBjsAVEkiDHVzZXJfaWQGOwBGaQNOFFFJIgp0b2tlbgY7AEZJIjdDeURVdEtvS1pkZmxFb3RRcHNOaG1obEdxRU9BSFhUT2t3UWJVS0N0ZWdBckpRc0FuVgY7AFQ%3D--40f3b099895933e8740f8a953d7683d28a7f0b83; user_id=5313614",
         "Content-Type": "application/json; charset=utf-8",
         "User-Agent": "Lookbook/1.7.3 CFNetwork/711.3.18 Darwin/14.0.0",
         "Accept-Encoding":"gzip, deflate",

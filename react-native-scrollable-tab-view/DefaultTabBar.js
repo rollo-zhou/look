@@ -15,11 +15,11 @@ var styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 5,
+    paddingBottom: 0,
   },
 
   tabs: {
-    height: 40,
+    height: 44,
     flexDirection: 'row',
     justifyContent: 'space-around',
     borderWidth: 0,
@@ -49,7 +49,7 @@ var DefaultTabBar = React.createClass({
       <TouchableOpacity style={[styles.tab]} key={name} onPress={() => this.props.goToPage(page)}>
         <View>
           <Text style={{color: isTabActive ? activeTextColor : inactiveTextColor,
-            fontWeight: isTabActive ? 'normal' : 'normal'}}>{name}</Text>
+            fontWeight: isTabActive ? 'bold' : 'normal'}}>{name}</Text>
         </View>
       </TouchableOpacity>
     );

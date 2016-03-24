@@ -109,7 +109,7 @@ const LookDetail = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 64,
+    paddingTop: 44,
     backgroundColor: globalVariables.background,
   },
   commentContent: {

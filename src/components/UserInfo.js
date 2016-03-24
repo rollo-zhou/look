@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   headerContent: {
     // flex: 2,
     paddingBottom: 20,
-    paddingTop: 94,
+    paddingTop: 74,
     alignItems: "center",
     width: width,
     // backgroundColor: "#fff"

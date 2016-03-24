@@ -81,6 +81,7 @@ const LookListItem = React.createClass({
 
     return (
       <ListView
+       style={styles.container}
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
         onEndReached={this.onEndReached}
@@ -137,7 +138,7 @@ const LookListItem = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // paddingTop: 64,
+    paddingTop: 44,
     backgroundColor: globalVariables.background,
   },
   centerText: {
