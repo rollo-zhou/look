@@ -119,7 +119,8 @@ const styles = StyleSheet.create({
     alignItems: "flex-start"
   },
   userName: {
-    fontWeight: "700"
+    color:"#666"
+    // fontWeight: "700"
   },
   commentBody: {
     flex: 1,

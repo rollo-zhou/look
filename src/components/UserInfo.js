@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   playerContent: {
     fontSize: 12,
     color: "#d8d2d6",
-    fontWeight: "400",
+    // fontWeight: "400",
     lineHeight: 18
   },
 

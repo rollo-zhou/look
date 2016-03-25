@@ -15,11 +15,11 @@ var styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 0,
+    paddingBottom: 1,
   },
 
   tabs: {
-    height: 44,
+    height: 2,
     flexDirection: 'row',
     justifyContent: 'space-around',
     borderWidth: 0,

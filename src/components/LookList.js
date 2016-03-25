@@ -8,6 +8,7 @@ const {
   TextInput,
   View,
   TabBarIOS,
+  Dimensions,
 } = React;
 
 
@@ -15,6 +16,7 @@ import LookListItem from './LookListItem.js';
 import globalVariables from '../globalVariables.js';
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
+const {width, height} = Dimensions.get('window');
 
 const LookList = React.createClass({
   getInitialState() {
@@ -42,7 +44,7 @@ const LookList = React.createClass({
         translucent={true}
         >
         <Icon.TabBarItemIOS
-
+          title="H-N-T"
           iconName="home"
           selectedIconName="home"
           iconSize={23}
@@ -53,19 +55,19 @@ const LookList = React.createClass({
             });
           }}>
           <ScrollableTabView initialPage={0}>
-            <View tabLabel='HOT' ref='listviewHot' style={styles.container}>
+            <View tabLabel=' ' ref='listviewHot' style={styles.container}>
               <LookListItem type="hot" apiTypeUrl="look/hot" navigator={this.props.navigator} loadDate={true}/>
             </View>
-            <View tabLabel='NEW' ref='listviewNew' style={styles.container}>
+            <View tabLabel=' ' ref='listviewNew' style={styles.container}>
               <LookListItem type="new" apiTypeUrl="look/new" navigator={this.props.navigator} loadDate={true}/>
             </View>
-            <View tabLabel='TOP' ref='listviewTop' style={styles.container}>
+            <View tabLabel=' ' ref='listviewTop' style={styles.container}>
               <LookListItem type="top" apiTypeUrl="look/top/week" navigator={this.props.navigator} loadDate={true}/>
             </View>
           </ScrollableTabView>
         </Icon.TabBarItemIOS>
         <Icon.TabBarItemIOS
-
+          title="Feed"
           iconName="feed"
           selectedIconName="feed"
           iconSize={23}
@@ -76,15 +78,11 @@ const LookList = React.createClass({
             });
           }}>
           <View tabLabel='FEED' ref='listviewFeed' style={styles.container}>
-
-            <View  style={{height: 44,backgroundColor:'white'}}>
-             <Text>Feed</Text>
-            </View>
             <LookListItem type="feed" apiTypeUrl="feed/looks" navigator={this.props.navigator} loadDate={true} />
           </View>
         </Icon.TabBarItemIOS>
         <Icon.TabBarItemIOS
-
+          title="Streams"
           iconName="safari"
           selectedIconName="safari"
           iconSize={23}
@@ -100,7 +98,7 @@ const LookList = React.createClass({
           </View>
         </Icon.TabBarItemIOS>
         <Icon.TabBarItemIOS
-
+          title="Me"
           iconName="user"
           selectedIconName="user"
           iconSize={23}
@@ -135,6 +133,20 @@ const styles = StyleSheet.create({
   tabText: {
     // color: 'white',
     margin: 50,
+  },
+
+  navigatorBar:{
+    height: 44,
+    width:width,
+    position: 'absolute',
+    backgroundColor: 'rgba(255,255,255,0.98)',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    left: 0,
+    top: 0,
+    // backgroundColor: "transparent",
+    // opacity:0.99,
   },
 });
 

@@ -65,7 +65,7 @@ var UserCell = React.createClass({
 
 const styles = StyleSheet.create({
   commentContent: {
-    padding: 10,
+    padding: 5,
     flex: 1,
     flexDirection: "row",
     alignItems: "flex-start",
@@ -73,22 +73,18 @@ const styles = StyleSheet.create({
     //opacity:0.8
   },
   userName: {
-    fontWeight: "700"
+    // fontWeight: "400",
+    color:"#666"
   },
   commentBody: {
     flex: 1,
     flexDirection: "column",
-    justifyContent: "center"
+    justifyContent: "center",
+    padding: 10,
   },
   commentText: {
     flex: 1,
     flexDirection: "row"
-  },
-  cellBorder: {
-    backgroundColor: "rgba(0, 0, 0, 0.2)",
-    // Trick to get the thinest line the device can display
-    height: 1 / height,
-    marginLeft: 4,
   },
   avatar: {
     borderRadius: 20,

@@ -91,7 +91,7 @@ const LookDetail = React.createClass({
               </Text>
             </View>
           </View>
-          <View style={styles.cellBorder} />
+
         </View>
         </TouchableOpacity>
     );
@@ -144,7 +144,8 @@ const styles = StyleSheet.create({
     alignItems: "flex-start"
   },
   userName: {
-    fontWeight: "700"
+    color:"#666"
+    // fontWeight: "700"
   },
   commentBody: {
     flex: 1,
@@ -153,6 +154,8 @@ const styles = StyleSheet.create({
   },
   commentText: {
     flex: 1,
+    color:"#666",
+    fontSize:12,
     flexDirection: "row"
   },
   cellBorder: {

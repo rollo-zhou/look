@@ -31,12 +31,13 @@ var LookCell = React.createClass({
     return (
       <View style={styles.item}>
         <ActivityIndicatorIOS style={styles.spinner} />
+        <UserCell user={this.props.look.user} onSelect={this.props.onUserSelect} navigator={this.props.navigator}/>
         <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect}>
           <Image
             style={{height: (this.props.look.photo_height*width)/this.props.look.photo_width,resizeMode: 'cover',}}
             source={{uri: this.props.look.photos.medium}}/>
         </TouchableOpacity>
-        <UserCell user={this.props.look.user} onSelect={this.props.onUserSelect} navigator={this.props.navigator}/>
+
       </View>
     );
   },
@@ -61,9 +62,9 @@ var LookCell = React.createClass({
 const styles = StyleSheet.create({
   item: {
     backgroundColor: 'white',
-    margin: 5,
-    marginTop: 5,
-    marginBottom: 5,
+    margin: 0,
+    marginTop: 0,
+    marginBottom: 10,
     padding: 0,
     shadowColor: 'black',
     shadowOffset: { height: 2, width: 1 },
