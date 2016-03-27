@@ -54,6 +54,7 @@ const LookDetail = React.createClass({
         look={this.props.look}
         navigator={this.props.navigator}
         onSelect={function(){}}
+        userCell={true}
       />
     );
   },
@@ -76,6 +77,9 @@ const LookDetail = React.createClass({
     });
   },
   renderRow(comments) {
+    if(!comments.comment||!comments.comment.user){
+      return false;
+    }
     return (
       <TouchableOpacity activeOpacity={0.8} onPress={()=>this.onSelectUser(comments.comment.user)}>
       <View >

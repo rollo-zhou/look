@@ -24,14 +24,32 @@ var LookCell = React.createClass({
       onSelect:false,
       onUserSelect:false,
       navigator:"",
+      userCell:false,
     };
   },
 
   render() {
-    return (
-      <View style={styles.item}>
+    if(!this.props.look.photos){
+      return false;
+    }
+
+
+    if(this.props.userCell){
+      return (<View style={styles.item}>
         <ActivityIndicatorIOS style={styles.spinner} />
-        <UserCell user={this.props.look.user} onSelect={this.props.onUserSelect} navigator={this.props.navigator}/>
+         <UserCell user={this.props.look.user} onSelect={this.props.onUserSelect} navigator={this.props.navigator}/>
+        <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect}>
+          <Image
+            style={{height: (this.props.look.photo_height*width)/this.props.look.photo_width,resizeMode: 'cover',}}
+            source={{uri: this.props.look.photos.medium}}/>
+        </TouchableOpacity>
+
+      </View>);
+    }
+    return (
+    <View style={styles.item}>
+      <ActivityIndicatorIOS style={styles.spinner} />
+
         <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect}>
           <Image
             style={{height: (this.props.look.photo_height*width)/this.props.look.photo_width,resizeMode: 'cover',}}

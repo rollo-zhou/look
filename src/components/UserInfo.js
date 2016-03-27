@@ -46,6 +46,9 @@ const UserInfo = React.createClass({
   },
 
   render() {
+    if(!this.props.user){
+      return false;
+    }
     return (<View>
           <View style={styles.headerContent}>
             <Image source={{uri:this.props.user.photo}} style={styles.playerAvatar} />

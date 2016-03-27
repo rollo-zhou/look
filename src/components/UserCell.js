@@ -27,6 +27,9 @@ var UserCell = React.createClass({
   },
 
   render() {
+    if(!this.props.user){
+      return false;
+    }
     var byline=(<Text style={styles.commentText}>
                   {this.props.user.byline}
                        <Icon name="bullhorn" color="#4F8EF7" />
@@ -69,8 +72,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "flex-start",
+     backgroundColor: globalVariables.background,
     //backgroundColor: "transparent",
-    //opacity:0.8
+    opacity:0.97,
   },
   userName: {
     // fontWeight: "400",

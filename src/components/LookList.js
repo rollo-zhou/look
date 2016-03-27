@@ -13,9 +13,12 @@ const {
 
 
 import LookListItem from './LookListItem.js';
+import Login from './Login.js';
 import globalVariables from '../globalVariables.js';
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+
 const {width, height} = Dimensions.get('window');
 
 const LookList = React.createClass({
@@ -109,8 +112,7 @@ const LookList = React.createClass({
             });
           }}>
           <View>
-          <Icon name="bullhorn" color="#4F8EF7" />
-            <Text style={styles.tabText}>re-renders of the </Text>
+            <Login navigator={this.props.navigator}/>
           </View>
         </Icon.TabBarItemIOS>
       </TabBarIOS>

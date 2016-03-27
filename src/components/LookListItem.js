@@ -14,11 +14,25 @@ import LookCell from './LookCell.js';
 import LookListNoResults from './LookListNoResults.js';
 import globalVariables from '../globalVariables.js';
 import DoneFooter from './DoneFooter.js';
+import UserCell from './UserCell.js';
 
 const LookListItem = React.createClass({
   getInitialState() {
+     var getSectionData = (dataBlob, sectionID) => {
+        return dataBlob[sectionID];
+    }
+
+    var getRowData = (dataBlob, sectionID, rowID) => {
+       return dataBlob[sectionID + ':' + rowID];
+    }
+
     return {
-      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2,
+        sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
+        getSectionHeaderData: getSectionData,
+        getRowData: getRowData,
+     }),
       looks: [],
       searchPending: true,
       refreshing:false,
@@ -42,7 +56,19 @@ const LookListItem = React.createClass({
   },
 
   getDataSource(looks) {
-    return this.state.dataSource.cloneWithRows(looks);
+    var dataBlob = {};
+    var sectionsID = [];
+    var rowsID = [];
+    looks.map((item, index)=>{
+        sectionsID.push(index);
+        dataBlob[index] = item.look.user;
+
+        var rowID = rowsID[index] = [];
+        var id = item.look.id;
+        dataBlob[index + ':' + id] = item;
+        rowID.push(id);
+    });
+    return this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionsID, rowsID);
   },
 
   renderFooter() {
@@ -62,11 +88,19 @@ const LookListItem = React.createClass({
   },
 
   renderRow(looks) {
+    if(!looks||!looks.look){
+      return false;
+    }
     return (
       <LookCell
         look={looks.look}
         navigator={this.props.navigator}
       />
+    );
+  },
+  renderSectionHeader(user){
+     return (
+      <UserCell user={user}  navigator={this.props.navigator}/>
     );
   },
 
@@ -86,6 +120,7 @@ const LookListItem = React.createClass({
         renderRow={this.renderRow}
         onEndReached={this.onEndReached}
         renderFooter={this.renderFooter}
+        renderSectionHeader={this.renderSectionHeader}
         onEndReachedThreshold={10}
         automaticallyAdjustContentInsets={false}
         keyboardDismissMode='on-drag'

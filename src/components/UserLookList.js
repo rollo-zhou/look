@@ -99,6 +99,8 @@ const UserLookList = React.createClass({
             look={looks.look}
             navigator={this.props.navigator}
             onUserSelect={function(){}}
+            userCell={true}
+            userCell={true}
           />);
       }
      return  (

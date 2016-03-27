@@ -23,6 +23,9 @@ const LookCellThumbnail = React.createClass({
     };
   },
   render() {
+    if(!this.props.look.photos){
+      return false;
+    }
     return(
       <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect}>
           <View style={styles.row}>

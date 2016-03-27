@@ -15,15 +15,16 @@ module.exports = {
         "Accept-Encoding":"gzip, deflate",
         "Connection":"keep-alive"
       },
-  queryRromServer(apiUrl,callBack,callBackHeaders) {
+  queryRromServer(apiUrl,callBack,parameter) {
     fetch(
     apiUrl,
     {
-      method: 'get',
-      headers: this.apiServerHeaders
+      method: (parameter&&parameter.method)||'get',
+      headers: this.apiServerHeaders,
+      body:(parameter&&parameter.body)||'',
     })
     .then((response) => {
-      callBackHeaders&&callBackHeaders(response.headers.get("Set-Cookie"));
+      parameter&&parameter.callBackHeaders&&parameter.callBackHeaders(response.headers);
       return response.json();
     })
     .then((responseText) => {
