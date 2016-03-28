@@ -1,3 +1,5 @@
+import Storage from './components/Storage.js';
+
 module.exports = {
   blue: '#22B8D8',
   green: '#666',
@@ -9,30 +11,47 @@ module.exports = {
   apiServer:'http://api.lookbook.nu/v1/',
   apiServerHeaders:{
         "Host": "api.lookbook.nu",
-        "Cookie":"_lookbook_session=BAh7C0kiD3Nlc3Npb25faWQGOgZFVEkiJTFhYWQ4ODZlZTRhODNkOGE2MDQ1ODExMjA0ODQxMmNlBjsAVEkiEG1vYmlsZV92aWV3BjsARkZJIgpnZW9pcAY7AEZ7DToRY291bnRyeV9jb2RlIgdjbjoSY291bnRyeV9jb2RlMyIIQ0hOOhFjb3VudHJ5X25hbWUiCkNoaW5hOgtyZWdpb24iBzIzOhByZWdpb25fbmFtZSINU2hhbmdoYWk6CWNpdHkiDVNoYW5naGFpOg1sYXRpdHVkZWYWMzEuMDQ1NjAwODkxMTEzMjg6DmxvbmdpdHVkZWYXMTIxLjM5OTY5NjM1MDA5NzY2SSILbG9jYWxlBjsARkkiB2NuBjsAVEkiDHVzZXJfaWQGOwBGaQNOFFFJIgp0b2tlbgY7AEZJIjdDeURVdEtvS1pkZmxFb3RRcHNOaG1obEdxRU9BSFhUT2t3UWJVS0N0ZWdBckpRc0FuVgY7AFQ%3D--40f3b099895933e8740f8a953d7683d28a7f0b83; user_id=5313614",
+        "Cookie":"",
         "Content-Type": "application/json; charset=utf-8",
         "User-Agent": "Lookbook/1.7.3 CFNetwork/711.3.18 Darwin/14.0.0",
         "Accept-Encoding":"gzip, deflate",
         "Connection":"keep-alive"
       },
-  queryRromServer(apiUrl,callBack,parameter) {
-    fetch(
-    apiUrl,
-    {
-      method: (parameter&&parameter.method)||'get',
-      headers: this.apiServerHeaders,
-      body:(parameter&&parameter.body)||'',
-    })
-    .then((response) => {
-      parameter&&parameter.callBackHeaders&&parameter.callBackHeaders(response.headers);
-      return response.json();
-    })
-    .then((responseText) => {
-      callBack&&callBack(responseText);
-    })
-    .catch(function (error) {
-      console.error('An error occured');
-      console.error(error.message);
-    });
+    queryRromServer(apiUrl,callBack,parameter) {
+    this.apiServerHeaders["Content-Type"]=(parameter&&parameter.Content)?parameter.Content:this.apiServerHeaders["Content-Type"];
+    var _this=this;
+    Storage.getItem('cookie').then((cookie)=> {
+          // console.log('haveLoadedUser');
+          if (cookie) {
+            _this.apiServerHeaders["Cookie"]=cookie;
+              fetch(
+                apiUrl,
+                {
+                  method: (parameter&&parameter.method)||'get',
+                  headers: _this.apiServerHeaders,
+                  body:(parameter&&parameter.body)||'',
+                })
+                .then((response) => {
+                  parameter&&parameter.callBackHeaders&&parameter.callBackHeaders(response.headers.map);
+                  return response.json();
+                })
+                .then((responseText) => {
+                  callBack&&callBack(responseText);
+                })
+                .catch(function (error) {
+                  console.error('An error occured');
+                  console.error(error.message);
+                }
+              );
+          }
+          else {
+              throw 'GET_LOGIN_USER_FROM_STORAGE_FAILED'
+          }
+
+      })
+      .catch((err)=> {
+          console.warn(err)
+      })
+      .done()
   },
 }

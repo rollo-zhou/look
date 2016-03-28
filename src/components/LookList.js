@@ -14,10 +14,13 @@ const {
 
 import LookListItem from './LookListItem.js';
 import Login from './Login.js';
+import User from './User.js';
+import Streams from './Streams.js';
 import globalVariables from '../globalVariables.js';
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import Storage from './Storage.js';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 const {width, height} = Dimensions.get('window');
 
@@ -26,6 +29,8 @@ const LookList = React.createClass({
     return {
       type:"hot",
       selectedTab: 'lookbook',
+      mePage:"",
+      feedPage:"",
     };
   },
 
@@ -35,11 +40,35 @@ const LookList = React.createClass({
     };
   },
 
+  componentWillUnmount() {
+    RCTDeviceEventEmitter.removeListener('Login',this._onNotification);
+  },
+
   componentDidMount() {
-    // console.log(this.props.search);
+    Storage.removeItem("user");
+    this.getMePage();
+    RCTDeviceEventEmitter.addListener('Login',this._onNotification);
+  },
+  _onNotification(notification) {
+    this.getMePage()
+  },
+  async getMePage(){
+    const user = await Storage.getItem("user");
+    if(user&&user.id){
+      this.setState({
+        mePage:(<User user={user} navigator={this.props.navigator}/>),
+        feedPage:(<LookListItem type="feed" apiTypeUrl="feed/looks" navigator={this.props.navigator} loadDate={true} />),
+      });
+    }else{
+      this.setState({
+        mePage:(<Login navigator={this.props.navigator}/>),
+        feedPage:(<Login navigator={this.props.navigator}/>),
+      });
+    }
   },
 
   render() {
+
     return (
        <TabBarIOS
         tintColor={globalVariables.green}
@@ -62,10 +91,10 @@ const LookList = React.createClass({
               <LookListItem type="hot" apiTypeUrl="look/hot" navigator={this.props.navigator} loadDate={true}/>
             </View>
             <View tabLabel=' ' ref='listviewNew' style={styles.container}>
-              <LookListItem type="new" apiTypeUrl="look/new" navigator={this.props.navigator} loadDate={true}/>
+              <LookListItem type="new" apiTypeUrl="look/new" navigator={this.props.navigator} loadDate={false}/>
             </View>
             <View tabLabel=' ' ref='listviewTop' style={styles.container}>
-              <LookListItem type="top" apiTypeUrl="look/top/week" navigator={this.props.navigator} loadDate={true}/>
+              <LookListItem type="top" apiTypeUrl="look/top/week" navigator={this.props.navigator} loadDate={false}/>
             </View>
           </ScrollableTabView>
         </Icon.TabBarItemIOS>
@@ -81,7 +110,7 @@ const LookList = React.createClass({
             });
           }}>
           <View tabLabel='FEED' ref='listviewFeed' style={styles.container}>
-            <LookListItem type="feed" apiTypeUrl="feed/looks" navigator={this.props.navigator} loadDate={true} />
+            {this.state.feedPage}
           </View>
         </Icon.TabBarItemIOS>
         <Icon.TabBarItemIOS
@@ -96,8 +125,7 @@ const LookList = React.createClass({
             });
           }}>
           <View>
-          <Icon name="bullhorn" color="#4F8EF7" />
-            <Text style={styles.tabText}>re-renders of the </Text>
+            <Streams  navigator={this.props.navigator}/>
           </View>
         </Icon.TabBarItemIOS>
         <Icon.TabBarItemIOS
@@ -112,7 +140,7 @@ const LookList = React.createClass({
             });
           }}>
           <View>
-            <Login navigator={this.props.navigator}/>
+           {this.state.mePage}
           </View>
         </Icon.TabBarItemIOS>
       </TabBarIOS>

@@ -100,7 +100,6 @@ const UserLookList = React.createClass({
             navigator={this.props.navigator}
             onUserSelect={function(){}}
             userCell={true}
-            userCell={true}
           />);
       }
      return  (

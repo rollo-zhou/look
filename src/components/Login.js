@@ -14,7 +14,8 @@ import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');
 import globalVariables from '../globalVariables.js';
 import Storage from './Storage.js';
-var Icon = require('react-native-vector-icons/FontAwesome');
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Login = React.createClass({
   getInitialState() {
@@ -86,27 +87,41 @@ const Login = React.createClass({
 
   },
   login() {
-
     const { username, password } = this.state;
     if(!username||!password){
       Vibration.vibrate();
       return;
     }
-    globalVariables.queryRromServer(globalVariables.apiUserServer+'login',this.processsResults,{
+    globalVariables.queryRromServer(globalVariables.apiServer+'login',this.processsResults,{
       method:"POST",
+      Content:"application/x-www-form-urlencoded",
       body:'user[email]=rolloxa@qq.com&user[password]=z123456',
       callBackHeaders:function(data){
-        // Storage.setItem('cookie', data.user);
+        if(data["set-cookie"]&&data["set-cookie"][0]){
+          Storage.setItem('cookie', data["set-cookie"][0])
+          .then(()=>{
+              return "";
+            }
+          ).catch(function (error) {});
+        }
       }
     });
   },
   processsResults(data) {
-    if (!data||!data.status.tolocal.toLocaleLowerCase()!='success'){
+    if (!data||!data.status.toLocaleLowerCase()=='success'){
       Vibration.vibrate();
       return;
     }
-    Storage.setItem('userInfo', data.user);
-    this.props.navigator.pop();
+    Storage.setItem('user', data.user)
+      .then(()=>{
+        this._sendNotification();
+        this.props.navigator.pop();
+      }
+    ).catch(function (error) {});
+
+  },
+  _sendNotification() {
+    RCTDeviceEventEmitter.emit('Login');
   }
 });
 

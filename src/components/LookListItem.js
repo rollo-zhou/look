@@ -45,7 +45,8 @@ const LookListItem = React.createClass({
     return {
       type:"hot",
       loadDate:false,
-      apiTypeUrl:"hot"
+      apiTypeUrl:"hot",
+      urlPageType:"/",
     };
   },
 
@@ -144,7 +145,11 @@ const LookListItem = React.createClass({
   },
 
   queryRromServer(page) {
-    globalVariables.queryRromServer(globalVariables.apiServer+this.props.apiTypeUrl+'/'+(page||1),this.processsResults);
+    var url=globalVariables.apiServer+this.props.apiTypeUrl+'/'+(page||1)
+    if(this.props.urlPageType!="/"){
+      url=globalVariables.apiServer+this.props.apiTypeUrl+'?page='+(page||1)
+    }
+    globalVariables.queryRromServer(url,this.processsResults);
   },
 
   processsResults(data) {
