@@ -8,7 +8,7 @@ const {
   NavigatorIOS,
   TabBarIOS,
   PixelRatio,
-  StatusBarIOS,
+  StatusBar,
 } = React;
 
 import Dimensions from 'Dimensions';
@@ -26,7 +26,7 @@ const Den = React.createClass({
   },
 
   render() {
-    StatusBarIOS.setHidden(true);
+    StatusBar.setHidden(true);
     return (
       <View style={styles.app}>
           <ScreenNavigator

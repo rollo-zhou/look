@@ -45,7 +45,7 @@ const LookList = React.createClass({
   },
 
   componentDidMount() {
-    Storage.removeItem("user");
+    // Storage.removeItem("user");
     this.getMePage();
     RCTDeviceEventEmitter.addListener('Login',this._onNotification);
   },
@@ -66,7 +66,22 @@ const LookList = React.createClass({
       });
     }
   },
-
+  onChangeTab(index,ref){
+    if(!index.i) return;
+    if(index.i==0){
+      if(!this.refs.listviewHot.haveLoadData()){
+        this.refs.listviewHot.queryRromServer(1);
+      }
+    }else if(index.i==1){
+      if(!this.refs.listviewNew.haveLoadData()){
+        this.refs.listviewNew.queryRromServer(1);
+      }
+    }else if(index.i==2){
+      if(!this.refs.listviewTop.haveLoadData()){
+        this.refs.listviewTop.queryRromServer(1);
+      }
+    }
+  },
   render() {
 
     return (
@@ -76,7 +91,7 @@ const LookList = React.createClass({
         translucent={true}
         >
         <Icon.TabBarItemIOS
-          title="H-N-T"
+          title="H·N·T"
           iconName="home"
           selectedIconName="home"
           iconSize={23}
@@ -86,15 +101,15 @@ const LookList = React.createClass({
               selectedTab: 'lookbook',
             });
           }}>
-          <ScrollableTabView initialPage={0}>
-            <View tabLabel=' ' ref='listviewHot' style={styles.container}>
-              <LookListItem type="hot" apiTypeUrl="look/hot" navigator={this.props.navigator} loadDate={true}/>
+          <ScrollableTabView initialPage={0} onChangeTab={this.onChangeTab}>
+            <View tabLabel='HOT' style={styles.container}>
+              <LookListItem ref='listviewHot' type="hot" apiTypeUrl="look/hot" navigator={this.props.navigator} loadDate={true}/>
             </View>
-            <View tabLabel=' ' ref='listviewNew' style={styles.container}>
-              <LookListItem type="new" apiTypeUrl="look/new" navigator={this.props.navigator} loadDate={false}/>
+            <View tabLabel='NEW' style={styles.container}>
+              <LookListItem ref='listviewNew' type="new" apiTypeUrl="look/new" navigator={this.props.navigator} loadDate={false}/>
             </View>
-            <View tabLabel=' ' ref='listviewTop' style={styles.container}>
-              <LookListItem type="top" apiTypeUrl="look/top/week" navigator={this.props.navigator} loadDate={false}/>
+            <View tabLabel='TOP' style={styles.container}>
+              <LookListItem ref='listviewTop' type="top" apiTypeUrl="look/top/week" navigator={this.props.navigator} loadDate={false}/>
             </View>
           </ScrollableTabView>
         </Icon.TabBarItemIOS>

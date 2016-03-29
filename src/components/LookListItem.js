@@ -55,6 +55,9 @@ const LookListItem = React.createClass({
       this.queryRromServer(1);
     }
   },
+  haveLoadData(){
+    return !!this.state.looks.length;
+  },
 
   getDataSource(looks) {
     var dataBlob = {};

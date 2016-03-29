@@ -36,7 +36,7 @@ const User = React.createClass({
     };
   },
   showImagListOrThumb(type){
-      this.refs.UserLookList.setShowImagType(type);
+      this.refs.userLookList.setShowImagType(type);
   },
   toLookedPage(type){
     this.props.navigator.push({
@@ -82,7 +82,7 @@ const User = React.createClass({
           uid={this.props.uid}
           navigator={this.props.navigator}
           from="looks"
-          ref="UserLookList"/>
+          ref="userLookList"/>
       </View>
     );
   },

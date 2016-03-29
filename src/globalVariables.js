@@ -22,8 +22,8 @@ module.exports = {
     var _this=this;
     Storage.getItem('cookie').then((cookie)=> {
           // console.log('haveLoadedUser');
-          if (cookie) {
-            _this.apiServerHeaders["Cookie"]=cookie;
+          // if (cookie) {
+            _this.apiServerHeaders["Cookie"]=cookie||"";
               fetch(
                 apiUrl,
                 {
@@ -43,10 +43,10 @@ module.exports = {
                   console.error(error.message);
                 }
               );
-          }
-          else {
-              throw 'GET_LOGIN_USER_FROM_STORAGE_FAILED'
-          }
+          // }
+          // else {
+          //     throw 'GET_LOGIN_USER_FROM_STORAGE_FAILED'
+          // }
 
       })
       .catch((err)=> {
