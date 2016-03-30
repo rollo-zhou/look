@@ -39,7 +39,7 @@ const Den = React.createClass({
               title='HOT'
               backButtonTitle=' '
               component={LookList}
-              backButtonIcon={this.state.backIcon}
+              // backButtonIcon={this.state.backIcon}
                // leftButtonIcon={this.state.backIcon}
               navigationBarHidden={true}
              />

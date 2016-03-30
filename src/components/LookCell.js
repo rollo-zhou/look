@@ -72,8 +72,8 @@ var LookCell = React.createClass({
     }else{
       this.props.navigator.push({
         component: LookDetail,
-        backButtonTitle:'',
-        backButtonIcon:this.state.backIcon,
+        backButtonTitle:' ',
+        // backButtonIcon:this.state.backIcon,
         title: 'Details',
         passProps: {
           look:this.props.look,

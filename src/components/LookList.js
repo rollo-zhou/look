@@ -56,7 +56,7 @@ const LookList = React.createClass({
     const user = await Storage.getItem("user");
     if(user&&user.id){
       this.setState({
-        mePage:(<User user={user} navigator={this.props.navigator}/>),
+        mePage:(<User user={user} isMe={true} navigator={this.props.navigator}/>),
         feedPage:(<LookListItem type="feed" apiTypeUrl="feed/looks" navigator={this.props.navigator} loadDate={true} />),
       });
     }else{

@@ -108,31 +108,13 @@ const Login = React.createClass({
       return;
     }
 
-    var hyped_look_ids={};
-    var fanned_user_ids={};
-
-    var hypedLength=data.hyped_look_ids.length;
-    var fannedLength=data.fanned_user_ids.length;
-    for (var i = 0; i < hypedLength; i++) {
-      hyped_look_ids[data.hyped_look_ids[i]]=i;
-    };
-     for (var i = 0; i < fannedLength; i++) {
-      fanned_user_ids[data.fanned_user_ids[i]]=i;
-    };
-    Storage.setItem('user-hyped',hyped_look_ids)
-    .then(()=>{
-      }
-    );
-    Storage.setItem('user-fanned', fanned_user_ids)
-    .then(()=>{
-      }
-    );
-    Storage.setItem('user', data.user)
-      .then(()=>{
+    globalVariables.saveMeInfo(data.hyped_look_ids
+      ,data.fanned_user_ids
+      ,data.user
+      ,()=>{
         this._sendNotification();
         this.props.navigator.pop();
-      }
-    ).catch(function (error) {});
+      });
 
   },
   _sendNotification() {

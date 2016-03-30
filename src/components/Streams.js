@@ -6,7 +6,6 @@ const {
   Text,
   View,
   ListView,
-  Mixins,
   TouchableOpacity
 } = React;
 

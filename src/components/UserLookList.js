@@ -48,7 +48,7 @@ const UserLookList = React.createClass({
       from:"looks",
       renderHeader:function(){},
       navigator:"",
-      refreshFunc:()=>{},
+      isMe:false,
     };
   },
   componentDidMount() {
@@ -93,7 +93,7 @@ const UserLookList = React.createClass({
   onEndReached() {
     // console.log('onEndReached');
     if (this.state.next && !this.state.searchPending) {
-      this.queryRromServer(this.setState.pageNo);
+      this.queryRromServer(this.state.pageNo);
     }
   },
 
@@ -114,8 +114,36 @@ const UserLookList = React.createClass({
   },
 
   render() {
-
-    return (
+    if(this.props.isMe){
+      return (
+          <ListView
+            ref='listview'
+            contentContainerStyle={this.state.listRowStyle}
+            dataSource={this.state.dataSource}
+            renderFooter={this.renderFooter}
+            renderRow={this.renderRow}
+            onEndReached={this.onEndReached}
+            renderHeader={this.props.renderHeader}
+            onEndReachedThreshold={10}
+            // initialListSize={15}
+            pageSize={15}
+            scrollRenderAheadDistance={10}
+            automaticallyAdjustContentInsets={false}
+            keyboardDismissMode='on-drag'
+            keyboardShouldPersistTaps={false}
+            showsVerticalScrollIndicator={true}
+            style={styles.container}
+            refreshControl={
+            <RefreshControl
+            onRefresh={this.reFreshQueryRMLS}
+            tintColor='#aaaaaa'
+            refreshing={this.state.refreshing}
+            progressBackgroundColor='#aaaaaa'
+          />}
+          />
+      );
+    }else{
+      return (
         <ListView
           ref='listview'
           contentContainerStyle={this.state.listRowStyle}
@@ -133,21 +161,18 @@ const UserLookList = React.createClass({
           keyboardShouldPersistTaps={false}
           showsVerticalScrollIndicator={true}
           style={styles.container}
-          refreshControl={
-          <RefreshControl
-          onRefresh={this.reFreshQueryRMLS}
-          tintColor='#aaaaaa'
-          refreshing={this.state.refreshing}
-          progressBackgroundColor='#aaaaaa'
-        />}
         />
     );
+    }
+
   },
 
   reFreshQueryRMLS(page) {
     if (!this.state.searchPending) {
       this.setState({ refreshing: true ,pageNo:1});
-      this.props.refreshFunc();
+      if(this.refs.listview.refs.userInfo){
+        this.refs.listview.refs.userInfo.queryRromServer();
+      }
       this.queryRromServer(1);
     }else{
        this.setState({ refreshing: false });

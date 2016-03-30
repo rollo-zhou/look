@@ -6,7 +6,6 @@ const {
   Text,
   View,
   ListView,
-  Mixins,
   TouchableOpacity
 } = React;
 
@@ -18,7 +17,6 @@ import UserInfo from './UserInfo.js';
 import UserLookList from './UserLookList.js';
 
 const UserLooked = React.createClass({
-  // mixins:[UserLookList],
   getDefaultProps() {
     return {
       uid: 0,

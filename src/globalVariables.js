@@ -54,4 +54,36 @@ module.exports = {
       })
       .done()
   },
+  saveMeInfo(hypedLookIds,fannedUserIds,user,callBack){
+    if(hypedLookIds){
+      var hyped_look_ids={};
+      var hypedLength=hypedLookIds.length;
+      for (var i = 0; i < hypedLength; i++) {
+        hyped_look_ids[hypedLookIds[i]]=i;
+      };
+      Storage.setItem('user-hyped',hyped_look_ids)
+      .then(()=>{
+        }
+      );
+    }
+    if(fannedUserIds){
+      var fanned_user_ids={};
+      var fannedLength=fannedUserIds.length;
+      for (var i = 0; i < fannedLength; i++) {
+        fanned_user_ids[fannedUserIds[i]]=i;
+      };
+      Storage.setItem('user-fanned', fanned_user_ids)
+      .then(()=>{
+        }
+      );
+    }
+
+    if(user){
+      Storage.setItem('user', user)
+        .then(()=>{
+          callBack && callBack();
+        }
+      );
+    }
+  },
 }

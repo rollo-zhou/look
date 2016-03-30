@@ -107,7 +107,7 @@ const UserInfo = React.createClass({
   },
 
   queryRromServer() {
-    globalVariables.queryRromServer(globalVariables.apiUserServer+(uid||this.props.user.id),this.processsResults);
+    globalVariables.queryRromServer(globalVariables.apiUserServer+(this.props.uid||this.props.user.id),this.processsResults);
   },
   processsResults(data) {
     if (!data) {
@@ -121,6 +121,12 @@ const UserInfo = React.createClass({
       searchPending: false,
       uid:data.id
     });
+
+    globalVariables.saveMeInfo(data.user.hyped_look_ids
+      ,data.user.fanned_user_ids
+      ,data.user
+      ,()=>{
+      });
   }
 });
 
@@ -128,7 +134,7 @@ const styles = StyleSheet.create({
   headerContent: {
     // flex: 2,
     paddingBottom: 20,
-    paddingTop: 74,
+    paddingTop: 84,
     alignItems: "center",
     width: width,
     // backgroundColor: "#fff"

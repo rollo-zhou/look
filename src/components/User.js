@@ -6,7 +6,6 @@ const {
   Text,
   View,
   ListView,
-  Mixins,
   TouchableOpacity
 } = React;
 
@@ -19,7 +18,6 @@ import UserLooked from './UserLooked.js';
 import UserList from './UserList.js';
 
 const User = React.createClass({
-  // mixins:[UserInfo],
   getDefaultProps() {
     return {
       uid: 0,
@@ -33,10 +31,11 @@ const User = React.createClass({
         karma_count:""
       },
       navigator:"",
+      isMe:false,
     };
   },
   showImagListOrThumb(type){
-      // this.refs.userLookList.setShowImagType(type);
+      this.refs.userLookList.setShowImagType(type);
   },
   toLookedPage(type){
     this.props.navigator.push({
@@ -74,9 +73,7 @@ const User = React.createClass({
         navigator={this.props.navigator}/>
     );
   },
-  refreshFunc(){
-    // this.queryRromServer();
-  },
+
   render() {
     return(
       <View style={styles.container}>
@@ -85,7 +82,7 @@ const User = React.createClass({
           uid={this.props.uid}
           navigator={this.props.navigator}
           from="looks"
-          refreshFunc={this.refreshFunc}
+          isMe={this.props.isMe}
           ref="userLookList"/>
       </View>
     );
@@ -95,7 +92,7 @@ const User = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // paddingTop: 64,
+    // paddingTop: 84,
     backgroundColor: globalVariables.background,
   },
 
