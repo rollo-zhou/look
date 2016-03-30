@@ -110,7 +110,12 @@ const UserInfo = React.createClass({
     globalVariables.queryRromServer(globalVariables.apiUserServer+(uid||this.props.user.id),this.processsResults);
   },
   processsResults(data) {
-    if (!data) return;
+    if (!data) {
+      this.setState({
+        searchPending: false,
+      });
+      return;
+    }
     this.setState({
       user: data,
       searchPending: false,

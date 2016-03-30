@@ -17,7 +17,7 @@ const DoneFooter = React.createClass({
   render() {
      return(
       <View style={styles.doneView}>
-          <Image source={require('../images/foxy.png')} style={styles.doneImage} />
+          <Text style={styles.ILoveYou}>- I Love You -</Text>
       </View>
     );
   },
@@ -26,9 +26,17 @@ const DoneFooter = React.createClass({
 const styles = StyleSheet.create({
   doneView: {
     flexDirection: 'row',
-    justifyContent: 'center'
-  },
+    justifyContent: 'center',
+    height:40,
 
+  },
+  ILoveYou: {
+    paddingTop:10,
+    fontSize: 10,
+    color: "#d8d2d6",
+    // fontWeight: "400",
+    // lineHeight: 18
+  },
   doneImage: {
     width: 302 / 5,
     height: 252 / 5

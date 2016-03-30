@@ -14,6 +14,7 @@ import globalVariables from '../globalVariables.js';
 import UserCell from './UserCell.js';
 import moment from 'moment';
 import LookDetail from './LookDetail.js';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const { width, height } = Dimensions.get('window');
 
@@ -25,9 +26,14 @@ var LookCell = React.createClass({
       onUserSelect:false,
       navigator:"",
       userCell:false,
+
     };
   },
-
+  getInitialState() {
+    return {
+     backIcon:Icon.getImageSource('angle-left', 25).then((source) =>this.setState({ backIcon: source }))
+    };
+  },
   render() {
     if(!this.props.look.photos){
       return false;
@@ -37,7 +43,7 @@ var LookCell = React.createClass({
     if(this.props.userCell){
       return (<View style={styles.item}>
         <ActivityIndicatorIOS style={styles.spinner} />
-         <UserCell user={this.props.look.user} onSelect={this.props.onUserSelect} navigator={this.props.navigator}/>
+        <UserCell user={this.props.look.user} onSelect={this.props.onUserSelect} navigator={this.props.navigator}/>
         <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect}>
           <Image
             style={{height: (this.props.look.photo_height*width)/this.props.look.photo_width,resizeMode: 'cover',}}
@@ -60,12 +66,14 @@ var LookCell = React.createClass({
     );
   },
   onSelect() {
+
     if(this.props.onSelect){
       this.props.onSelect(this.props.look);
     }else{
       this.props.navigator.push({
         component: LookDetail,
-        backButtonTitle:' ',
+        backButtonTitle:'',
+        backButtonIcon:this.state.backIcon,
         title: 'Details',
         passProps: {
           look:this.props.look,

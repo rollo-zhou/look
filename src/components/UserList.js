@@ -15,6 +15,7 @@ const {width, height} = Dimensions.get('window');
 import globalVariables from '../globalVariables.js';
 import User from './User.js';
 import UserCell from './UserCell.js';
+import DoneFooter from './DoneFooter.js';
 
 const LookDetail = React.createClass({
   getInitialState() {
@@ -22,7 +23,8 @@ const LookDetail = React.createClass({
       dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
       users: [],
       searchPending: true,
-      next:1
+      next:true,
+      pageNo:1,
     };
   },
   getDefaultProps() {
@@ -61,7 +63,7 @@ const LookDetail = React.createClass({
   onEndReached() {
     if (this.state.next && !this.state.searchPending) {
       this.setState({ searchPending: true });
-      this.queryRromServer(this.state.next);
+      this.queryRromServer(this.state.pageNo);
     }
   },
 
@@ -93,15 +95,19 @@ const LookDetail = React.createClass({
   },
 
   processsResults(data) {
-    if (!data||!data.users||!data.users.length) return;
-
+    if (!data||!data.users||!data.users.length) {
+      this.setState({
+        searchPending: false,
+        next:false,
+      });
+      return;
+    }
     var newUsers= this.state.users.concat(data.users);
-
     this.setState({
       users: newUsers,
       searchPending: false,
       dataSource: this.getDataSource(newUsers),
-      next: this.state.next+1
+      pageNo: this.state.pageNo+1
     });
   }
 });

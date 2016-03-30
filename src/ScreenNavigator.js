@@ -7,6 +7,7 @@ const {
 import globalVariables from './globalVariables.js';
 import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const ScreenNavigator = React.createClass({
   getDefaultProps() {
@@ -15,6 +16,7 @@ const ScreenNavigator = React.createClass({
       component: null
     };
   },
+
   render() {
     return (
       <NavigatorIOS

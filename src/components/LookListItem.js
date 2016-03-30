@@ -36,8 +36,9 @@ const LookListItem = React.createClass({
       looks: [],
       searchPending: true,
       refreshing:false,
-      next:1,
+      next:true,
       navigator:"",
+      pageNo:1,
     };
   },
 
@@ -87,7 +88,7 @@ const LookListItem = React.createClass({
   onEndReached() {
     if (this.state.next && !this.state.searchPending) {
       this.setState({ searchPending: true });
-      this.queryRromServer(this.state.next);
+      this.queryRromServer(this.state.pageNo);
     }
   },
 
@@ -142,8 +143,10 @@ const LookListItem = React.createClass({
   },
   reFreshQueryRMLS(page) {
     if (!this.state.searchPending) {
+      this.setState({ refreshing: true ,pageNo:1});
       this.queryRromServer(1);
-      this.setState({ refreshing: true });
+    }else{
+       this.setState({ refreshing: false });
     }
   },
 
@@ -157,11 +160,13 @@ const LookListItem = React.createClass({
 
   processsResults(data) {
     if (!data||!data.looks||!data.looks.length){
-      if(this.state.refreshing)
-        this.setState({ refreshing: false });
+      this.setState({
+        searchPending: false,
+        refreshing:false,
+        next:false,
+      });
       return;
     }
-
     var newLooks ='';
     if(this.state.refreshing){
       newLooks= data.looks;
@@ -173,7 +178,7 @@ const LookListItem = React.createClass({
       searchPending: false,
       refreshing:false,
       dataSource: this.getDataSource(newLooks),
-      next: this.state.next+1
+      pageNo: this.state.pageNo+1
     });
   }
 });

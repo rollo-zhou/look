@@ -19,7 +19,7 @@ import UserLooked from './UserLooked.js';
 import UserList from './UserList.js';
 
 const User = React.createClass({
-  // mixins:[UserLookList],
+  // mixins:[UserInfo],
   getDefaultProps() {
     return {
       uid: 0,
@@ -36,7 +36,7 @@ const User = React.createClass({
     };
   },
   showImagListOrThumb(type){
-      this.refs.userLookList.setShowImagType(type);
+      // this.refs.userLookList.setShowImagType(type);
   },
   toLookedPage(type){
     this.props.navigator.push({
@@ -66,6 +66,7 @@ const User = React.createClass({
   renderHeader() {
     return (
       <UserInfo user={this.props.user}
+        ref="userInfo"
         showImagListOrThumb={this.showImagListOrThumb}
         toLookedPage={this.toLookedPage}
         toUserListPage={this.toUserListPage}
@@ -73,7 +74,9 @@ const User = React.createClass({
         navigator={this.props.navigator}/>
     );
   },
-
+  refreshFunc(){
+    // this.queryRromServer();
+  },
   render() {
     return(
       <View style={styles.container}>
@@ -82,6 +85,7 @@ const User = React.createClass({
           uid={this.props.uid}
           navigator={this.props.navigator}
           from="looks"
+          refreshFunc={this.refreshFunc}
           ref="userLookList"/>
       </View>
     );

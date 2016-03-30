@@ -21,6 +21,8 @@ const Streams = React.createClass({
     return {
       streams:[],
       dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
+      next:true,
+      searchPending:true,
     };
   },
   getDefaultProps() {

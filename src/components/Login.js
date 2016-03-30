@@ -80,12 +80,7 @@ const Login = React.createClass({
       </View>
     );
   },
-  handleChange(value){
-    this.setState({uid:value});
-  },
-  handleTextDone(){
 
-  },
   login() {
     const { username, password } = this.state;
     if(!username||!password){
@@ -112,6 +107,26 @@ const Login = React.createClass({
       Vibration.vibrate();
       return;
     }
+
+    var hyped_look_ids={};
+    var fanned_user_ids={};
+
+    var hypedLength=data.hyped_look_ids.length;
+    var fannedLength=data.fanned_user_ids.length;
+    for (var i = 0; i < hypedLength; i++) {
+      hyped_look_ids[data.hyped_look_ids[i]]=i;
+    };
+     for (var i = 0; i < fannedLength; i++) {
+      fanned_user_ids[data.fanned_user_ids[i]]=i;
+    };
+    Storage.setItem('user-hyped',hyped_look_ids)
+    .then(()=>{
+      }
+    );
+    Storage.setItem('user-fanned', fanned_user_ids)
+    .then(()=>{
+      }
+    );
     Storage.setItem('user', data.user)
       .then(()=>{
         this._sendNotification();

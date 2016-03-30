@@ -6,7 +6,8 @@ const {
   Text,
   View,
   ListView,
-  TouchableOpacity
+  TouchableOpacity,
+  RefreshControl,
 } = React;
 
 import Dimensions from 'Dimensions';
@@ -24,9 +25,11 @@ const UserLookList = React.createClass({
       looks: [],
       uid:0,
       user: {},
-      next:1,
+      next:true,
+      pageNo:1,
       showImagType:"thumb",
-      listRowStyle:styles.thumb
+      listRowStyle:styles.thumb,
+      refreshing:false,
     };
   },
 
@@ -45,11 +48,12 @@ const UserLookList = React.createClass({
       from:"looks",
       renderHeader:function(){},
       navigator:"",
+      refreshFunc:()=>{},
     };
   },
   componentDidMount() {
     // console.log(this.props.search);
-    this.processResults();
+
     this.queryRromServer();
   },
 
@@ -87,9 +91,9 @@ const UserLookList = React.createClass({
   },
 
   onEndReached() {
-    console.log('onEndReached');
+    // console.log('onEndReached');
     if (this.state.next && !this.state.searchPending) {
-      this.queryRromServer();
+      this.queryRromServer(this.setState.pageNo);
     }
   },
 
@@ -110,8 +114,6 @@ const UserLookList = React.createClass({
   },
 
   render() {
-    if (!this.state.searchPending && !this.state.looks.length) {
-    }
 
     return (
         <ListView
@@ -131,35 +133,49 @@ const UserLookList = React.createClass({
           keyboardShouldPersistTaps={false}
           showsVerticalScrollIndicator={true}
           style={styles.container}
+          refreshControl={
+          <RefreshControl
+          onRefresh={this.reFreshQueryRMLS}
+          tintColor='#aaaaaa'
+          refreshing={this.state.refreshing}
+          progressBackgroundColor='#aaaaaa'
+        />}
         />
     );
   },
 
-  processResults(data) {
-    if(!data){
-      data=this.props;
+  reFreshQueryRMLS(page) {
+    if (!this.state.searchPending) {
+      this.setState({ refreshing: true ,pageNo:1});
+      this.props.refreshFunc();
+      this.queryRromServer(1);
+    }else{
+       this.setState({ refreshing: false });
     }
-    this.setState({
-      user: data.user,
-      searchPending: false,
-      form: data.form
-    });
   },
 
   queryRromServer(page) {
-    globalVariables.queryRromServer(globalVariables.apiUserServer+this.props.user.id+'/'+this.props.from+'?page='+(this.state.next||1),this.processsResults);
+    globalVariables.queryRromServer(globalVariables.apiUserServer+this.props.user.id+'/'+this.props.from+'?page='+(page||1),this.processsResults);
   },
 
   processsResults(data) {
-    if (!data||!data.looks||!data.looks.length) return;
+    if (!data||!data.looks||!data.looks.length){
+      this.setState({
+        searchPending: false,
+        refreshing:false,
+        next:false,
+      });
+      return;
+    }
 
     const newLooks = this.state.looks.concat(data.looks);
     this.setState({
       looks: newLooks,
       searchPending: false,
+      refreshing:false,
       dataSource: this.getDataSource(newLooks),
       form: data.form,
-      next: this.state.next+1
+      pageNo: this.state.pageNo+1
     });
   }
 });
