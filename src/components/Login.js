@@ -108,14 +108,18 @@ const Login = React.createClass({
       return;
     }
 
-    globalVariables.saveMeInfo(data.hyped_look_ids
-      ,data.fanned_user_ids
-      ,data.user
-      ,()=>{
-        this._sendNotification();
-        this.props.navigator.pop();
+    globalVariables.saveMeInfo(
+      {
+        hypedLookIds:data.hyped_look_ids||[],
+        fannedUserIds:data.fanned_user_ids||[],
+        user:data.user||{},
+        hypedCallBack:()=>{},
+        fannedCallBack:()=>{},
+        userCallBack:()=>{
+          this._sendNotification();
+          this.props.navigator.pop();
+        }
       });
-
   },
   _sendNotification() {
     RCTDeviceEventEmitter.emit('Login');

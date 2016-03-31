@@ -15,7 +15,7 @@ import UserCell from './UserCell.js';
 import moment from 'moment';
 import LookDetail from './LookDetail.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import LookCellFooter from './LookCellFooter.js';
 const { width, height } = Dimensions.get('window');
 
 var LookCell = React.createClass({
@@ -49,7 +49,7 @@ var LookCell = React.createClass({
             style={{height: (this.props.look.photo_height*width)/this.props.look.photo_width,resizeMode: 'cover',}}
             source={{uri: this.props.look.photos.medium}}/>
         </TouchableOpacity>
-
+        <LookCellFooter look={this.props.look} onSelect={this.onSelect} navigator={this.props.navigator}/>
       </View>);
     }
     return (
@@ -61,12 +61,12 @@ var LookCell = React.createClass({
             style={{height: (this.props.look.photo_height*width)/this.props.look.photo_width,resizeMode: 'cover',}}
             source={{uri: this.props.look.photos.medium}}/>
         </TouchableOpacity>
-
+        <LookCellFooter look={this.props.look} onSelect={this.onSelect} navigator={this.props.navigator}/>
       </View>
     );
   },
-  onSelect() {
 
+  onSelect() {
     if(this.props.onSelect){
       this.props.onSelect(this.props.look);
     }else{

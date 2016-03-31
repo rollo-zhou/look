@@ -37,17 +37,31 @@ var UserCell = React.createClass({
     return (
       <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect}>
           <View style={styles.commentContent}>
-              <Image source={{uri:this.props.user.photo}}
+            <Image source={{uri:this.props.user.photo}}
                      style={styles.avatar}/>
             <View style={styles.commentBody}>
               <Text style={styles.userName}>
                 {this.props.user.name}
               </Text>
-
             </View>
+            <View style={styles.time}>
+              <Icon name="clock-o"/>
+              <Text style={styles.userName}>
+
+              </Text>
+            </View>
+            <TouchableOpacity activeOpacity={0.8} onPress={this.addUser}>
+              <View style={styles.addUser} >
+                <Text style={styles.userName}>+</Text>
+
+              </View>
+            </TouchableOpacity>
           </View>
         </TouchableOpacity>
     );
+  },
+  addUser(){
+    return false;
   },
   onSelect() {
     if(this.props.onSelect){
@@ -76,9 +90,21 @@ const styles = StyleSheet.create({
     //backgroundColor: "transparent",
     opacity:0.97,
   },
+  addUser: {
+    margin:10,
+    width: 45,
+    height: 20,
+    borderWidth: 1,
+    borderRadius: 3,
+    borderColor: '#666',
+    flexDirection: "column",
+    justifyContent: "center",
+  },
   userName: {
     // fontWeight: "400",
-    color:"#666"
+    color:"#666",
+    fontSize:12,
+
   },
   commentBody: {
     flex: 1,
@@ -86,15 +112,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 10,
   },
+  time: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    padding: 5,
+  },
   commentText: {
     flex: 1,
     flexDirection: "row"
   },
   avatar: {
-    borderRadius: 20,
-    width: 40,
-    height: 40,
-    marginRight: 10
+    borderRadius: 18,
+    width: 36,
+    height: 36,
+    marginRight: 10,
+    marginLeft:10,
   }
 
 });

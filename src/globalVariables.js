@@ -54,34 +54,44 @@ module.exports = {
       })
       .done()
   },
-  saveMeInfo(hypedLookIds,fannedUserIds,user,callBack){
-    if(hypedLookIds){
+  saveMeInfo(meInfo){
+    //{
+    //  hypedLookIds:[],
+    //  fannedUserIds:[],
+    //  user:{},
+    //  hypedCallBack:()=>{},
+    //  fannedCallBack:()=>{},
+    //  userCallBack:()=>{},
+    //}
+    if(meInfo.hypedLookIds){
       var hyped_look_ids={};
-      var hypedLength=hypedLookIds.length;
+      var hypedLength=meInfo.hypedLookIds.length;
       for (var i = 0; i < hypedLength; i++) {
-        hyped_look_ids[hypedLookIds[i]]=i;
+        hyped_look_ids[meInfo.hypedLookIds[i]]=i+1;
       };
       Storage.setItem('user-hyped',hyped_look_ids)
       .then(()=>{
+          meInfo.hypedCallBack && meInfo.userCallBack();
         }
       );
     }
-    if(fannedUserIds){
+    if(meInfo.fannedUserIds){
       var fanned_user_ids={};
-      var fannedLength=fannedUserIds.length;
+      var fannedLength=meInfo.fannedUserIds.length;
       for (var i = 0; i < fannedLength; i++) {
-        fanned_user_ids[fannedUserIds[i]]=i;
+        fanned_user_ids[meInfo.fannedUserIds[i]]=i+1;
       };
       Storage.setItem('user-fanned', fanned_user_ids)
       .then(()=>{
+          meInfo.fannedCallBack && meInfo.userCallBack();
         }
       );
     }
 
-    if(user){
-      Storage.setItem('user', user)
+    if(meInfo.user){
+      Storage.setItem('user', meInfo.user)
         .then(()=>{
-          callBack && callBack();
+          meInfo.userCallBack && meInfo.userCallBack();
         }
       );
     }
