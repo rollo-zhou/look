@@ -87,7 +87,7 @@ var UserCell = React.createClass({
       this.setState({
         isFaned:!this.state.isFaned,
       });
-      globalVariables.queryRromServer(globalVariables.apiLookServer+(this.props.user.id)+"/fan"
+      globalVariables.queryRromServer(globalVariables.apiUserServer+(this.props.user.id)+"/fan"
         ,this.processsResults
         ,{
           method:method
