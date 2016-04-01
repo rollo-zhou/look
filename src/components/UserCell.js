@@ -14,6 +14,7 @@ import globalVariables from '../globalVariables.js';
 import User from './User.js';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Storage from './Storage.js';
 const { width, height } = Dimensions.get('window');
 
 var UserCell = React.createClass({
@@ -25,7 +26,26 @@ var UserCell = React.createClass({
       showByline:false,
     };
   },
-
+  getInitialState() {
+    return {
+      isFaned:false,
+    };
+  },
+  module:{
+    user:{}
+  },
+  componentDidMount() {
+    if(!this.props.user){
+      return false;
+    }
+    Storage.getItem('user-fanned')
+    .then((user)=>{
+      if(!user)return;
+        this.module.user=user;
+        this.setState({isFaned:!!user[this.props.user.id]});
+      }
+    );
+  },
   render() {
     if(!this.props.user){
       return false;
@@ -52,7 +72,7 @@ var UserCell = React.createClass({
             </View>
             <TouchableOpacity activeOpacity={0.8} onPress={this.addUser}>
               <View style={styles.addUser} >
-                <Text style={styles.userName}>+</Text>
+                <Text style={styles.userName}>{this.state.isFaned?"-":"+"}</Text>
 
               </View>
             </TouchableOpacity>
@@ -61,7 +81,40 @@ var UserCell = React.createClass({
     );
   },
   addUser(){
+    if(!this.module.userHyped) return;
+    if(this.props.user && this.props.user.id){
+      var method=this.state.isFaned?"DELETE":"POST"
+      this.setState({
+        isFaned:!this.state.isFaned,
+      });
+      globalVariables.queryRromServer(globalVariables.apiLookServer+(this.props.user.id)+"/fan"
+        ,this.processsResults
+        ,{
+          method:method
+        });
+    }
     return false;
+  },
+
+  processsResults(data) {
+    if (data && data.status=="ok") {
+      delete this.module.user[this.props.user.id];
+      this.setState({
+        isFaned:false,
+      });
+    }else{
+      this.module.user[this.props.user.id]=this.props.user.id;
+      this.setState({
+        isFaned:true,
+      });
+    }
+
+    if (data && data.status){
+      Storage.setItem('user-fanned',this.module.user)
+      .then((user)=>{
+        }
+      );
+    }
   },
   onSelect() {
     if(this.props.onSelect){

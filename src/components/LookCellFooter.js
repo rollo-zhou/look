@@ -81,7 +81,7 @@ var LookCellFooter = React.createClass({
         hypes_count:hypes_count,
         isHype:!this.state.isHype,
       });
-      globalVariables.queryRromServer(globalVariables.apiLookServer+(this.props.look.id),this.processsResults);
+      globalVariables.queryRromServer(globalVariables.apiLookServer+(this.props.look.id)+"/hype",this.processsResults);
     }
   },
   processsResults(data) {
