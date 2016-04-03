@@ -86,7 +86,7 @@ const LookList = React.createClass({
 
     return (
        <TabBarIOS
-        tintColor={globalVariables.green}
+        tintColor={globalVariables.base}
         shadowHidden={true}
         translucent={true}
         >
@@ -101,7 +101,11 @@ const LookList = React.createClass({
               selectedTab: 'lookbook',
             });
           }}>
-          <ScrollableTabView initialPage={0} onChangeTab={this.onChangeTab}>
+          <ScrollableTabView
+            initialPage={0}
+            onChangeTab={this.onChangeTab}
+            tabBarUnderlineColor={globalVariables.base}
+            >
             <View tabLabel='HOT' style={styles.container}>
               <LookListItem ref='listviewHot' type="hot" apiTypeUrl="look/hot" navigator={this.props.navigator} loadDate={true}/>
             </View>
@@ -170,28 +174,6 @@ const styles = StyleSheet.create({
     flex: 1,
     // paddingTop: 64,
     backgroundColor: globalVariables.background,
-  },
-  tabContent: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  tabText: {
-    // color: 'white',
-    margin: 50,
-  },
-
-  navigatorBar:{
-    height: 44,
-    width:width,
-    position: 'absolute',
-    backgroundColor: 'rgba(255,255,255,0.98)',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    left: 0,
-    top: 0,
-    // backgroundColor: "transparent",
-    // opacity:0.99,
   },
 });
 

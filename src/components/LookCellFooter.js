@@ -53,23 +53,27 @@ var LookCellFooter = React.createClass({
     }
 
     return (
-    <View style={styles.commentContent}>
-     <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect}>
-      <View style={styles.commentBody}>
-        <Icon name="bullhorn" color={this.state.isHype?"#d54":"#666"}/>
-        <Text style={styles.userName}>
+    <View style={styles.flexContainer}>
+     <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect} style={styles.cell}>
+        <Icon name="bullhorn" color={this.state.isHype?globalVariables.base:globalVariables.textBase} size={16}/>
+        <Text style={styles.text}>
           {this.state.hypes_count}
         </Text>
-      </View>
     </TouchableOpacity>
-    <TouchableOpacity activeOpacity={0.8} onPress={this.props.onSelect}>
-      <View style={styles.commentBody}>
-        <Icon name="commenting-o"/>
-        <Text style={styles.userName}>
+     <View style={styles.separator} />
+    <TouchableOpacity activeOpacity={0.8} onPress={this.props.onSelect} style={styles.cell}>
+        <Icon name="commenting-o" color={globalVariables.textBase} size={16}/>
+        <Text style={styles.text}>
           {this.props.look.comments_count}
         </Text>
-      </View>
       </TouchableOpacity>
+       <View style={styles.separator} />
+      <View style={styles.cell}>
+        <Icon name="heart-o" color={this.state.isHype?globalVariables.base:globalVariables.textBase} size={16}/>
+        <Text style={styles.text}>
+          {this.props.look.loves_count}
+        </Text>
+      </View>
     </View>
     );
   },
@@ -109,25 +113,37 @@ var LookCellFooter = React.createClass({
 });
 
 const styles = StyleSheet.create({
-  commentContent: {
-    padding: 5,
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "flex-start",
-     backgroundColor: globalVariables.background,
-    //backgroundColor: "transparent",
-    opacity:0.97,
+  flexContainer: {
+      flexDirection: 'row',
+      opacity:0.97,
+      padding: 5,
+      backgroundColor: globalVariables.background,
+      height:45,
   },
-  userName: {
-    // fontWeight: "400",
-    color:"#666",
-    fontSize:12,
-  },
-  commentBody: {
+  cell: {
+    flexDirection: 'row',
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text:{
+    color:globalVariables.textBase,
+    fontSize:10,
+    marginLeft:10,
+  },
+  separator: {
+    backgroundColor: globalVariables.textBase2,
+    height: 15 ,
+    width:0.5,
+    marginVertical: 10,
+  },
+  separator2: {
+    backgroundColor: globalVariables.textBase2,
+    height: 0.5 ,
+    width:width-20,
+    marginVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

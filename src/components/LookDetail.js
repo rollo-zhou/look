@@ -82,23 +82,20 @@ const LookDetail = React.createClass({
       return false;
     }
     return (
-      <TouchableOpacity activeOpacity={0.8} onPress={()=>this.onSelectUser(comments.comment.user)}>
-      <View >
-          <View style={styles.commentContent}>
-              <Image source={{uri:comments.comment.user.photo}}
-                     style={styles.avatar}/>
-            <View style={styles.commentBody}>
-              <Text style={styles.userName}>
-                {comments.comment.user.name}
-              </Text>
-              <Text style={styles.commentText}>
-                {comments.comment.body}
-              </Text>
+      <TouchableOpacity activeOpacity={0.8} onPress={()=>this.onSelectUser(comments.comment.user)} style={styles.flexContainer}>
+        <Image source={{uri:comments.comment.user.photo}} style={styles.avatar}/>
+        <View style={styles.commentBody}>
+          <View style={styles.commentHeader}>
+            <View style={{flex:1}}>
+              <Text style={styles.userName}>{comments.comment.user.name}</Text>
+            </View>
+            <View style={styles.timeView}>
+              <Text style={styles.time}>time</Text>
             </View>
           </View>
-
+          <Text style={styles.commentText}>{comments.comment.body}</Text>
         </View>
-        </TouchableOpacity>
+      </TouchableOpacity>
     );
   },
 
@@ -144,42 +141,48 @@ const LookDetail = React.createClass({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingTop: 44,
     backgroundColor: globalVariables.background,
   },
-  commentContent: {
-    padding: 10,
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "flex-start"
-  },
-  userName: {
-    color:"#666"
-    // fontWeight: "700"
+  flexContainer: {
+    opacity:0.97,
+    padding: 5,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
   commentBody: {
     flex: 1,
     flexDirection: "column",
-    justifyContent: "center"
+    justifyContent: "center",
+  },
+  commentHeader: {
+    flexDirection: "row",
+    alignItems: "flex-start"
+  },
+  userName: {
+    color:globalVariables.base,
+    fontSize:12,
+  },
+  timeView:{
+    width:100
+  },
+  time:{
+    color:globalVariables.textBase2,
+    textAlign:"center",
+    fontSize:10,
   },
   commentText: {
-    flex: 1,
-    color:"#666",
-    fontSize:12,
-    flexDirection: "row"
-  },
-  cellBorder: {
-    backgroundColor: "rgba(0, 0, 0, 0.2)",
-    // Trick to get the thinest line the device can display
-    height: 1 / height,
-    marginLeft: 4,
+    fontSize:11,
+    marginTop:8,
+    flexDirection: "row",
+    color:globalVariables.textBase,
   },
   avatar: {
-    borderRadius: 20,
-    width: 40,
-    height: 40,
-    marginRight: 10
+    borderRadius: 18,
+    width: 36,
+    height: 36,
+    marginRight: 10,
+    marginLeft: 10,
   }
 });
 

@@ -21,11 +21,12 @@ const ScreenNavigator = React.createClass({
     return (
       <NavigatorIOS
         style={styles.container}
-        tintColor={globalVariables.green}
+        barTintColor={globalVariables.background}
+        tintColor={globalVariables.textBase}
+        titleTextColor={globalVariables.textBase}
         initialRoute={this.props}
         shadowHidden={true}
         translucent={true}
-        titleTextColor={globalVariables.textColor}
       />
     );
   },

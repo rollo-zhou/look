@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   text: {
     flex: 1,
     padding: 40,
-    color: globalVariables.green,
+    color: globalVariables.base,
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 17,

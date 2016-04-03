@@ -49,7 +49,7 @@ const Den = React.createClass({
 });
 
 const styles = StyleSheet.create({
-  // app: { width, height },
+  app: { width, height },
 });
 
 export default Den;

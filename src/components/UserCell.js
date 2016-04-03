@@ -55,28 +55,19 @@ var UserCell = React.createClass({
                        <Icon name="bullhorn" color="#4F8EF7" />
                 </Text>);
     return (
-      <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect}>
-          <View style={styles.commentContent}>
+      <TouchableOpacity activeOpacity={0.8} style={styles.flexContainer} onPress={this.onSelect}>
+          <View style={styles.cell}>
             <Image source={{uri:this.props.user.photo}}
                      style={styles.avatar}/>
-            <View style={styles.commentBody}>
               <Text style={styles.userName}>
                 {this.props.user.name}
               </Text>
-            </View>
-            <View style={styles.time}>
-              <Icon name="clock-o"/>
-              <Text style={styles.userName}>
-
-              </Text>
-            </View>
-            <TouchableOpacity activeOpacity={0.8} onPress={this.addUser}>
-              <View style={styles.addUser} >
-                <Text style={styles.userName}>{this.state.isFaned?"-":"+"}</Text>
-
-              </View>
-            </TouchableOpacity>
           </View>
+          <TouchableOpacity style={styles.cellfixed} activeOpacity={0.8} onPress={this.addUser}>
+              <View style={styles.addUserView} >
+                <Text style={styles.addUserText}>{this.state.isFaned?"-":"+"}</Text>
+              </View>
+          </TouchableOpacity>
         </TouchableOpacity>
     );
   },
@@ -134,55 +125,48 @@ var UserCell = React.createClass({
 });
 
 const styles = StyleSheet.create({
-  commentContent: {
-    padding: 5,
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "flex-start",
-     backgroundColor: globalVariables.background,
-    //backgroundColor: "transparent",
-    opacity:0.97,
+  flexContainer: {
+      // 容器需要添加direction才能变成让子元素flex
+      flexDirection: 'row',
+      opacity:0.97,
+      padding: 5,
+      backgroundColor: globalVariables.background,
+      alignItems: 'center',
   },
-  addUser: {
-    margin:10,
-    width: 45,
-    height: 20,
+  cellfixed: {
+    width: 65,
+  },
+  cell: {
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
+  },
+  addUserView: {
+    width: 55,
+    height: 25,
     borderWidth: 1,
     borderRadius: 3,
-    borderColor: '#666',
-    flexDirection: "column",
-    justifyContent: "center",
+    borderColor: globalVariables.base,
+    alignItems:'center',
+    marginRight:10,
+  },
+  addUserText:{
+    color:globalVariables.base,
+    textAlign:"center",
   },
   userName: {
     // fontWeight: "400",
-    color:"#666",
+    color:globalVariables.base,
     fontSize:12,
-
-  },
-  commentBody: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: 10,
-  },
-  time: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: 5,
-  },
-  commentText: {
-    flex: 1,
-    flexDirection: "row"
+    marginLeft:3,
   },
   avatar: {
     borderRadius: 18,
     width: 36,
     height: 36,
-    marginRight: 10,
+    marginRight: 5,
     marginLeft:10,
   }
-
 });
 
 export default UserCell;
