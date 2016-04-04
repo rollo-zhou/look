@@ -12,7 +12,7 @@ const {
 
 import globalVariables from '../globalVariables.js';
 import moment from 'moment';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Storage from './Storage.js';
 const { width, height } = Dimensions.get('window');
 
@@ -54,21 +54,21 @@ var LookCellFooter = React.createClass({
     return (
       <View style={styles.flexContainer}>
        <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect} style={styles.cell}>
-          <Icon name="bullhorn" color={this.state.isHype?globalVariables.base:globalVariables.textBase} size={18}/>
+          <Icon name="speakerphone" color={this.state.isHype?globalVariables.base:globalVariables.textBase} size={18}/>
           <Text style={styles.text}>
             {this.state.hypes_count}
           </Text>
       </TouchableOpacity>
       <View style={styles.separator} />
       <TouchableOpacity activeOpacity={0.8} onPress={this.props.onSelect} style={styles.cell}>
-          <Icon name="commenting-o" color={globalVariables.textBase} size={18}/>
+          <Icon name="ios-chatbubble-outline" color={globalVariables.textBase} size={20}/>
           <Text style={styles.text}>
             {this.props.look.comments_count}
           </Text>
       </TouchableOpacity>
       <View style={styles.separator} />
       <View style={styles.cell}>
-        <Icon name="heart-o" color={this.state.isHype?globalVariables.base:globalVariables.textBase} size={18}/>
+        <Icon name="ios-heart-outline" color={this.state.isHype?globalVariables.base:globalVariables.textBase} size={20}/>
         <Text style={styles.text}>
           {this.props.look.loves_count}
         </Text>

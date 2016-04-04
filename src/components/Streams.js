@@ -46,7 +46,7 @@ const Streams = React.createClass({
     return <ActivityIndicatorIOS style={styles.scrollSpinner} />;
   },
   onSelect(name){
-    name=name.toLocaleLowerCase();
+    // name=name.toLocaleLowerCase();
     this.props.navigator.push({
         component: LookListItem,
         backButtonTitle:' ',
@@ -68,7 +68,7 @@ const Streams = React.createClass({
       <TouchableOpacity activeOpacity={0.8} onPress={()=>this.onSelect(streams.name)}>
           <View style={styles.row}>
             <Image source={{uri:streams.backgrounds[0]}}
-            style={{height: (width/2)-20,width: (width/2)-20}}/>
+            style={{height: (width/2)-10,width: (width/2)-10}}/>
             <View style={styles.content}>
             <Text style={styles.contentText}>{streams.name}</Text>
             </View>
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 0,
     backgroundColor: globalVariables.background,
-    margin:10,
+    // margin:10,
     marginBottom:44,
   },
   thumb: {

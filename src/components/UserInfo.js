@@ -88,10 +88,10 @@ const UserInfo = React.createClass({
           </TouchableOpacity>
 
           <TouchableOpacity activeOpacity={0.8} onPress={() => this.toLookedPage("HYPED")} style={styles.cell}>
-            <Icon name="speakerphone" color={globalVariables.textBase} size={30}/>
+            <Icon name="speakerphone" color={globalVariables.textBase} size={25}/>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.8} onPress={() => this.toLookedPage("LOVED")} style={styles.cell}>
-              <Icon name="ios-heart" color={globalVariables.textBase} size={30}/>
+              <Icon name="ios-heart" color={globalVariables.textBase} size={27}/>
           </TouchableOpacity>
         </View>
      </View>
