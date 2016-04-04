@@ -55,6 +55,7 @@ const Streams = React.createClass({
           apiTypeUrl:"streams/"+name,
           urlPageType:"?",
           loadDate:{true},
+          needPaddingTop:{true},
           navigator:this.props.navigator,
         },
       });
@@ -67,7 +68,10 @@ const Streams = React.createClass({
       <TouchableOpacity activeOpacity={0.8} onPress={()=>this.onSelect(streams.name)}>
           <View style={styles.row}>
             <Image source={{uri:streams.backgrounds[0]}}
-            style={{height: (width/3)-2,width: (width/3)-2}}/>
+            style={{height: (width/2)-20,width: (width/2)-20}}/>
+            <View style={styles.content}>
+            <Text style={styles.contentText}>{streams.name}</Text>
+            </View>
           </View>
       </TouchableOpacity>
     );
@@ -76,9 +80,10 @@ const Streams = React.createClass({
   render() {
     return (
       <ListView
+        contentContainerStyle={styles.thumb}
         dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
         renderFooter={this.renderFooter}
+        renderRow={this.renderRow}
         onEndReachedThreshold={10}
         automaticallyAdjustContentInsets={false}
         keyboardDismissMode='on-drag'
@@ -88,19 +93,31 @@ const Streams = React.createClass({
       />
     );
   },
-
+  onEndReached() {
+    if (this.state.next && !this.state.searchPending) {
+      this.setState({ searchPending: true });
+      this.queryRromServer(this.state.pageNo);
+    }
+  },
   queryRromServer(page) {
     globalVariables.queryRromServer(globalVariables.apiServer+"streams",this.processsResults);
   },
 
   processsResults(data) {
-    if (!data||!data.streams||!data.streams.length) return;
-
+    if (!data||!data.streams||!data.streams.length){
+      this.setState({
+        searchPending: false,
+        next:false,
+      });
+      return;
+    }
     var newStreams= this.state.streams.concat(data.streams);
 
     this.setState({
       streams: newStreams,
       dataSource: this.getDataSource(newStreams),
+      searchPending: false,
+      next:false,
     });
   }
 });
@@ -108,40 +125,37 @@ const Streams = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 44,
+    paddingTop: 0,
     backgroundColor: globalVariables.background,
+    margin:10,
+    marginBottom:44,
   },
-  commentContent: {
-    padding: 10,
+  thumb: {
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  },
+  row: {
     flex: 1,
-    flexDirection: "row",
-    alignItems: "flex-start"
+    margin: 5,
+    flexDirection: 'column',
+    alignItems:"center",
+    // backgroundColor:globalVariables.textBase2,
   },
-  userName: {
-    color:"#666"
-    // fontWeight: "700"
-  },
-  commentBody: {
+  content:{
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "center"
-  },
-  commentText: {
-    flex: 1,
-    flexDirection: "row"
-  },
-  cellBorder: {
-    backgroundColor: "rgba(0, 0, 0, 0.2)",
-    // Trick to get the thinest line the device can display
-    height: 1 / height,
-    marginLeft: 4,
-  },
-  avatar: {
-    borderRadius: 20,
-    width: 40,
+    justifyContent: "center",
     height: 40,
-    marginRight: 10
-  }
+    // marginBottom:10,
+  },
+  contentText:{
+    fontWeight: "600",
+    // fontSize:16,
+    color:globalVariables.base,
+  },
+  scrollSpinner: {
+    marginVertical: 36,
+  },
 });
 
 export default Streams;

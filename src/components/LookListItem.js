@@ -48,6 +48,7 @@ const LookListItem = React.createClass({
       loadDate:false,
       apiTypeUrl:"hot",
       urlPageType:"/",
+      needPaddingTop:false,
     };
   },
 
@@ -120,7 +121,7 @@ const LookListItem = React.createClass({
 
     return (
       <ListView
-       style={styles.container}
+       style={this.props.needPaddingTop?styles.container1:styles.container}
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
         onEndReached={this.onEndReached}
@@ -186,7 +187,11 @@ const LookListItem = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // paddingTop: 44,
+    backgroundColor: globalVariables.background,
+  },
+  container1: {
+    flex: 1,
+    paddingTop: 44,
     backgroundColor: globalVariables.background,
   },
   centerText: {

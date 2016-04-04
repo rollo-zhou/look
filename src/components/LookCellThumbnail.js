@@ -30,7 +30,7 @@ const LookCellThumbnail = React.createClass({
       <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect}>
           <View style={styles.row}>
             <Image source={{uri:this.props.look.photos.small}}
-            style={{height: (width/3)-2,width: (width/3)-2}}/>
+            style={{height: (width/3)-1,width: (width/3)-1}}/>
           </View>
       </TouchableOpacity>
     );
@@ -55,7 +55,8 @@ const LookCellThumbnail = React.createClass({
 
 const styles = StyleSheet.create({
   row: {
-    padding: 1,
+    margin: 0.5,
+    backgroundColor:globalVariables.textBase2,
   },
 
 });

@@ -143,7 +143,7 @@ const LookList = React.createClass({
               selectedTab: 'streams',
             });
           }}>
-          <View>
+          <View style={styles.container}>
             <Streams  navigator={this.props.navigator}/>
           </View>
         </Icon.TabBarItemIOS>
@@ -158,7 +158,7 @@ const LookList = React.createClass({
               selectedTab: 'user',
             });
           }}>
-          <View>
+          <View style={styles.container}>
            {this.state.mePage}
           </View>
         </Icon.TabBarItemIOS>

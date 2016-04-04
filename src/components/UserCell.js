@@ -113,7 +113,7 @@ var UserCell = React.createClass({
     }else{
       this.props.navigator.push({
         component: User,
-        title: 'User',
+        title: this.props.user.name,
         backButtonTitle:' ',
         passProps: {
           user:this.props.user,
@@ -148,16 +148,18 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     borderColor: globalVariables.base,
     alignItems:'center',
-    marginRight:10,
+    // justifyContent: "center",
+    // marginRight:10,
   },
   addUserText:{
     color:globalVariables.base,
-    textAlign:"center",
+    fontSize:16,
+    // textAlign:"center",
   },
   userName: {
     // fontWeight: "400",
     color:globalVariables.base,
-    fontSize:12,
+    // fontSize:12,
     marginLeft:3,
   },
   avatar: {

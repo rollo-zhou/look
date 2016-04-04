@@ -76,8 +76,16 @@ const User = React.createClass({
 
   render() {
     return(
+
       <View style={styles.container}>
-        <UserLookList renderHeader={this.renderHeader}
+       <UserInfo user={this.props.user}
+        ref="userInfo"
+        showImagListOrThumb={this.showImagListOrThumb}
+        toLookedPage={this.toLookedPage}
+        toUserListPage={this.toUserListPage}
+        uid={this.props.uid}
+        navigator={this.props.navigator}/>
+      <UserLookList
           user={this.props.user}
           uid={this.props.uid}
           navigator={this.props.navigator}
@@ -92,7 +100,7 @@ const User = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // paddingTop: 84,
+    paddingTop: 54,
     backgroundColor: globalVariables.background,
   },
 

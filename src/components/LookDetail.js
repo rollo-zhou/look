@@ -69,7 +69,7 @@ const LookDetail = React.createClass({
   onSelectUser(user) {
     this.props.navigator.push({
       component: User,
-      title: 'User',
+      title: user.name,
       backButtonTitle:' ',
       passProps: {
         user:user,
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   },
   flexContainer: {
     opacity:0.97,
-    padding: 5,
+    padding: 10,
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
@@ -161,18 +161,19 @@ const styles = StyleSheet.create({
   },
   userName: {
     color:globalVariables.base,
-    fontSize:12,
+    // fontSize:12,
   },
   timeView:{
     width:100
   },
   time:{
     color:globalVariables.textBase2,
-    textAlign:"center",
-    fontSize:10,
+    textAlign:"right",
+    fontSize:12,
+    marginRight:10,
   },
   commentText: {
-    fontSize:11,
+    // fontSize:12,
     marginTop:8,
     flexDirection: "row",
     color:globalVariables.textBase,

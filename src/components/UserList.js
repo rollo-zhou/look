@@ -12,7 +12,6 @@ const {
 import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');
 import globalVariables from '../globalVariables.js';
-import User from './User.js';
 import UserCell from './UserCell.js';
 import DoneFooter from './DoneFooter.js';
 

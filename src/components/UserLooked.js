@@ -13,10 +13,16 @@ import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');
 import globalVariables from '../globalVariables.js';
 import UserInfo from './UserInfo.js';
-
+import Icon from 'react-native-vector-icons/Ionicons';
 import UserLookList from './UserLookList.js';
 
 const UserLooked = React.createClass({
+  getInitialState() {
+    return {
+      isThumb:true,
+      counts:0,
+    };
+  },
   getDefaultProps() {
     return {
       uid: 0,
@@ -34,29 +40,25 @@ const UserLooked = React.createClass({
     };
   },
   showImagListOrThumb(type){
-      this.refs.UserLookList.setShowImagType(type);
-  },
-  renderHeader() {
-    return (
-      <View style={styles.mainSection}>
-            <View style={styles.shotCounter}>
-                    <Text style={styles.shotCounterText}
-                      onPress={() => this.showImagListOrThumb("thumb")}
-                    > 缩略图 </Text>
-                </View>
-                <View style={styles.shotCounter}>
-                    <Text style={styles.shotCounterText}
-                    onPress={() => this.showImagListOrThumb("list")}
-                    > 列表 </Text>
-                </View>
-          </View>
-    );
+    var isThumb=type=='thumb'?true:false;
+    this.setState({isThumb:isThumb});
+    this.refs.UserLookList.setShowImagType(type);
   },
 
   render() {
     return(
       <View style={styles.container}>
-        <UserLookList renderHeader={this.renderHeader}
+        <View style={styles.mainSection}>
+
+          <TouchableOpacity activeOpacity={0.8} onPress={() => this.showImagListOrThumb("thumb")} style={styles.cell}>
+            <Icon name="grid" color={this.state.isThumb?globalVariables.base:globalVariables.textBase} size={30}/>
+          </TouchableOpacity>
+
+          <TouchableOpacity activeOpacity={0.8} onPress={() => this.showImagListOrThumb("list")} style={styles.cell}>
+              <Icon name="navicon-round" color={this.state.isThumb?globalVariables.textBase:globalVariables.base} size={30}/>
+          </TouchableOpacity>
+        </View>
+        <UserLookList
           user={this.props.user}
           uid={this.props.uid}
           from={this.props.from}
@@ -70,23 +72,33 @@ const UserLooked = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // paddingTop: 64,
+    paddingTop: 54,
     backgroundColor: globalVariables.background,
   },
-
-  shotCounter: {
-    flex: 2,
-    alignItems: "center",
-    justifyContent: "space-between"
+  cell: {
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  shotCounterText: {
-    color: "#333"
+  cellText: {
+    flexDirection: 'row',
+    flex: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text:{
+    color:globalVariables.base,
+    fontWeight:'600',
   },
   mainSection: {
-    flex: 1,
-    alignItems: "stretch",
-    padding: 10,
-    // backgroundColor: "white"
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  separator: {
+    backgroundColor: globalVariables.textBase2,
+    height: 20 ,
+    width:1,
   },
 });
 

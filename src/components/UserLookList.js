@@ -123,7 +123,7 @@ const UserLookList = React.createClass({
             renderFooter={this.renderFooter}
             renderRow={this.renderRow}
             onEndReached={this.onEndReached}
-            renderHeader={this.props.renderHeader}
+
             onEndReachedThreshold={10}
             // initialListSize={15}
             pageSize={15}
@@ -151,7 +151,7 @@ const UserLookList = React.createClass({
           renderFooter={this.renderFooter}
           renderRow={this.renderRow}
           onEndReached={this.onEndReached}
-          renderHeader={this.props.renderHeader}
+
           onEndReachedThreshold={10}
           // initialListSize={15}
           pageSize={15}
@@ -208,7 +208,7 @@ const UserLookList = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 44,
+    // paddingTop: -10,
     backgroundColor: globalVariables.background,
   },
 
