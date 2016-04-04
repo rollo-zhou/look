@@ -63,6 +63,7 @@ const UserLooked = React.createClass({
           uid={this.props.uid}
           from={this.props.from}
           navigator={this.props.navigator}
+          needShowTime={false}
           ref="UserLookList"/>
       </View>
     );

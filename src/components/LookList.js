@@ -42,12 +42,14 @@ const LookList = React.createClass({
 
   componentWillUnmount() {
     RCTDeviceEventEmitter.removeListener('Login',this._onNotification);
+    RCTDeviceEventEmitter.removeListener('Logout',this._onNotification);
   },
 
   componentDidMount() {
     // Storage.removeItem("user");
     this.getMePage();
     RCTDeviceEventEmitter.addListener('Login',this._onNotification);
+    RCTDeviceEventEmitter.addListener('Logout',this._onNotification);
   },
   _onNotification(notification) {
     this.getMePage()

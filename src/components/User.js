@@ -84,6 +84,7 @@ const User = React.createClass({
         toLookedPage={this.toLookedPage}
         toUserListPage={this.toUserListPage}
         uid={this.props.uid}
+        isMe={this.props.isMe}
         navigator={this.props.navigator}/>
       <UserLookList
           user={this.props.user}
@@ -100,7 +101,6 @@ const User = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 54,
     backgroundColor: globalVariables.background,
   },
 

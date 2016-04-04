@@ -13,6 +13,8 @@ import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');
 import globalVariables from '../globalVariables.js';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Storage from './Storage.js';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 const UserInfo = React.createClass({
   getInitialState() {
@@ -21,6 +23,7 @@ const UserInfo = React.createClass({
       user:{},
       uid:0,
       isThumb:true,
+      isMe:false,
     };
   },
 
@@ -46,34 +49,62 @@ const UserInfo = React.createClass({
       this.queryRromServer();
     }
   },
+  logout(){
+    Storage.removeItem("user");
+    Storage.removeItem("user-hyped");
+    Storage.removeItem("user-fanned");
+    RCTDeviceEventEmitter.emit('Logout');
+  },
+  getBtnView(){
+    if(this.props.isMe){
+      return(<TouchableOpacity style={styles.addUserView} onPress={this.logout}>
+              <Text style={styles.LogoutText}>Logout</Text>
+            </TouchableOpacity>);
+    }else{
+      return(<TouchableOpacity style={styles.addUserView} >
+              <Text style={styles.addUserText}>{this.state.isFaned?"-":"+"}</Text>
+            </TouchableOpacity>);
+    }
+  },
+  getNameView(){
+    if(this.props.isMe){
+      return(<View style={[styles.cell,{height:44,marginBottom:10}]}>
+          <Text style={styles.userNameTest} > {this.props.user.name}</Text>
+        </View>);
+    }else{
+      return false;
+    }
 
+  },
   render() {
     if(!this.props.user){
       return false;
     }
     return (
-      <View  style={styles.flexContainer}>
+      <View  style={[styles.flexContainer,{paddingTop: this.props.isMe?0:54}]}>
+        {this.getNameView()}
         <View style={styles.mainSection}>
           <Image source={{uri:this.props.user.photo}} style={styles.avatar}/>
           <View style={styles.userInfoBody}>
             <View style={styles.userInfoHeader}>
               <TouchableOpacity style={styles.userInfoView} onPress={() => this.toUserListPage("fans")}>
-                <Text style={styles.numText} > {this.props.user.fans_count} </Text>
+                <Text style={styles.numText} > {this.props.user.fans_count}</Text>
                 <Text style={styles.strText} > FANS </Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.userInfoView} onPress={() => this.toUserListPage("fanned")}>
-                <Text style={styles.numText} > {this.props.user.looks_count} </Text>
+                <Text style={styles.numText} > {this.props.user.looks_count}</Text>
                 <Text style={styles.strText} > FANNED </Text>
               </TouchableOpacity>
               <View style={styles.userInfoView}>
-                <Text style={styles.numText} > {this.props.user.looks_count} </Text>
+                <Text style={styles.numText} > {this.props.user.looks_count}</Text>
                 <Text style={styles.strText} > LOOKS</Text>
               </View>
+              <View style={styles.userInfoView}>
+                <Text style={styles.numText} > {this.props.user.karma_count}</Text>
+                <Text style={styles.strText} > KARMA</Text>
+              </View>
             </View>
-            <View style={styles.addUserView} >
-              <Text style={styles.addUserText}>{this.state.isFaned?"-":"+"}</Text>
-            </View>
-
+            {this.getBtnView()}
           </View>
         </View>
 
@@ -134,13 +165,6 @@ const UserInfo = React.createClass({
 });
 
 const styles = StyleSheet.create({
-  mainSection: {
-    flex: 1,
-    flexDirection: 'row',
-    // paddingBottom: 10,
-    // alignItems: "center",
-    justifyContent: 'flex-start',
-  },
   flexContainer: {
       // 容器需要添加direction才能变成让子元素flex
       flexDirection: 'column',
@@ -150,11 +174,19 @@ const styles = StyleSheet.create({
       // justifyContent: 'flex-start',
       // paddingTop: 84,
   },
+  mainSection: {
+    flex: 1,
+    flexDirection: 'row',
+    // paddingBottom: 10,
+    // alignItems: "center",
+    justifyContent: 'flex-start',
+  },
+
   userInfoBody: {
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
-    marginLeft:15,
+    // marginLeft:5,
   },
   userInfoHeader: {
     flexDirection: "row",
@@ -172,7 +204,7 @@ const styles = StyleSheet.create({
   },
   strText: {
     color:globalVariables.textBase,
-    fontSize:12,
+    fontSize:10,
   },
   addUserView: {
     // width: width-200,
@@ -182,7 +214,17 @@ const styles = StyleSheet.create({
     borderColor: globalVariables.base,
     alignItems:'center',
     margin:20,
-
+    justifyContent: "center",
+  },
+  LogoutText:{
+    color:globalVariables.base,
+    // fontSize:16,
+    // textAlign:"center",
+  },
+  userNameTest:{
+    fontSize:16,
+    fontWeight:"600",
+    color:globalVariables.textBase,
   },
   addUserText:{
     color:globalVariables.base,

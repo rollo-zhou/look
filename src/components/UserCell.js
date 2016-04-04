@@ -13,7 +13,7 @@ const {
 import globalVariables from '../globalVariables.js';
 import User from './User.js';
 import moment from 'moment';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Storage from './Storage.js';
 const { width, height } = Dimensions.get('window');
 
@@ -24,6 +24,7 @@ var UserCell = React.createClass({
       navigator:"",
       onSelect:false,
       showByline:false,
+      needShowTime:true,
     };
   },
   getInitialState() {
@@ -46,14 +47,27 @@ var UserCell = React.createClass({
       }
     );
   },
+  getRightView(){
+    if(this.props.needShowTime||this.state.isFaned){
+      return(
+          <View style={styles.timeView} >
+           <Icon name="ios-clock-outline" color={globalVariables.textBase} size={15}/>
+          <Text style={styles.timeText}>  1d</Text>
+          </View>
+        );
+    }else{
+      return (
+        <TouchableOpacity style={styles.cellfixed} activeOpacity={0.8} onPress={this.addUser}>
+          <View style={styles.addUserView} >
+            <Text style={styles.addUserText}>+</Text>
+          </View>
+        </TouchableOpacity>);
+    }
+  },
   render() {
     if(!this.props.user){
       return false;
     }
-    var byline=(<Text style={styles.commentText}>
-                  {this.props.user.byline}
-                       <Icon name="bullhorn" color="#4F8EF7" />
-                </Text>);
     return (
       <TouchableOpacity activeOpacity={0.8} style={styles.flexContainer} onPress={this.onSelect}>
           <View style={styles.cell}>
@@ -63,11 +77,7 @@ var UserCell = React.createClass({
                 {this.props.user.name}
               </Text>
           </View>
-          <TouchableOpacity style={styles.cellfixed} activeOpacity={0.8} onPress={this.addUser}>
-              <View style={styles.addUserView} >
-                <Text style={styles.addUserText}>{this.state.isFaned?"-":"+"}</Text>
-              </View>
-          </TouchableOpacity>
+          {this.getRightView()}
         </TouchableOpacity>
     );
   },
@@ -141,6 +151,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+  timeView:{
+    width: 55,
+    alignItems:'center',
+    flexDirection: 'row',
+  },
   addUserView: {
     width: 55,
     height: 25,
@@ -155,6 +170,10 @@ const styles = StyleSheet.create({
     color:globalVariables.base,
     fontSize:16,
     // textAlign:"center",
+  },
+  timeText:{
+    color:globalVariables.textBase,
+    fontSize:12,
   },
   userName: {
     // fontWeight: "400",

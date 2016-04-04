@@ -106,7 +106,7 @@ const LookListItem = React.createClass({
   },
   renderSectionHeader(user){
      return (
-      <UserCell user={user}  navigator={this.props.navigator}/>
+      <UserCell user={user} needShowTime={false} navigator={this.props.navigator}/>
     );
   },
 
