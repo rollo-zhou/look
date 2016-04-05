@@ -33,10 +33,10 @@ const Login = React.createClass({
   render() {
 
     return (
-      <View style={{backgroundColor:'#f4f4f4',flex:1}}
-       keyboardDismissMode='on-drag'
-     keyboardShouldPersistTaps={false} >
-          <Icon name="user" size={90} color="#666" style={styles.style_image} />
+      <View style={{backgroundColor:'#f4f4f4',flex:1,marginLeft:40,marginRight:40,}}
+        keyboardDismissMode='on-drag'
+        keyboardShouldPersistTaps={false} >
+          <Icon name="user" size={90} color={globalVariables.base} style={styles.style_image} />
           <TextInput
               style={styles.style_user_input}
               placeholder='UserId'
@@ -47,15 +47,11 @@ const Login = React.createClass({
               clearButtonMode='while-editing'
               keyboardType='twitter'
               value={this.state.username}
-              onChangeText={username => this.setState({username})}
+              onChangeText={username => this.setState({username})} />
 
-          />
-          <View
-              style={{height:1,backgroundColor:'#f4f4f4'}}
-          />
           <TextInput
-              style={styles.style_pwd_input}
-              placeholder='PassWord'
+              style={styles.style_user_input}
+              placeholder='Password'
               numberOfLines={1}
               secureTextEntry={true}
               textAlign='center'
@@ -63,19 +59,14 @@ const Login = React.createClass({
               clearButtonMode='while-editing'
               value={this.state.password}
               onChangeText={password => this.setState({password})}
-              onSubmitEditing={this.login}
-          />
-           <TouchableOpacity
-            onPress={this.login}
-            >
-          <View
-              style={styles.style_view_commit}
-           >
-            <Text style={{color:'#fff'}}>
-               Log In
-            </Text>
+              onSubmitEditing={this.login} />
 
-          </View>
+          <TouchableOpacity onPress={this.login} >
+            <View style={styles.style_view_commit} >
+              <Text style={{color: globalVariables.base,}}>
+                 Log In
+              </Text>
+            </View>
           </TouchableOpacity>
       </View>
     );
@@ -132,42 +123,33 @@ const styles = StyleSheet.create({
     borderRadius:35,
     height:70,
     width:70,
-    marginTop:40,
+    marginTop:80,
     alignSelf:'center',
   },
   style_user_input:{
-      backgroundColor:'#fff',
-      marginTop:10,
-      height:35,
+      // backgroundColor:'#fff',
+      marginTop:20,
+      height:40,
+      borderColor: globalVariables.base,
+      borderWidth: 1,
+       borderRadius:3,
   },
    style_pwd_input:{
-      backgroundColor:'#fff',
-      height:35,
+      // backgroundColor:'#fff',
+      height:40,
+      borderColor: globalVariables.base,
+      borderWidth: 1,
+       borderRadius:3,
   },
    style_view_commit:{
-      marginTop:15,
-      marginLeft:10,
-      marginRight:10,
-      backgroundColor:'#63B8FF',
-      height:35,
-      borderRadius:5,
+      marginTop:25,
+      borderColor:globalVariables.base,
+      borderWidth:1,
+      height:40,
+      borderRadius:3,
       justifyContent: 'center',
       alignItems: 'center',
   },
-  style_view_unlogin:{
-    fontSize:12,
-    color:'#63B8FF',
-    marginLeft:10,
-  },
-  style_view_register:{
-    fontSize:12,
-    color:'#63B8FF',
-    marginRight:10,
-    alignItems:'flex-end',
-    flex:1,
-    flexDirection:'row',
-    textAlign:'right',
-  }
 });
 
 export default Login;
