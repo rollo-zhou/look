@@ -87,10 +87,11 @@ const Login = React.createClass({
       Vibration.vibrate();
       return;
     }
+    var body='user[email]='+username+'&user[password]='+password;
     globalVariables.queryRromServer(globalVariables.apiServer+'login',this.processsResults,{
       method:"POST",
       Content:"application/x-www-form-urlencoded",
-      body:'user[email]=rolloxa@qq.com&user[password]=z123456',
+      body:body,
       callBackHeaders:function(data){
         if(data["set-cookie"]&&data["set-cookie"][0]){
           Storage.setItem('cookie', data["set-cookie"][0])

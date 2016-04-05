@@ -37,7 +37,8 @@ const UserInfo = React.createClass({
         byline:"",
         fans_count:"",
         looks_count:"",
-        karma_count:""
+        karma_count:"",
+        fanned_count:0,
       },
       showImagListOrThumb:function(){},
       toLookedPage:function(){},
@@ -45,9 +46,9 @@ const UserInfo = React.createClass({
     };
   },
   componentDidMount() {
-    if(!this.props.user.id){
+    // if(!this.props.user.id){
       this.queryRromServer();
-    }
+    // }
   },
   logout(){
     Storage.removeItem("user");
@@ -92,7 +93,7 @@ const UserInfo = React.createClass({
                 <Text style={styles.strText} > FANS </Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.userInfoView} onPress={() => this.toUserListPage("fanned")}>
-                <Text style={styles.numText} > {this.props.user.looks_count}</Text>
+                <Text style={styles.numText} > {this.state.user.fanned_count}</Text>
                 <Text style={styles.strText} > FANNED </Text>
               </TouchableOpacity>
               <View style={styles.userInfoView}>
