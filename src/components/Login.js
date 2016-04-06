@@ -24,14 +24,14 @@ const Login = React.createClass({
       password: '',
     };
   },
-
   getDefaultProps() {
     return {
     };
   },
-
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  },
   render() {
-
     return (
       <View style={{backgroundColor:'#f4f4f4',flex:1,marginLeft:40,marginRight:40,}}
         keyboardDismissMode='on-drag'
@@ -63,7 +63,7 @@ const Login = React.createClass({
 
           <TouchableOpacity onPress={this.login} >
             <View style={styles.style_view_commit} >
-              <Text style={{color: globalVariables.base,}}>
+              <Text style={{color: globalVariables.base}}>
                  Log In
               </Text>
             </View>

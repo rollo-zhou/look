@@ -36,7 +36,9 @@ const Streams = React.createClass({
   getDataSource(streams) {
     return this.state.dataSource.cloneWithRows(streams);
   },
-
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  },
   renderFooter() {
     if (!this.state.next && !this.state.searchPending) {
       return (

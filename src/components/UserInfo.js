@@ -20,7 +20,16 @@ const UserInfo = React.createClass({
   getInitialState() {
     return {
       searchPending: true,
-      user:{},
+      user:{
+        id:0,
+        photo:"",
+        name:"",
+        byline:"",
+        fans_count:"",
+        looks_count:"",
+        karma_count:"",
+        fanned_count:0,
+      },
       uid:0,
       isThumb:true,
       isMe:false,
@@ -76,6 +85,9 @@ const UserInfo = React.createClass({
       return false;
     }
 
+  },
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
   },
   render() {
     if(!this.props.user){
@@ -135,6 +147,7 @@ const UserInfo = React.createClass({
     this.props.showImagListOrThumb(type);
   },
   toLookedPage(type){
+    // var count= type=="LOVED"?this.state.user.loved_looks_count:this.state.user.hyped_looks_count;
     this.props.toLookedPage(type);
   },
   toUserListPage(type){
@@ -152,16 +165,24 @@ const UserInfo = React.createClass({
       return;
     }
     this.setState({
-      user: data,
+      user: data.user,
       searchPending: false,
       uid:data.id
     });
 
-    globalVariables.saveMeInfo(data.user.hyped_look_ids
-      ,data.user.fanned_user_ids
-      ,data.user
-      ,()=>{
-      });
+    globalVariables.userIsLogin((isLogin,user)=>{
+      if(isLogin){
+        globalVariables.saveMeInfo(
+        {
+          hypedLookIds:data.user.hyped_look_ids||[],
+          fannedUserIds:data.user.fanned_user_ids||[],
+          user:data.user||{},
+          hypedCallBack:()=>{},
+          fannedCallBack:()=>{},
+          userCallBack:()=>{}
+        });
+      }
+    });
   }
 });
 

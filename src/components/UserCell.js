@@ -25,6 +25,7 @@ var UserCell = React.createClass({
       onSelect:false,
       showByline:false,
       needShowTime:false,
+      title:"",
     };
   },
   getInitialState() {
@@ -39,6 +40,7 @@ var UserCell = React.createClass({
     if(!this.props.user){
       return false;
     }
+
     Storage.getItem('user-fanned')
     .then((user)=>{
       if(!user)return;
@@ -47,12 +49,15 @@ var UserCell = React.createClass({
       }
     );
   },
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  },
   getRightView(){
     if(this.props.needShowTime||this.state.isFaned){
       return(
           <View style={styles.timeView} >
-           <Icon name="ios-clock-outline" color={globalVariables.textBase} size={15}/>
-          <Text style={styles.timeText}> {globalVariables.formatDateToString(this.props.needShowTime)}</Text>
+            <Icon name="ios-clock-outline" color={globalVariables.textBase} size={15}/>
+            <Text style={styles.timeText}> {globalVariables.formatDateToString(this.props.needShowTime)}</Text>
           </View>
         );
     }else{
@@ -70,15 +75,16 @@ var UserCell = React.createClass({
     }
     return (
       <TouchableOpacity activeOpacity={0.8} style={styles.flexContainer} onPress={this.onSelect}>
-          <View style={styles.cell}>
-            <Image source={{uri:this.props.user.photo}}
-                     style={styles.avatar}/>
-              <Text style={styles.userName}>
-                {this.props.user.name}
-              </Text>
+        <View style={styles.cell}>
+          <Image source={{uri:this.props.user.photo}} style={styles.avatar}/>
+          <View style={styles.cellColumn}>
+            <Text style={styles.userName}>
+              {this.props.user.name}
+            </Text>
           </View>
-          {this.getRightView()}
-        </TouchableOpacity>
+        </View>
+        {this.getRightView()}
+      </TouchableOpacity>
     );
   },
   addUser(){
@@ -136,6 +142,7 @@ var UserCell = React.createClass({
 
 const styles = StyleSheet.create({
   flexContainer: {
+     flex: 1,
       // 容器需要添加direction才能变成让子元素flex
       flexDirection: 'row',
       opacity:0.97,
@@ -148,15 +155,22 @@ const styles = StyleSheet.create({
   },
   cell: {
     flexDirection: 'row',
-    flex: 1,
+    flex: 4,
     alignItems: 'center',
   },
+  cellColumn: {
+    flexDirection: 'column',
+    // justifyContent: 'flex-start',
+    justifyContent: 'center',
+  },
   timeView:{
+    flex: 1,
     width: 55,
     alignItems:'center',
-    flexDirection: 'row',
+    // flexDirection: 'row',
   },
   addUserView: {
+     flex: 1,
     width: 55,
     height: 25,
     borderWidth: 1,
@@ -174,6 +188,7 @@ const styles = StyleSheet.create({
   timeText:{
     color:globalVariables.textBase,
     fontSize:12,
+    marginLeft:3,
   },
   userName: {
     // fontWeight: "400",

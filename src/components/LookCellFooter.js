@@ -45,7 +45,9 @@ var LookCellFooter = React.createClass({
       }
     );
   },
-
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  },
   render() {
     if(!this.props.look){
       return false;

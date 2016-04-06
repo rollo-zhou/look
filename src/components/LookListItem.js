@@ -21,11 +21,9 @@ const LookListItem = React.createClass({
      var getSectionData = (dataBlob, sectionID) => {
         return dataBlob[sectionID];
     }
-
     var getRowData = (dataBlob, sectionID, rowID) => {
        return dataBlob[sectionID + ':' + rowID];
     }
-
     return {
       dataSource: new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 !== r2,
@@ -76,7 +74,9 @@ const LookListItem = React.createClass({
     });
     return this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionsID, rowsID);
   },
-
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  },
   renderFooter() {
     if (!this.state.next && !this.state.searchPending) {
       return (

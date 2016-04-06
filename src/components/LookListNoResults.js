@@ -12,7 +12,13 @@ const {width, height} = Dimensions.get('window');
 import globalVariables from '../globalVariables.js';
 
 const LookListNoResults = React.createClass({
-
+  getInitialState() {
+    return {
+    };
+  },
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  },
   render() {
     return (
       <View style={styles.view}>

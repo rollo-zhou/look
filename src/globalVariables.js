@@ -98,6 +98,11 @@ module.exports = {
       );
     }
   },
+  userIsLogin(callBack){
+    Storage.getItem("user").then((user)=>{
+      callBack&&callBack(user&&user.id,user);
+    });
+  },
   formatDateToString(dateStr){
     if(!dateStr)return '';
     var list=/(\d+-\d+-\d+T\d+:\d+:\d+)(-|\+)(\d+):(\d+)/ig.exec(dateStr);

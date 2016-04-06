@@ -60,6 +60,13 @@ const LookDetail = React.createClass({
     );
   },
   onEndReached() {
+    if(this.props.look.comments_count==0){
+      this.setState({
+        next:false,
+      });
+      return;
+    }
+
     if (this.state.next && !this.state.searchPending) {
       this.setState({ searchPending: true });
       this.queryRromServer(this.state.pageNo);
@@ -77,6 +84,9 @@ const LookDetail = React.createClass({
       },
     });
   },
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  },
   renderRow(comments) {
     if(!comments.comment||!comments.comment.user){
       return false;
@@ -90,7 +100,7 @@ const LookDetail = React.createClass({
               <Text style={styles.userName}>{comments.comment.user.name}</Text>
             </View>
             <View style={styles.timeView}>
-              <Text style={styles.time}>time</Text>
+              <Text style={styles.time}> {globalVariables.formatDateToString(comments.comment.user.created_at)}</Text>
             </View>
           </View>
           <Text style={styles.commentText}>{comments.comment.body}</Text>
@@ -130,11 +140,13 @@ const LookDetail = React.createClass({
       return;
     }
     var newComments= this.state.comments.concat(data.comments);
+    var next=newComments.length>=this.props.look.comments_count?false:true;
     this.setState({
       comments: newComments,
       searchPending: false,
       dataSource: this.getDataSource(newComments),
-      pageNo: this.state.pageNo+1
+      pageNo: this.state.pageNo+1,
+      next:next,
     });
   }
 });

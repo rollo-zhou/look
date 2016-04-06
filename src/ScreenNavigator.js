@@ -16,7 +16,9 @@ const ScreenNavigator = React.createClass({
       component: null
     };
   },
-
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  },
   render() {
     return (
       <NavigatorIOS

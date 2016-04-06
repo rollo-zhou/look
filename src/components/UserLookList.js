@@ -49,6 +49,7 @@ const UserLookList = React.createClass({
       renderHeader:function(){},
       navigator:"",
       isMe:false,
+      listCount:-1,
     };
   },
   componentDidMount() {
@@ -96,7 +97,9 @@ const UserLookList = React.createClass({
       this.queryRromServer(this.state.pageNo);
     }
   },
-
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  },
   renderRow(looks) {
      if(this.state.showImagType=="list"){
         return (<LookCell
@@ -194,13 +197,18 @@ const UserLookList = React.createClass({
     }
 
     const newLooks = this.state.looks.concat(data.looks);
+    var next=true;
+    if(this.props.listCount>0&&newLooks.length>=this.props.listCount){
+      next=false;
+    }
     this.setState({
       looks: newLooks,
       searchPending: false,
       refreshing:false,
       dataSource: this.getDataSource(newLooks),
       form: data.form,
-      pageNo: this.state.pageNo+1
+      pageNo: this.state.pageNo+1,
+      next:next,
     });
   }
 });
@@ -218,11 +226,13 @@ const styles = StyleSheet.create({
   thumb: {
     justifyContent: 'space-around',
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
   },
 
   scrollSpinner: {
     marginVertical: 20,
+    width:width,
   },
 });
 

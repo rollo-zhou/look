@@ -44,18 +44,20 @@ const UserLooked = React.createClass({
     this.setState({isThumb:isThumb});
     this.refs.UserLookList.setShowImagType(type);
   },
-
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  },
   render() {
     return(
       <View style={styles.container}>
         <View style={styles.mainSection}>
 
           <TouchableOpacity activeOpacity={0.8} onPress={() => this.showImagListOrThumb("thumb")} style={styles.cell}>
-            <Icon name="grid" color={this.state.isThumb?globalVariables.base:globalVariables.textBase} size={30}/>
+            <Icon name="grid" color={this.state.isThumb?globalVariables.base:globalVariables.textBase} size={25}/>
           </TouchableOpacity>
 
           <TouchableOpacity activeOpacity={0.8} onPress={() => this.showImagListOrThumb("list")} style={styles.cell}>
-              <Icon name="navicon-round" color={this.state.isThumb?globalVariables.textBase:globalVariables.base} size={30}/>
+              <Icon name="navicon-round" color={this.state.isThumb?globalVariables.textBase:globalVariables.base} size={27}/>
           </TouchableOpacity>
         </View>
         <UserLookList

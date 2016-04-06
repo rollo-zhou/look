@@ -34,6 +34,10 @@ const User = React.createClass({
       isMe:false,
     };
   },
+  getInitialState() {
+    return {
+    };
+  },
   showImagListOrThumb(type){
       this.refs.userLookList.setShowImagType(type);
   },
@@ -73,7 +77,9 @@ const User = React.createClass({
         navigator={this.props.navigator}/>
     );
   },
-
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  },
   render() {
     return(
 
@@ -92,6 +98,7 @@ const User = React.createClass({
           navigator={this.props.navigator}
           from="looks"
           isMe={this.props.isMe}
+          listCount={this.props.user.looks_count}
           ref="userLookList"/>
       </View>
     );

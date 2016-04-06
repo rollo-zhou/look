@@ -22,6 +22,13 @@ const LookCellThumbnail = React.createClass({
       navigator:"",
     };
   },
+  getInitialState() {
+    return {
+    };
+  },
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  },
   render() {
     if(!this.props.look.photos){
       return false;

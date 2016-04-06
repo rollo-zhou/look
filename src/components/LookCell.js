@@ -30,19 +30,20 @@ var LookCell = React.createClass({
   },
   getInitialState() {
     return {
-     backIcon:Icon.getImageSource('angle-left', 25).then((source) =>this.setState({ backIcon: source }))
     };
+  },
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
   },
   render() {
     if(!this.props.look.photos){
       return false;
     }
 
-
     if(this.props.userCell){
       return (<View style={styles.item}>
         <ActivityIndicatorIOS style={styles.spinner} />
-        <UserCell user={this.props.look.user} needShowTime={this.props.look.created_at} onSelect={this.props.onUserSelect} navigator={this.props.navigator}/>
+        <UserCell user={this.props.look.user} needShowTime={this.props.look.created_at} title={this.props.look.title} onSelect={this.props.onUserSelect} navigator={this.props.navigator}/>
         <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect} style={{backgroundColor:globalVariables.textBase2}}>
           <Image source={{uri: this.props.look.photos.medium}} style={{height: (this.props.look.photo_height*width)/this.props.look.photo_width,resizeMode: 'cover'}}/>
         </TouchableOpacity>

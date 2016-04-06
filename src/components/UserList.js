@@ -70,7 +70,9 @@ const LookDetail = React.createClass({
       <UserCell user={users.user} needShowTime={false} navigator={this.props.navigator}/>
     );
   },
-
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  },
   render() {
     return (
       <ListView

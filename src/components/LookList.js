@@ -84,8 +84,11 @@ const LookList = React.createClass({
       }
     }
   },
+  // shouldComponentUpdate: function(nextProps, nextState) {
+  //   return nextState.type!=this.state.type|| nextState.selectedTab!=this.state.selectedTab;
+  //   // return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  // },
   render() {
-
     return (
        <TabBarIOS
         tintColor={globalVariables.base}

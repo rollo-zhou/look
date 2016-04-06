@@ -14,6 +14,13 @@ const {width, height} = Dimensions.get('window');
 import globalVariables from '../globalVariables.js';
 
 const DoneFooter = React.createClass({
+  getInitialState() {
+    return {
+    };
+  },
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  },
   render() {
      return(
       <View style={styles.doneView}>
@@ -28,7 +35,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     height:40,
-
+    width:width,
+    marginTop:20,
+    marginBottom:20,
   },
   ILoveYou: {
     paddingTop:10,
