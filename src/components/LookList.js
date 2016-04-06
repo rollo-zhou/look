@@ -55,7 +55,7 @@ const LookList = React.createClass({
     this.getMePage()
   },
   async getMePage(){
-    const user = await Storage.getItem("user");
+    const user = await globalVariables.getUser();
     if(user&&user.id){
       this.setState({
         mePage:(<User user={user} isMe={true} navigator={this.props.navigator}/>),

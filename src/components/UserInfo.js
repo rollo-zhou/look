@@ -60,9 +60,7 @@ const UserInfo = React.createClass({
     // }
   },
   logout(){
-    Storage.removeItem("user");
-    Storage.removeItem("user-hyped");
-    Storage.removeItem("user-fanned");
+    globalVariables.logout();
     RCTDeviceEventEmitter.emit('Logout');
   },
   getBtnView(){

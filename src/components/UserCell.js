@@ -34,18 +34,16 @@ var UserCell = React.createClass({
     };
   },
   module:{
-    user:{}
+    userFanned:{}
   },
   componentDidMount() {
     if(!this.props.user){
       return false;
     }
-
-    Storage.getItem('user-fanned')
-    .then((user)=>{
-      if(!user)return;
-        this.module.user=user;
-        this.setState({isFaned:!!user[this.props.user.id]});
+    globalVariables.getUserFanned((fanned)=>{
+      if(!fanned)return;
+        this.module.userFanned=fanned;
+        this.setState({isFaned:!!fanned[this.props.user.id]});
       }
     );
   },
@@ -88,7 +86,7 @@ var UserCell = React.createClass({
     );
   },
   addUser(){
-    if(!this.module.userHyped) return;
+    if(!this.module.userFanned) return;
     if(this.props.user && this.props.user.id){
       var method=this.state.isFaned?"DELETE":"POST"
       this.setState({
@@ -105,22 +103,20 @@ var UserCell = React.createClass({
 
   processsResults(data) {
     if (data && data.status=="ok") {
-      delete this.module.user[this.props.user.id];
+      delete this.module.userFanned[this.props.user.id];
       this.setState({
         isFaned:false,
       });
     }else{
-      this.module.user[this.props.user.id]=this.props.user.id;
+      this.module.userFanned[this.props.user.id]=this.props.user.id;
       this.setState({
         isFaned:true,
       });
     }
 
     if (data && data.status){
-      Storage.setItem('user-fanned',this.module.user)
-      .then((user)=>{
-        }
-      );
+      globalVariables.setUserFanned(this.module.userFanned);
+
     }
   },
   onSelect() {

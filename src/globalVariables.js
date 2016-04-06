@@ -26,6 +26,11 @@ module.exports = {
     "Accept-Encoding":"gzip, deflate",
     "Connection":"keep-alive"
   },
+  user:{
+    user:null,
+    fanned:null,
+    hyped:null,
+  }
   queryRromServer(apiUrl,callBack,parameter) {
     this.apiServerHeaders["Content-Type"]=(parameter&&parameter.Content)?parameter.Content:this.apiServerHeaders["Content-Type"];
     var _this=this;
@@ -71,11 +76,9 @@ module.exports = {
       for (var i = 0; i < hypedLength; i++) {
         hyped_look_ids[meInfo.hypedLookIds[i]]=i+1;
       };
-      Storage.setItem('user-hyped',hyped_look_ids)
-      .then(()=>{
-          meInfo.hypedCallBack && meInfo.userCallBack();
-        }
-      );
+      this.setUserHyped(hyped_look_ids,()=>{
+         meInfo.hypedCallBack && meInfo.userCallBack();
+      });
     }
     if(meInfo.fannedUserIds){
       var fanned_user_ids={};
@@ -83,23 +86,55 @@ module.exports = {
       for (var i = 0; i < fannedLength; i++) {
         fanned_user_ids[meInfo.fannedUserIds[i]]=i+1;
       };
-      Storage.setItem('user-fanned', fanned_user_ids)
-      .then(()=>{
-          meInfo.fannedCallBack && meInfo.userCallBack();
-        }
-      );
+
+      this.setUserFanned(fanned_user_ids,()=>{
+         meInfo.fannedCallBack && meInfo.userCallBack();
+      });
     }
 
     if(meInfo.user){
-      Storage.setItem('user', meInfo.user)
-        .then(()=>{
-          meInfo.userCallBack && meInfo.userCallBack();
-        }
-      );
+      this.setUser(meInfo.user,()=>{
+        meInfo.userCallBack && meInfo.userCallBack();
+      });
     }
   },
-  userIsLogin(callBack){
+  logout(){
+    Storage.removeItem("user");
+    Storage.removeItem("user-hyped");
+    Storage.removeItem("user-fanned");
+  },
+  setUser(user,callBack){
+    Storage.setItem("user").then(()=>{
+      callBack&&callBack();
+    });
+  },
+  setUserHyped(Hyped,callBack){
+    Storage.setItem("user-hyped",Hyped).then(()=>{
+      callBack&&callBack();
+    });
+  },
+  setUserFanned(Fanned,callBack){
+    Storage.setItem("user-fanned",Fanned).then(()=>{
+      callBack&&callBack();
+    });
+  },
+  getUser(callBack){
     Storage.getItem("user").then((user)=>{
+      callBack&&callBack(user);
+    });
+  },
+  getUserHyped(callBack){
+    Storage.getItem("user-hyped").then((hyped)=>{
+      callBack&&callBack(hyped);
+    });
+  },
+  getUserFanned(callBack){
+    Storage.getItem("user-fanned").then((fanned)=>{
+      callBack&&callBack(fanned);
+    });
+  },
+  userIsLogin(callBack){
+    this.getUser((user)=>{
       callBack&&callBack(user&&user.id,user);
     });
   },

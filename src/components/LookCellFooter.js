@@ -37,8 +37,7 @@ var LookCellFooter = React.createClass({
     if(!this.props.look){
       return false;
     }
-    Storage.getItem('user-hyped')
-    .then((hyped)=>{
+    globalVariables.getUserHyped((hyped)=>{
       if(!hyped)return;
         this.module.userHyped=hyped;
         this.setState({isHype:!!hyped[this.props.look.id]});
@@ -105,10 +104,7 @@ var LookCellFooter = React.createClass({
     }
 
     if (data && data.status){
-      Storage.setItem('user-hyped',this.module.userHyped)
-      .then((hyped)=>{
-        }
-      );
+      globalVariables.setUserHyped(this.module.userHyped);
     }
   }
 });
