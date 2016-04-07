@@ -15,6 +15,7 @@ import User from './User.js';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Storage from './Storage.js';
+import Login from './Login.js';
 const { width, height } = Dimensions.get('window');
 
 var UserCell = React.createClass({
@@ -34,12 +35,18 @@ var UserCell = React.createClass({
     };
   },
   module:{
-    userFanned:{}
+    userFanned:null,
+    user:null,
   },
   componentDidMount() {
     if(!this.props.user){
       return false;
     }
+    // globalVariables.getUser((user)=>{
+    //   if(!user)return;
+    //     this.module.user=user;
+    //   }
+    // );
     globalVariables.getUserFanned((fanned)=>{
       if(!fanned)return;
         this.module.userFanned=fanned;
@@ -86,23 +93,36 @@ var UserCell = React.createClass({
     );
   },
   addUser(){
-    if(!this.module.userFanned) return;
-    if(this.props.user && this.props.user.id){
-      var method=this.state.isFaned?"DELETE":"POST"
-      this.setState({
-        isFaned:!this.state.isFaned,
+     globalVariables.getUser((user)=>{
+      if(!user){
+          this.props.navigator.push({
+            component: Login,
+            backButtonTitle:' ',
+            // backButtonIcon:this.state.backIcon,
+            title: 'Login',
+            passProps: {
+              navigator:this.props.navigator,
+            },
+          });
+          return;
+        }else if(this.props.user && this.props.user.id){
+          var method=this.state.isFaned?"DELETE":"POST"
+          this.setState({
+            isFaned:!this.state.isFaned,
+          });
+          globalVariables.queryRromServer(globalVariables.apiUserServer+(this.props.user.id)+"/fan"
+            ,this.processsResults
+            ,{
+              method:method
+            });
+        }
       });
-      globalVariables.queryRromServer(globalVariables.apiUserServer+(this.props.user.id)+"/fan"
-        ,this.processsResults
-        ,{
-          method:method
-        });
-    }
     return false;
   },
 
   processsResults(data) {
-    if (data && data.status=="ok") {
+    if(!data) return;
+    if (data.status!="fanned") {
       delete this.module.userFanned[this.props.user.id];
       this.setState({
         isFaned:false,

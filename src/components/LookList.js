@@ -54,19 +54,20 @@ const LookList = React.createClass({
   _onNotification(notification) {
     this.getMePage()
   },
-  async getMePage(){
-    const user = await globalVariables.getUser();
-    if(user&&user.id){
-      this.setState({
-        mePage:(<User user={user} isMe={true} navigator={this.props.navigator}/>),
-        feedPage:(<LookListItem type="feed" apiTypeUrl="feed/looks" navigator={this.props.navigator} loadDate={true} />),
-      });
-    }else{
-      this.setState({
-        mePage:(<Login navigator={this.props.navigator}/>),
-        feedPage:(<Login navigator={this.props.navigator}/>),
-      });
-    }
+  getMePage(){
+    globalVariables.getUser((user)=>{
+      if(user&&user.id){
+        this.setState({
+          mePage:(<User user={user} isMe={true} navigator={this.props.navigator}/>),
+          feedPage:(<LookListItem type="feed" apiTypeUrl="feed/looks" navigator={this.props.navigator} loadDate={true} />),
+        });
+      }else{
+        this.setState({
+          mePage:(<Login navigator={this.props.navigator}/>),
+          feedPage:(<Login navigator={this.props.navigator}/>),
+        });
+      }
+    });
   },
   onChangeTab(index,ref){
     if(!index.i) return;

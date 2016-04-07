@@ -30,7 +30,7 @@ module.exports = {
     user:null,
     fanned:null,
     hyped:null,
-  }
+  },
   queryRromServer(apiUrl,callBack,parameter) {
     this.apiServerHeaders["Content-Type"]=(parameter&&parameter.Content)?parameter.Content:this.apiServerHeaders["Content-Type"];
     var _this=this;
@@ -104,9 +104,11 @@ module.exports = {
     Storage.removeItem("user-fanned");
   },
   setUser(user,callBack){
-    Storage.setItem("user").then(()=>{
+    if(user&&user.id){
+      Storage.setItem("user",user).then(()=>{
       callBack&&callBack();
     });
+    }
   },
   setUserHyped(Hyped,callBack){
     Storage.setItem("user-hyped",Hyped).then(()=>{
@@ -121,6 +123,7 @@ module.exports = {
   getUser(callBack){
     Storage.getItem("user").then((user)=>{
       callBack&&callBack(user);
+      return user;
     });
   },
   getUserHyped(callBack){

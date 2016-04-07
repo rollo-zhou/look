@@ -14,6 +14,7 @@ import globalVariables from '../globalVariables.js';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Storage from './Storage.js';
+import Login from './Login.js';
 const { width, height } = Dimensions.get('window');
 
 var LookCellFooter = React.createClass({
@@ -30,13 +31,18 @@ var LookCellFooter = React.createClass({
     };
   },
   module:{
-    userHyped:{},
-    user:{}
+    userHyped:null,
+    user:null,
   },
   componentDidMount() {
     if(!this.props.look){
       return false;
     }
+    // globalVariables.getUser((user)=>{
+    //   if(!user)return;
+    //     this.module.user=user;
+    //   }
+    // );
     globalVariables.getUserHyped((hyped)=>{
       if(!hyped)return;
         this.module.userHyped=hyped;
@@ -78,29 +84,45 @@ var LookCellFooter = React.createClass({
     );
   },
   onSelect() {
-    if(!this.module.userHyped) return;
-    if(this.props.look && this.props.look.id){
-      var hypes_count=this.state.isHype?this.state.hypes_count-1:this.state.hypes_count+1
-      this.setState({
-        hypes_count:hypes_count,
-        isHype:!this.state.isHype,
-      });
-      globalVariables.queryRromServer(globalVariables.apiLookServer+(this.props.look.id)+"/hype",this.processsResults);
-    }
+     globalVariables.getUser((user)=>{
+      if(!user){
+        this.props.navigator.push({
+          component: Login,
+          backButtonTitle:' ',
+          // backButtonIcon:this.state.backIcon,
+          title: 'Login',
+          passProps: {
+            navigator:this.props.navigator,
+          },
+        });
+        return;
+      }else if(this.props.look && this.props.look.id){
+        var hypes_count=this.state.isHype?this.state.hypes_count-1:this.state.hypes_count+1
+        this.setState({
+          hypes_count:hypes_count,
+          isHype:!this.state.isHype,
+        });
+        globalVariables.queryRromServer(globalVariables.apiLookServer+(this.props.look.id)+"/hype",this.processsResults);
+      }
+    });
   },
   processsResults(data) {
     if (data && data.status=="unhyped") {
       delete this.module.userHyped[this.props.look.id];
-      this.setState({
-        hypes_count:this.state.hypes_count-1,
-        isHype:false,
-      });
+      if(this.state.isHype){
+        this.setState({
+          hypes_count:this.state.hypes_count-1,
+          isHype:false,
+        });
+      }
     }else if(data && data.status=="hyped") {
       this.module.userHyped[this.props.look.id]=this.props.look.id;
-      this.setState({
-        hypes_count:this.state.hypes_count+1,
-        isHype:true,
-      });
+      if(!this.state.isHype){
+        this.setState({
+          hypes_count:this.state.hypes_count+1,
+          isHype:true,
+        });
+      }
     }
 
     if (data && data.status){

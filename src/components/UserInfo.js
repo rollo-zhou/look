@@ -15,6 +15,7 @@ import globalVariables from '../globalVariables.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Storage from './Storage.js';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+import Login from './Login.js';
 
 const UserInfo = React.createClass({
   getInitialState() {
@@ -54,10 +55,25 @@ const UserInfo = React.createClass({
       toUserListPage:function(){},
     };
   },
+   module:{
+    userFanned:null,
+    user:null,
+  },
   componentDidMount() {
-    // if(!this.props.user.id){
-      this.queryRromServer();
+     // if(!this.props.user.id){
+    this.queryRromServer();
     // }
+    globalVariables.getUser((user)=>{
+      if(!user)return;
+        this.module.user=user;
+      }
+    );
+    globalVariables.getUserFanned((fanned)=>{
+      if(!fanned)return;
+        this.module.userFanned=fanned;
+        this.setState({isFaned:!!fanned[this.props.user.id]});
+      }
+    );
   },
   logout(){
     globalVariables.logout();
@@ -69,7 +85,7 @@ const UserInfo = React.createClass({
               <Text style={styles.LogoutText}>Logout</Text>
             </TouchableOpacity>);
     }else{
-      return(<TouchableOpacity style={styles.addUserView} >
+      return(<TouchableOpacity style={styles.addUserView} onPress={this.addUser}>
               <Text style={styles.addUserText}>{this.state.isFaned?"-":"+"}</Text>
             </TouchableOpacity>);
     }
@@ -151,6 +167,52 @@ const UserInfo = React.createClass({
   toUserListPage(type){
     this.props.toUserListPage(type);
   },
+  addUser(){
+    if(!this.module.user) {
+      this.props.navigator.push({
+        component: Login,
+        backButtonTitle:' ',
+        // backButtonIcon:this.state.backIcon,
+        title: 'Login',
+        passProps: {
+          navigator:this.props.navigator,
+        },
+      });
+      return;
+    }
+    // if(!this.module.userFanned) return;
+    if(this.props.user && this.props.user.id){
+      var method=this.state.isFaned?"DELETE":"POST"
+      this.setState({
+        isFaned:!this.state.isFaned,
+      });
+      globalVariables.queryRromServer(globalVariables.apiUserServer+(this.props.user.id)+"/fan"
+        ,this.addUserProcesssResults
+        ,{
+          method:method
+        });
+    }
+    return false;
+  },
+
+  addUserProcesssResults(data) {
+    if(!data) return;
+    if (data.status!="fanned") {
+      delete this.module.userFanned[this.props.user.id];
+      this.setState({
+        isFaned:false,
+      });
+    }else{
+      this.module.userFanned[this.props.user.id]=this.props.user.id;
+      this.setState({
+        isFaned:true,
+      });
+    }
+
+    if (data && data.status){
+      globalVariables.setUserFanned(this.module.userFanned);
+    }
+  },
 
   queryRromServer() {
     globalVariables.queryRromServer(globalVariables.apiUserServer+(this.props.uid||this.props.user.id),this.processsResults);
@@ -167,20 +229,21 @@ const UserInfo = React.createClass({
       searchPending: false,
       uid:data.id
     });
-
-    globalVariables.userIsLogin((isLogin,user)=>{
-      if(isLogin){
-        globalVariables.saveMeInfo(
-        {
-          hypedLookIds:data.user.hyped_look_ids||[],
-          fannedUserIds:data.user.fanned_user_ids||[],
-          user:data.user||{},
-          hypedCallBack:()=>{},
-          fannedCallBack:()=>{},
-          userCallBack:()=>{}
-        });
-      }
-    });
+    if(this.props.isMe){
+      globalVariables.userIsLogin((isLogin,user)=>{
+        if(isLogin){
+          globalVariables.saveMeInfo(
+          {
+            hypedLookIds:data.user.hyped_look_ids||[],
+            fannedUserIds:data.user.fanned_user_ids||[],
+            user:data.user||{},
+            hypedCallBack:()=>{},
+            fannedCallBack:()=>{},
+            userCallBack:()=>{}
+          });
+        }
+      });
+    }
   }
 });
 
