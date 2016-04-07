@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
   },
   cellfixed: {
-    width: 65,
+    width: 55,
   },
   cell: {
     flexDirection: 'row',
@@ -182,9 +182,10 @@ const styles = StyleSheet.create({
   },
   timeView:{
     // flex: 1,
-    width: 55,
+    // width: 50,
     alignItems:'center',
     flexDirection: 'row',
+    marginRight:5,
   },
   addUserView: {
     flex: 1,
@@ -219,6 +220,7 @@ const styles = StyleSheet.create({
     height: 36,
     marginRight: 5,
     marginLeft:5,
+    backgroundColor:globalVariables.textBase2,
   }
 });
 

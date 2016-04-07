@@ -178,14 +178,15 @@ const styles = StyleSheet.create({
     // fontSize:12,
   },
   timeView:{
-    width:55,
+    // width:50,
     flexDirection: "row",
     alignItems:'center',
+    marginRight:5,
   },
   time:{
     color:globalVariables.textBase,
     fontSize:12,
-    // marginRight:0,
+    // ,
   },
   commentText: {
     // fontSize:12,

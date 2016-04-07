@@ -5,6 +5,7 @@ const {
   Image,
   Text,
   View,
+  ScrollView,
   TextInput,
   TouchableOpacity,
   Vibration,
@@ -33,11 +34,11 @@ const Login = React.createClass({
   },
   render() {
     return (
-      <View style={styles.container}
+      <ScrollView style={styles.container}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps={false} >
         <View style={styles.containerView}>
-          <Icon name="user" size={90} color={globalVariables.base} style={styles.style_image} />
+          <Icon name="user" size={50} color={globalVariables.base} style={styles.userIcon} />
           <TextInput
               style={styles.style_user_input}
               placeholder='UserId'
@@ -46,10 +47,11 @@ const Login = React.createClass({
               textAlign='center'
               ref="username"
               clearButtonMode='while-editing'
-              keyboardType='twitter'
+              keyboardType='email-address'
               value={this.state.username}
+              autoCapitalize="none"
+              autoCorrect={false}
               onChangeText={username => this.setState({username})} />
-
           <TextInput
               style={styles.style_user_input}
               placeholder='Password'
@@ -70,7 +72,7 @@ const Login = React.createClass({
             </View>
           </TouchableOpacity>
           </View>
-      </View>
+      </ScrollView>
     );
   },
 
@@ -132,10 +134,10 @@ const styles = StyleSheet.create({
     marginLeft:40,
     marginRight:40,
   },
-  style_image:{
-    borderRadius:35,
-    height:70,
-    width:70,
+  userIcon:{
+    // borderRadius:35,
+    // height:70,
+    // width:70,
     alignSelf:'center',
   },
   style_user_input:{
