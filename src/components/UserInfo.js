@@ -156,6 +156,7 @@ const UserInfo = React.createClass({
           <TouchableOpacity activeOpacity={0.8} onPress={() => this.toLookedPage("HYPED")} style={styles.cell}>
             <Icon name="speakerphone" color={globalVariables.textBase} size={25}/>
           </TouchableOpacity>
+
           <TouchableOpacity activeOpacity={0.8} onPress={() => this.toLookedPage("LOVED")} style={styles.cell}>
               <Icon name="ios-heart" color={globalVariables.textBase} size={27}/>
           </TouchableOpacity>
@@ -169,8 +170,8 @@ const UserInfo = React.createClass({
     this.props.showImagListOrThumb(type);
   },
   toLookedPage(type){
-    // var count= type=="LOVED"?this.state.user.loved_looks_count:this.state.user.hyped_looks_count;
-    this.props.toLookedPage(type);
+    var count= type=="LOVED"?this.state.user.loved_looks_count:this.state.user.hyped_looks_count;
+    this.props.toLookedPage(type,count);
   },
   toUserListPage(type){
     this.props.toUserListPage(type);
@@ -265,6 +266,7 @@ const styles = StyleSheet.create({
       opacity:0.97,
       padding: 5,
       backgroundColor: globalVariables.background,
+      width:width,
       // justifyContent: 'flex-start',
       // paddingTop: 84,
   },

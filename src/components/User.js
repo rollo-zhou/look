@@ -41,15 +41,15 @@ const User = React.createClass({
   showImagListOrThumb(type){
       this.refs.userLookList.setShowImagType(type);
   },
-  toLookedPage(type){
+  toLookedPage(type,counts){
     this.props.navigator.push({
       component: UserLooked,
       title: type,
       backButtonTitle:' ',
       passProps: {
         user:this.props.user,
-        uid:this.props.uid,
         navigator:this.props.navigator,
+        counts:counts,
         from:type=="HYPED"?"hyped_looks":"loved_looks"
       },
     });
@@ -74,6 +74,7 @@ const User = React.createClass({
         toLookedPage={this.toLookedPage}
         toUserListPage={this.toUserListPage}
         uid={this.props.uid}
+        isMe={this.props.isMe}
         navigator={this.props.navigator}/>
     );
   },
@@ -84,21 +85,14 @@ const User = React.createClass({
     return(
 
       <View style={styles.container}>
-       <UserInfo user={this.props.user}
-        ref="userInfo"
-        showImagListOrThumb={this.showImagListOrThumb}
-        toLookedPage={this.toLookedPage}
-        toUserListPage={this.toUserListPage}
-        uid={this.props.uid}
-        isMe={this.props.isMe}
-        navigator={this.props.navigator}/>
-      <UserLookList
+        <UserLookList
           user={this.props.user}
           uid={this.props.uid}
           navigator={this.props.navigator}
           from="looks"
           isMe={this.props.isMe}
           listCount={this.props.user.looks_count}
+          renderHeader={this.renderHeader}
           ref="userLookList"/>
       </View>
     );

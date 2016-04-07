@@ -25,7 +25,6 @@ const UserLooked = React.createClass({
   },
   getDefaultProps() {
     return {
-      uid: 0,
       user: {
         uid: 0,
         photo:"",
@@ -37,6 +36,7 @@ const UserLooked = React.createClass({
       },
       from:"hyped_looks",
       navigator:"",
+      counts:0,
     };
   },
   showImagListOrThumb(type){
@@ -55,10 +55,14 @@ const UserLooked = React.createClass({
           <TouchableOpacity activeOpacity={0.8} onPress={() => this.showImagListOrThumb("thumb")} style={styles.cell}>
             <Icon name="grid" color={this.state.isThumb?globalVariables.base:globalVariables.textBase} size={25}/>
           </TouchableOpacity>
-
+          <View style={styles.separator} />
           <TouchableOpacity activeOpacity={0.8} onPress={() => this.showImagListOrThumb("list")} style={styles.cell}>
               <Icon name="navicon-round" color={this.state.isThumb?globalVariables.textBase:globalVariables.base} size={27}/>
           </TouchableOpacity>
+          <View style={styles.separator} />
+          <View style={styles.cell} >
+              <Text style={styles.text}>{this.props.counts}</Text>
+          </View>
         </View>
         <UserLookList
           user={this.props.user}
@@ -75,18 +79,12 @@ const UserLooked = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 54,
+    paddingTop: 44,
     backgroundColor: globalVariables.background,
   },
   cell: {
     flexDirection: 'row',
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  cellText: {
-    flexDirection: 'row',
-    flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -96,12 +94,23 @@ const styles = StyleSheet.create({
   },
   mainSection: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    alignItems:"center",
+    justifyContent: 'center',
   },
   separator: {
     backgroundColor: globalVariables.textBase2,
-    height: 20 ,
-    width:1,
+    height: 15 ,
+    width:0.5,
+  },
+  lookedCounts: {
+    width: 35,
+    height: 25,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: globalVariables.base,
+    alignItems:'center',
+    // justifyContent: "center",
+    // marginRight:10,
   },
 });
 
