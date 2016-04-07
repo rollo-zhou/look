@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems:"center",
     justifyContent: 'center',
+    height:44,
   },
   separator: {
     backgroundColor: globalVariables.textBase2,
