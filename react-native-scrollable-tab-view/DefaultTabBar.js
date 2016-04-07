@@ -19,7 +19,7 @@ var styles = StyleSheet.create({
   },
 
   tabs: {
-    height: 2,
+    height: 1.5,
     flexDirection: 'row',
     justifyContent: 'space-around',
     borderWidth: 0,
@@ -61,7 +61,7 @@ var DefaultTabBar = React.createClass({
     var tabUnderlineStyle = {
       position: 'absolute',
       width: containerWidth / numberOfTabs,
-      height: 2,
+      height: 1,
       backgroundColor: this.props.underlineColor || "navy",
       bottom: 0,
     };

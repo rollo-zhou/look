@@ -146,7 +146,8 @@ const styles = StyleSheet.create({
       height:40,
       borderColor: globalVariables.base,
       borderWidth: 1,
-       borderRadius:3,
+      borderRadius:3,
+      fontSize:14,
   },
    style_pwd_input:{
       // backgroundColor:'#fff',

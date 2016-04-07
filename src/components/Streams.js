@@ -70,7 +70,7 @@ const Streams = React.createClass({
       <TouchableOpacity activeOpacity={0.8} onPress={()=>this.onSelect(streams.name)}>
           <View style={styles.row}>
             <Image source={{uri:streams.backgrounds[0]}}
-            style={{height: (width/2)-10,width: (width/2)-10}}/>
+            style={{height: (width/2)-10,width: (width/2)-10,backgroundColor:globalVariables.textBase2}}/>
             <View style={styles.content}>
             <Text style={styles.contentText}>{streams.name}</Text>
             </View>
