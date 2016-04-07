@@ -97,7 +97,7 @@ const LookList = React.createClass({
         translucent={true}
         >
         <Icon.TabBarItemIOS
-          title="H·N·T"
+          title="N·H·T"
           iconName="home"
           selectedIconName="home"
           iconSize={23}
@@ -108,15 +108,15 @@ const LookList = React.createClass({
             });
           }}>
           <ScrollableTabView
-            initialPage={0}
+            initialPage={1}
             onChangeTab={this.onChangeTab}
             tabBarUnderlineColor={globalVariables.base}
             >
-            <View tabLabel='HOT' style={styles.container}>
-              <LookListItem ref='listviewHot' type="hot" apiTypeUrl="look/hot" navigator={this.props.navigator} loadDate={true}/>
-            </View>
             <View tabLabel='NEW' style={styles.container}>
               <LookListItem ref='listviewNew' type="new" apiTypeUrl="look/new" navigator={this.props.navigator} loadDate={false}/>
+            </View>
+            <View tabLabel='HOT' style={styles.container}>
+              <LookListItem ref='listviewHot' type="hot" apiTypeUrl="look/hot" navigator={this.props.navigator} loadDate={true}/>
             </View>
             <View tabLabel='TOP' style={styles.container}>
               <LookListItem ref='listviewTop' type="top" apiTypeUrl="look/top/week" navigator={this.props.navigator} loadDate={false}/>

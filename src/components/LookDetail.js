@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
     height: 36,
     marginRight: 10,
     marginLeft: 5,
+    backgroundColor:globalVariables.textBase2,
   }
 });
 

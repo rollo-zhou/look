@@ -349,6 +349,7 @@ const styles = StyleSheet.create({
     height: 80,
     marginRight: 5,
     marginLeft:10,
+    backgroundColor:globalVariables.textBase2,
   },
   cell: {
     flexDirection: 'row',
