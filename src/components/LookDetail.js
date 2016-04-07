@@ -15,6 +15,7 @@ import globalVariables from '../globalVariables.js';
 import LookCell from './LookCell.js';
 import User from './User.js';
 import DoneFooter from './DoneFooter.js';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const LookDetail = React.createClass({
   getInitialState() {
@@ -100,7 +101,8 @@ const LookDetail = React.createClass({
               <Text style={styles.userName}>{comments.comment.user.name}</Text>
             </View>
             <View style={styles.timeView}>
-              <Text style={styles.time}> {globalVariables.formatDateToString(comments.comment.user.created_at)}</Text>
+              <Icon name="ios-clock-outline" color={globalVariables.textBase} size={15}/>
+              <Text style={styles.time}> {globalVariables.formatDateToString(comments.comment.created_at)}</Text>
             </View>
           </View>
           <Text style={styles.commentText}>{comments.comment.body}</Text>
@@ -176,13 +178,14 @@ const styles = StyleSheet.create({
     // fontSize:12,
   },
   timeView:{
-    width:100
+    width:55,
+    flexDirection: "row",
+    alignItems:'center',
   },
   time:{
-    color:globalVariables.textBase2,
-    textAlign:"right",
+    color:globalVariables.textBase,
     fontSize:12,
-    marginRight:10,
+    // marginRight:0,
   },
   commentText: {
     // fontSize:12,
@@ -195,7 +198,7 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     marginRight: 10,
-    marginLeft: 10,
+    marginLeft: 5,
   }
 });
 

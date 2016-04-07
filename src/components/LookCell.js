@@ -14,7 +14,6 @@ import globalVariables from '../globalVariables.js';
 import UserCell from './UserCell.js';
 import moment from 'moment';
 import LookDetail from './LookDetail.js';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import LookCellFooter from './LookCellFooter.js';
 const { width, height } = Dimensions.get('window');
 

@@ -67,7 +67,7 @@ const LookDetail = React.createClass({
 
   renderRow(users) {
     return (
-      <UserCell user={users.user} needShowTime={false} navigator={this.props.navigator}/>
+      <UserCell user={users.user} needShowTime={false} time={users.user.created_at} navigator={this.props.navigator}/>
     );
   },
   shouldComponentUpdate: function(nextProps, nextState) {

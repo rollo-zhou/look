@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
       // 容器需要添加direction才能变成让子元素flex
       flexDirection: 'row',
       opacity:0.97,
-      padding: 5,
+      padding: 10,
       backgroundColor: globalVariables.background,
       alignItems: 'center',
   },
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   addUserView: {
-     flex: 1,
+    flex: 1,
     width: 55,
     height: 25,
     borderWidth: 1,
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     marginRight: 5,
-    marginLeft:10,
+    marginLeft:5,
   }
 });
 
