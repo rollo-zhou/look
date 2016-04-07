@@ -30,6 +30,7 @@ var LookCell = React.createClass({
   },
   getInitialState() {
     return {
+      needShowTime:true,
     };
   },
   shouldComponentUpdate: function(nextProps, nextState) {
@@ -43,7 +44,7 @@ var LookCell = React.createClass({
     if(this.props.userCell){
       return (<View style={styles.item}>
         <ActivityIndicatorIOS style={styles.spinner} />
-        <UserCell user={this.props.look.user} needShowTime={this.props.look.created_at} title={this.props.look.title} onSelect={this.props.onUserSelect} navigator={this.props.navigator}/>
+        <UserCell user={this.props.look.user} needShowTime={this.props.needShowTime} time={this.props.look.created_at} title={this.props.look.title} onSelect={this.props.onUserSelect} navigator={this.props.navigator}/>
         <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect} style={{backgroundColor:globalVariables.textBase2}}>
           <Image source={{uri: this.props.look.photos.medium}} style={{height: (this.props.look.photo_height*width)/this.props.look.photo_width,resizeMode: 'cover'}}/>
         </TouchableOpacity>
@@ -82,7 +83,7 @@ var LookCell = React.createClass({
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: globalVariables.backgroundColor,
+    backgroundColor: globalVariables.background,
     margin: 0,
     marginTop: 0,
     marginBottom: 10,

@@ -33,9 +33,10 @@ const Login = React.createClass({
   },
   render() {
     return (
-      <View style={{backgroundColor:'#f4f4f4',flex:1,marginLeft:40,marginRight:40,}}
+      <View style={styles.container}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps={false} >
+        <View style={styles.containerView}>
           <Icon name="user" size={90} color={globalVariables.base} style={styles.style_image} />
           <TextInput
               style={styles.style_user_input}
@@ -68,6 +69,7 @@ const Login = React.createClass({
               </Text>
             </View>
           </TouchableOpacity>
+          </View>
       </View>
     );
   },
@@ -119,11 +121,21 @@ const Login = React.createClass({
 });
 
 const styles = StyleSheet.create({
- style_image:{
+  container:{
+    paddingTop: 44,
+    backgroundColor:globalVariables.background,
+    flex:1,
+
+  },
+  containerView:{
+    marginTop:80,
+    marginLeft:40,
+    marginRight:40,
+  },
+  style_image:{
     borderRadius:35,
     height:70,
     width:70,
-    marginTop:80,
     alignSelf:'center',
   },
   style_user_input:{

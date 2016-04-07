@@ -85,9 +85,15 @@ const UserInfo = React.createClass({
               <Text style={styles.LogoutText}>Logout</Text>
             </TouchableOpacity>);
     }else{
-      return(<TouchableOpacity style={styles.addUserView} onPress={this.addUser}>
-              <Text style={styles.addUserText}>{this.state.isFaned?"-":"+"}</Text>
-            </TouchableOpacity>);
+      if(this.state.isFaned){
+         return(<TouchableOpacity style={styles.addedUserView} onPress={this.addUser}>
+                  <Icon name="ios-checkmark-empty" size={22} color={globalVariables.background}/>
+                </TouchableOpacity>);
+      }else{
+         return(<TouchableOpacity style={styles.addUserView} onPress={this.addUser}>
+                  <Text style={styles.addUserText}>+</Text>
+                </TouchableOpacity>);
+      }
     }
   },
   getNameView(){
@@ -294,6 +300,17 @@ const styles = StyleSheet.create({
     height: 25,
     borderWidth: 1,
     borderRadius: 3,
+    borderColor: globalVariables.base,
+    alignItems:'center',
+    margin:20,
+    justifyContent: "center",
+  },
+  addedUserView: {
+    // width: width-200,
+    height: 25,
+    borderWidth: 1,
+    borderRadius: 3,
+    backgroundColor: globalVariables.base,
     borderColor: globalVariables.base,
     alignItems:'center',
     margin:20,

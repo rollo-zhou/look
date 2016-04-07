@@ -50,6 +50,7 @@ const UserLookList = React.createClass({
       navigator:"",
       isMe:false,
       listCount:-1,
+      needShowTime:true,
     };
   },
   componentDidMount() {
@@ -106,6 +107,7 @@ const UserLookList = React.createClass({
             look={looks.look}
             navigator={this.props.navigator}
             onUserSelect={function(){}}
+            needShowTime={this.props.needShowTime}
             userCell={true}
           />);
       }

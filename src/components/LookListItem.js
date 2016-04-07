@@ -47,6 +47,7 @@ const LookListItem = React.createClass({
       apiTypeUrl:"hot",
       urlPageType:"/",
       needPaddingTop:false,
+      needShowTime:true,
     };
   },
 
@@ -65,7 +66,7 @@ const LookListItem = React.createClass({
     var rowsID = [];
     looks.map((item, index)=>{
         sectionsID.push(index);
-        dataBlob[index] = item.look.user;
+        dataBlob[index] = item.look;
 
         var rowID = rowsID[index] = [];
         var id = item.look.id;
@@ -104,9 +105,9 @@ const LookListItem = React.createClass({
       />
     );
   },
-  renderSectionHeader(user){
+  renderSectionHeader(look){
      return (
-      <UserCell user={user} needShowTime={false} navigator={this.props.navigator}/>
+      <UserCell user={look.user} needShowTime={false} time={look.created_at} navigator={this.props.navigator}/>
     );
   },
 

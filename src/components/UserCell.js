@@ -25,8 +25,9 @@ var UserCell = React.createClass({
       navigator:"",
       onSelect:false,
       showByline:false,
-      needShowTime:false,
+      needShowTime:true,
       title:"",
+      time:"",
     };
   },
   getInitialState() {
@@ -62,7 +63,7 @@ var UserCell = React.createClass({
       return(
           <View style={styles.timeView} >
             <Icon name="ios-clock-outline" color={globalVariables.textBase} size={15}/>
-            <Text style={styles.timeText}> {globalVariables.formatDateToString(this.props.needShowTime)}</Text>
+            <Text style={styles.timeText}> {globalVariables.formatDateToString(this.props.time)}</Text>
           </View>
         );
     }else{
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
   },
   cell: {
     flexDirection: 'row',
-    flex: 4,
+    flex: 1,
     alignItems: 'center',
   },
   cellColumn: {
@@ -180,10 +181,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   timeView:{
-    flex: 1,
+    // flex: 1,
     width: 55,
     alignItems:'center',
-    // flexDirection: 'row',
+    flexDirection: 'row',
   },
   addUserView: {
      flex: 1,
