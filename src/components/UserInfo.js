@@ -31,7 +31,6 @@ const UserInfo = React.createClass({
         karma_count:"",
         fanned_count:0,
       },
-      uid:0,
       isThumb:true,
       isMe:false,
     };
@@ -39,8 +38,7 @@ const UserInfo = React.createClass({
 
   getDefaultProps() {
     return {
-      uid: 0,
-      user: {
+      user:{
         id:0,
         photo:"",
         name:"",
@@ -55,19 +53,23 @@ const UserInfo = React.createClass({
       toUserListPage:function(){},
     };
   },
-   module:{
+  module:{
     userFanned:null,
     user:null,
   },
   componentDidMount() {
-     // if(!this.props.user.id){
-    this.queryRromServer();
-    // }
+    this.setState({user:this.props.user});
+
     globalVariables.getUser((user)=>{
-      if(!user)return;
-        this.module.user=user;
+      if(user && user.id==this.props.user.id){
+        this.setState({
+          user:user,
+          isMe:true,
+        });
+      }else{
+        this.queryRromServer();
       }
-    );
+    });
     globalVariables.getUserFanned((fanned)=>{
       if(!fanned)return;
         this.module.userFanned=fanned;
@@ -80,7 +82,7 @@ const UserInfo = React.createClass({
     RCTDeviceEventEmitter.emit('Logout');
   },
   getBtnView(){
-    if(this.props.isMe){
+    if(this.state.isMe){
       return(<TouchableOpacity style={styles.addUserView} onPress={this.logout}>
               <Text style={styles.LogoutText}>Logout</Text>
             </TouchableOpacity>);
@@ -97,9 +99,9 @@ const UserInfo = React.createClass({
     }
   },
   getNameView(){
-    if(this.props.isMe){
+    if(this.state.isMe){
       return(<View style={[styles.cell,{height:44,marginBottom:10}]}>
-          <Text style={styles.userNameTest} > {this.props.user.name}</Text>
+          <Text style={styles.userNameTest} > {this.state.user.name}</Text>
         </View>);
     }else{
       return false;
@@ -110,18 +112,18 @@ const UserInfo = React.createClass({
     return JSON.stringify(nextState)!=JSON.stringify(this.state);
   },
   render() {
-    if(!this.props.user){
+    if(!this.state.user){
       return false;
     }
     return (
-      <View  style={[styles.flexContainer,{paddingTop: this.props.isMe?0:54}]}>
+      <View  style={[styles.flexContainer,{paddingTop: this.state.isMe?0:54}]}>
         {this.getNameView()}
         <View style={styles.mainSection}>
-          <Image source={{uri:this.props.user.photo}} style={styles.avatar}/>
+          <Image source={{uri:this.state.user.photo}} style={styles.avatar}/>
           <View style={styles.userInfoBody}>
             <View style={styles.userInfoHeader}>
               <TouchableOpacity style={styles.userInfoView} onPress={() => this.toUserListPage("fans")}>
-                <Text style={styles.numText} > {this.props.user.fans_count}</Text>
+                <Text style={styles.numText} > {this.state.user.fans_count}</Text>
                 <Text style={styles.strText} > FANS </Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.userInfoView} onPress={() => this.toUserListPage("fanned")}>
@@ -129,11 +131,11 @@ const UserInfo = React.createClass({
                 <Text style={styles.strText} > FANNED </Text>
               </TouchableOpacity>
               <View style={styles.userInfoView}>
-                <Text style={styles.numText} > {this.props.user.looks_count}</Text>
+                <Text style={styles.numText} > {this.state.user.looks_count}</Text>
                 <Text style={styles.strText} > LOOKS</Text>
               </View>
               <View style={styles.userInfoView}>
-                <Text style={styles.numText} > {this.props.user.karma_count}</Text>
+                <Text style={styles.numText} > {this.state.user.karma_count}</Text>
                 <Text style={styles.strText} > KARMA</Text>
               </View>
             </View>
@@ -174,42 +176,45 @@ const UserInfo = React.createClass({
     this.props.toUserListPage(type);
   },
   addUser(){
-    if(!this.module.user) {
-      this.props.navigator.push({
-        component: Login,
-        backButtonTitle:' ',
-        // backButtonIcon:this.state.backIcon,
-        title: 'Login',
-        passProps: {
-          navigator:this.props.navigator,
-        },
-      });
-      return;
-    }
-    // if(!this.module.userFanned) return;
-    if(this.props.user && this.props.user.id){
-      var method=this.state.isFaned?"DELETE":"POST"
-      this.setState({
-        isFaned:!this.state.isFaned,
-      });
-      globalVariables.queryRromServer(globalVariables.apiUserServer+(this.props.user.id)+"/fan"
-        ,this.addUserProcesssResults
-        ,{
-          method:method
+    globalVariables.getUser((user)=>{
+      if(!user){
+        this.props.navigator.push({
+          component: Login,
+          backButtonTitle:' ',
+          // backButtonIcon:this.state.backIcon,
+          title: 'Login',
+          passProps: {
+            navigator:this.props.navigator,
+          },
         });
-    }
-    return false;
+        return;
+      }
+
+      if(this.state.user && this.state.user.id){
+        var method=this.state.isFaned?"DELETE":"POST"
+        this.setState({
+          isFaned:!this.state.isFaned,
+        });
+        globalVariables.queryRromServer(globalVariables.apiUserServer+(this.state.user.id)+"/fan"
+          ,this.addUserProcesssResults
+          ,{
+            method:method
+          });
+      }
+
+  });
   },
+
 
   addUserProcesssResults(data) {
     if(!data) return;
     if (data.status!="fanned") {
-      delete this.module.userFanned[this.props.user.id];
+      delete this.module.userFanned[this.state.user.id];
       this.setState({
         isFaned:false,
       });
     }else{
-      this.module.userFanned[this.props.user.id]=this.props.user.id;
+      this.module.userFanned[this.state.user.id]=this.state.user.id;
       this.setState({
         isFaned:true,
       });
@@ -221,7 +226,7 @@ const UserInfo = React.createClass({
   },
 
   queryRromServer() {
-    globalVariables.queryRromServer(globalVariables.apiUserServer+(this.props.uid||this.props.user.id),this.processsResults);
+    globalVariables.queryRromServer(globalVariables.apiUserServer+(this.state.uid||this.state.user.id),this.processsResults);
   },
   processsResults(data) {
     if (!data) {
@@ -235,7 +240,7 @@ const UserInfo = React.createClass({
       searchPending: false,
       uid:data.id
     });
-    if(this.props.isMe){
+    if(this.state.isMe){
       globalVariables.userIsLogin((isLogin,user)=>{
         if(isLogin){
           globalVariables.saveMeInfo(

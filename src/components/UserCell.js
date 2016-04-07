@@ -33,6 +33,7 @@ var UserCell = React.createClass({
   getInitialState() {
     return {
       isFaned:false,
+      isMe:false,
     };
   },
   module:{
@@ -43,11 +44,13 @@ var UserCell = React.createClass({
     if(!this.props.user){
       return false;
     }
-    // globalVariables.getUser((user)=>{
-    //   if(!user)return;
-    //     this.module.user=user;
-    //   }
-    // );
+    globalVariables.getUser((user)=>{
+      if(user && user.id==this.props.user.id){
+        this.setState({
+          isMe:true,
+        });
+      }
+    });
     globalVariables.getUserFanned((fanned)=>{
       if(!fanned)return;
         this.module.userFanned=fanned;
@@ -59,7 +62,7 @@ var UserCell = React.createClass({
     return JSON.stringify(nextState)!=JSON.stringify(this.state);
   },
   getRightView(){
-    if(this.props.needShowTime||this.state.isFaned){
+    if(this.props.needShowTime||this.state.isFaned||this.state.isMe){
       return(
           <View style={styles.timeView} >
             <Icon name="ios-clock-outline" color={globalVariables.textBase} size={15}/>
