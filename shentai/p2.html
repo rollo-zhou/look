@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="author" content="Tencent-TGideas">
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>一个美国市长@了你</title>
+<link rel="stylesheet" href="css.css"/>
+</head>
+
+<body>
+
+  <div class="page page1" id="page1" >
+    <div class="page1-con">
+      <div class="loading">
+        <div class="rotate-box">
+          <i class="loading-logo"></i>
+          <b class="dian"></b>
+        </div>
+        <div class="logo-text">美国移民基金</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page page2"  id="page2" style="display:none">
+    <div class="page2-con">
+      <div class="hd">
+        <span class="avatar sp"></span>
+        <div class="txt">
+          <span class="nickname">鲁迪 朱利安尼</span>
+          <span class="invite-col">邀请你视频聊天<span class="load_one"></span><span class="load_two"></span><span class="load_three"></span></span>
+        </div>
+      </div>
+      <div class="fd">
+        <div class="remind fl">
+          <div class="column">
+            <span class="icon sp"></span>
+            提醒我
+          </div>
+        </div>
+        <div class="msg fr">
+          <div class="column">
+            <span class="icon sp"></span>
+            信息
+          </div>
+        </div>
+        <div class="answer" id='lock'>
+         <div id="well">
+            <h2><strong id="slider"></strong> <span class="text">滑动接听</span></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="page page3" id="page3" style="display:none">
+    <div class="page3-con">
+      <div class="hd">
+        <span class="nickname">鲁迪 朱利安尼</span>
+      </div>
+      <ul class="handle-col">
+        <li class="col"><i class="icon icon1"></i><em>静音</em></li>
+        <li class="col"><i class="icon icon2"></i><em>拔号键盘</em></li>
+        <li class="col"><i class="icon icon3"></i><em>免提</em></li>
+        <li class="col"><i class="icon icon4"></i><em>添加通话</em></li>
+        <li class="col"><i class="icon icon5"></i><em>FeceTime</em></li>
+        <li class="col"><i class="icon icon6"></i><em>通讯录</em></li>
+      </ul>
+        <div class="hangup">
+          <i class="icon"></i>
+        </div>
+      <div class="invite-load">
+        <div class="pop"><p class="text">Hi，how about we build another <br> “Times Square” together?</p>
+                 <p class="name"> ——“美国市长”<br>朱利安尼</p></div>
+        <div class="mayor-pic"></div>
+        <div class="btn-box" id="btn-invite"><a href="##" class="btn1">接受邀请</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page page4" id="page4" style="display:none">
+    <div class="page4-con">
+      <div class="map-box">
+        <img src="img/map-pic.jpg" alt="" class="map-pic"/>
+        <h3 class="title">Times Square</h3>
+        <p class="tel">40.759082, - 73.984622</p>
+      </div>
+      <div class="img-first" id="mask_index"></div>
+      <div class="img-end"></div>
+    </div>
+  </div>
+
+  <div class="page page5"  id="page5" style="display:none">
+    <div class="page5-con">
+      <div class="invite-load">
+        <div class="pop"><p class="text">Congratulations! We build this amazing city <br>together!</p></div>
+        <div class="mayor-pic"></div>
+        <div class="btn-box" id="btn-celebrate"><a href="##" class="btn2">Let’s celebrate it！</a></div>
+      </div>
+      <div class="img-end"></div>
+    </div>
+  </div>
+
+  <div class="page page6" id="page6" style="display:none;">
+    <div class="page6-con">
+      <div class="show-end">
+        <h1 class="logo"></h1>
+        <div class="intro">
+          <p class="text">美国移民基金<br>702TSQ全球首发活动</p>
+          <p class="city">北京 上海</p>
+          <p class="date">4月16～17日</p>
+        </div>
+        <div class="slogan">邀您共襄盛举<br>见证下一个时代广场</div>
+        <div class="btn-box">
+          <a href="##" class="btn-detial">了解活动</a>
+          <a href="##" class="btn-inv" id="towx">邀请好友</a>
+        </div>
+      </div>
+      <div id="towxdiv" style="display:none">
+        <div class="share-box"></div>
+        <div class="mask" ></div>
+      </div>
+      <div class="page-bg"></div>
+    </div>
+  </div>
+  <audio id="ring" preload loop autoplay src="http://96.f.1ting.com/570b99f9/da89fca2d18b74c15d78697ce9e8fa88/zzzfuck0O6/2006PJuLy/13b_ManHi/7.mp3"></aidio>
+<!--   <audio id="say" preload loop src="tun.mp3"></aidio>
+  <audio id="bgmusic" preload loop src="jd.mp3"></aidio>
+  <audio id="bgmusic2" preload loop src="sh.mp3"></aidio> -->
+ <!--  <audio preload loop>
+    <source id="say" src="ring.mp3" type="audio/mpeg">
+  </audio>
+  --><!-- <audio preload loop>
+    <source id="bgmusic" src="tun.mp3" type="audio/mpeg">
+  </audio>
+  <audio preload loop>
+
+    <source id="bgmusic" src="jd.mp3" type="audio/mpeg">
+
+  </audio>
+  <audio preload loop>
+
+    <source id="bgmusic2" src="sh.mp3" type="audio/mpeg">
+  </audio> -->
+</body>
+
+<script src="zepto.min.js"></script>
+<script src="wScratchPad.min.js"></script>
+<script src="index.js"></script>
+</html>

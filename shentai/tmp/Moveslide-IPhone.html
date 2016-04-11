@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    top: 0;
+    left: 0;
+	background-attachment: fixed;
+}
+#iphone {
+	position:relative;
+	width:426px;
+	height:640px;
+	margin:10px auto;
+	background:url(http://fgm.cc/iphone/1.jpg) no-repeat;
+}
+#lock {
+	position:absolute;
+	left:50%;
+	bottom:33px;
+	width:358px;
+	height:62px;
+	margin-left:-179px;
+}
+#lock span {
+	position:absolute;
+	width:93px;
+	height:62px;
+	cursor:pointer;
+	background:url(http://fgm.cc/iphone/btn.jpg) no-repeat;
+}
+</style>
+
+<title>网页计算器</title>
+</head>
+<body>
+<div id="iphone">
+  <div id="lock"><span></span></div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+(function(){
+	//处理对象&初始变量
+	var float_obj = document.getElementById('lock');
+	var	float_cur = float_obj.getElementsByTagName("span")[0],
+		curWidth =float_obj.offsetWidth-float_cur.offsetWidth,
+		eventMaxWidth =float_obj.offsetWidth,
+		eventOff,startX,clientX;
+	//按下鼠标&触点
+	function clearStart(event){
+		// if(/ui-slider-handle/.test(event.target)){
+			//滑动激活
+			eventOff = true;
+			//恢复初始className
+			// float_cur.className = float_cur_startClass;
+			//获取鼠标||触点水平坐标
+			var touch = event.touches && event.touches[0] || event;
+			//记录初始坐标
+			startX = touch.clientX;
+			//阻止对象默认行为
+			event.preventDefault();
+			//console.log("开始解锁");
+		// }
+	}
+	//移动鼠标&触点
+	function clearMove(event){
+		var touch = event.touches && event.touches[0] || event,
+			_x = touch.clientX - startX;
+		if(eventOff && startX < touch.clientX && _x <= curWidth){
+			clientX = parseInt(_x/eventMaxWidth * 100);
+			float_cur.style.left = clientX + "%";
+			// console.log("解锁进度：" + clientX + "%");
+		}
+	}
+	//释放鼠标&触点
+	function clearEnd(event){
+		//滑动激活，且解锁百分比达到50
+		if(eventOff && clientX >= 50){
+			float_obj.style.opacity = "0";
+			float_obj.style.bottom = "-80px";
+
+			eventOff = false;
+			//console.log("解锁完成");
+			return false;
+		}
+		else if(eventOff){
+			// float_cur.className += " ui-slider-handle-snapping";
+			float_cur.style.left = "0";
+			eventOff = false;
+			//console.log("解锁失败");
+		}
+	}
+	//注册触摸事件
+	float_obj.addEventListener("touchstart",clearStart,false);
+	float_obj.addEventListener("touchmove",clearMove,false);
+	float_obj.addEventListener("touchend",clearEnd,false);
+	//注册常规事件
+	float_obj.addEventListener("mousedown",clearStart,false);
+	float_obj.addEventListener("mousemove",clearMove,false);
+	float_obj.addEventListener("mouseup",clearEnd,false);
+})();
+</script>
