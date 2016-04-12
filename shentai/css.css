@@ -264,11 +264,11 @@ background-size:100% auto;}
 .cup1{-webkit-animation: cup1 .8s ease;}
 .cup2{-webkit-animation: cup2 .8s ease;}
 .page-bg{/* -webkit-animation: show-end 1s .8s ease both; */}
-.show-end .btn-box>a{ -webkit-animation: show-end2 1s 1.2s ease both; }
-.show-end .logo{-webkit-animation: logo 1s 1.4s ease both;}
-.show-end .slogan, .show-end .intro{ -webkit-animation: show-end 1s 1.6s ease both; }
-.show-end .intro{ -webkit-animation-delay: 1.8s}
-.show-end .btn-box>a{ -webkit-animation-delay:2s }
+.show-end .btn-box>a{ -webkit-animation: show-end2 1s 1.8s ease both; }
+.show-end .logo{-webkit-animation: logo 1s 2s ease both;}
+.show-end .slogan, .show-end .intro{ -webkit-animation: show-end 1s 2.2s ease both; }
+.show-end .intro{ -webkit-animation-delay: 2.5s}
+.show-end .btn-box>a{ -webkit-animation-delay:2.8s }
 
 @-webkit-keyframes logo{
     0%{opacity:0;margin-left: 0;}

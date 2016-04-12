@@ -394,4 +394,4 @@ var Fireworks = function(){
 
 }
 
-var fworks = new Fireworks();
+// var fworks = new Fireworks();

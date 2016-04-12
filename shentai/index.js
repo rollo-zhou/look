@@ -12,10 +12,11 @@ $(function(){
    // var audioMusic2=createAudio("ring.mp3");
    // var audioMusic=createAudio("tun.mp3");
 
-   // var $audioSay=$("#ring");
+
    var $audioRing=$("#ring");
-   // var $audioMusic2=$("#bgmusic");
-   // var $audioMusic=$("#bgmusic2");
+   var $audioSay=$("#say");
+   var $audioMusic=$("#bgmusic");
+   var $audioMusic2=$("#bgmusic2");
 
 
    // var $audioRing=$("<audio preload loop autoplay src='ring.mp3'></audio>");
@@ -29,9 +30,10 @@ $(function(){
    // $("body").append($audioMusic2);
 
    var audioRing=$audioRing[0];
-   // var audioSay=$audioSay[0];
-   // var audioMusic2=$audioMusic2[0];
-   // var audioMusic=$audioMusic[0];
+   var audioSay=$audioSay[0];
+   var audioMusic=$audioMusic[0];
+   var audioMusic2=$audioMusic2[0];
+
 
    // var audioSay;
    // var audioMusic2;
@@ -145,7 +147,10 @@ $(function(){
       $p2.hide();
       $p3.show();
       audioRing.pause();
-      // audioSay.play();
+      setTimeout(function(){
+        audioSay.play();
+      }, 1000);
+
 
       // var $audioMusic=$("<audio preload loop src='tun.mp3'></audio>");
       //  $("body").append($audioMusic);
@@ -180,13 +185,13 @@ $(function(){
  (function(){
     $p4.show();
     $("#mask_index").wScratchPad({
-        size        : 50,
+        size        : 30,
         bg          : "",
         fg          : "img/img-first.jpg",
         realtime    : false,
         scratchDown : null,
         scratchUp   : function(e, percent){
-          if(percent > 0){
+          if(percent > 75){
             this.clear();
             this.enable("enabled", false);
             $("#mask_index").hide(300);
@@ -223,6 +228,7 @@ $(function(){
    */
   var p6={
     init:function(){
+      var fworks = new Fireworks();
       $p5.hide();
       $p6.show();
     },
