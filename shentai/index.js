@@ -186,7 +186,7 @@ $(function(){
         realtime    : false,
         scratchDown : null,
         scratchUp   : function(e, percent){
-          if(percent > 70){
+          if(percent > 0){
             this.clear();
             this.enable("enabled", false);
             $("#mask_index").hide(300);

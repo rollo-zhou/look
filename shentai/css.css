@@ -186,15 +186,15 @@ background-size:400px 400px;}
 }
 @-webkit-keyframes anim-badge2{
     0%{opacity:0;left:0px;}
-    100%{opacity:1;left:20px;}
+    100%{opacity:1;left:5px;}
 }
 
 
-.mayor-pic{position: absolute;bottom:0;left: 0;width: 80%;height: 60%;background:url(img/mayor-pic.png) no-repeat 0 0;-webkit-background-size:100% auto;
+.mayor-pic{position: absolute;bottom:0;left: 0;width: 100%;height: 60%;background:url(img/mayor-pic.png) no-repeat 0 bottom;-webkit-background-size:100% auto;
 background-size:100% auto;}
 
 .pop{padding:10px;width: 200px;position: absolute;right: 10px;bottom: 60%;background-color:#7f7f7f;color:#fff;font-size: 12px;z-index: 10;}
-.pop:after{position: absolute;content:"";bottom:-19px;left:20px;display: block;width: 0;height: 0;overflow: hidden;font-size: 0;
+.pop:after{position: absolute;content:"";bottom:-19px;left:60px;display: block;width: 0;height: 0;overflow: hidden;font-size: 0;
 border-top:10px solid #7f7f7f;
 border-right:15px solid transparent;
 border-bottom:10px solid transparent;
@@ -230,8 +230,8 @@ background-size:cover;}
 .page5 .pop{padding:30px 10px;}
 
 .page-bg{position: absolute;left:0;top:0;width: 100%;height: 100%;background-repeat: no-repeat;background-position: center bottom;
-z-index: 2;background-image: url(img/cup-end.png);-webkit-background-size:100% auto;background-size:100% auto;
--webkit-animation: show-end 1s .7s ease both;
+z-index: 2;background-image: url(img/cup-end.jpg);-webkit-background-size:100% 100%;background-size:100% 100%;
+/* -webkit-animation: show-end 1s .7s ease both; */
 }
 
 .mask{position: absolute;content:"";left: 0;top: 0;z-index: 11;width: 100%;height: 100%;background:rgba(0,0,0,.6);}
@@ -240,11 +240,11 @@ background-size:100% auto;}
 
 
 .show-end{height: 100%;position: relative;z-index: 10;
-    transition:all 1s ease-out 0s;
+    /* transition:all 1s ease-out 0s;
     -webkit-transition:all 1s ease-out 0s;
     -moz-transition:all 1s ease-out 0s;
     -o-transition:all 1s ease-out 0s;
-    -ms-transition:all 1s ease-out 0s;
+    -ms-transition:all 1s ease-out 0s; */
 }
 .show-end>div{box-sizing:border-box;
 -moz-box-sizing:border-box;
@@ -263,7 +263,7 @@ background-size:100% auto;}
 
 .cup1{-webkit-animation: cup1 .8s ease;}
 .cup2{-webkit-animation: cup2 .8s ease;}
-.page-bg{-webkit-animation: show-end 1s .8s ease both;}
+.page-bg{/* -webkit-animation: show-end 1s .8s ease both; */}
 .show-end .btn-box>a{ -webkit-animation: show-end2 1s 1.2s ease both; }
 .show-end .logo{-webkit-animation: logo 1s 1.4s ease both;}
 .show-end .slogan, .show-end .intro{ -webkit-animation: show-end 1s 1.6s ease both; }
@@ -297,7 +297,7 @@ background-size:100% auto;}
 @media only screen and (min-width: 375px){
     .show-end .logo{width: 100px;
 height: 80px;}
-    .show-end .intro{padding: 30px 0;}
-    .show-end .slogan{padding: 30px 0;}
+    .show-end .intro{padding: 20px 0;}
+    .show-end .slogan{padding: 20px 0;}
 .show-end .btn-box{bottom: 15%;}
 }
