@@ -198,10 +198,8 @@ $(function(){
             p5.init();
           }
         },
-        scratchMove : function(e, percent){
-          console.log(percent);
-        },
-        cursor: "crosshair"
+        scratchMove : null,
+        cursor: null,
     });
     $p4.hide();
     $p4.one('touchmove', function(event) {
