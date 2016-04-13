@@ -57,7 +57,7 @@ $(function(){
     init:function(){
       $p1.hide();
       $p2.show();
-      audioRing.play();
+
 
       // var $audioSay=$("<audio preload loop src='jd.mp3'></audio>");
       // $("body").append($audioSay);
@@ -98,7 +98,7 @@ $(function(){
         _x = touch.clientX - startX;
         // console.log(startX+"--"+touch.clientX+"--"+curWidth);
       if(eventOff && startX < touch.clientX && _x <= curWidth){
-        if(clientX>=25){
+        if(clientX>=15){
           float_text.hide();
         }else{
           float_text.show();
@@ -185,13 +185,13 @@ $(function(){
  (function(){
     $p4.show();
     $("#mask_index").wScratchPad({
-        size        : 30,
-        bg          : "",
+        size        : 40,
+        bg          : "img/img-end.jpg",
         fg          : "img/img-first.jpg",
         realtime    : false,
         scratchDown : null,
         scratchUp   : function(e, percent){
-          if(percent > 75){
+          if(percent > 50){
             this.clear();
             this.enable("enabled", false);
             $("#mask_index").hide(300);
@@ -204,6 +204,10 @@ $(function(){
         cursor: "crosshair"
     });
     $p4.hide();
+    $p4.one('touchmove', function(event) {
+      $("#tips").hide();
+    });
+
   })();
 
   /*
@@ -245,8 +249,16 @@ $(function(){
 
   (function(){
     window.onload=function(){
-      p2.init();
+      audioRing.play();
+      // setTimeout(function(){
+      //   alert(audioRing.currentTime);
+      //   if(audioRing.currentTime){
+      //     alert(audioRing.currentTime);
+          p2.init();
+      //   }else{
 
+      //   }
+      // },300);
     }
   })();
 });
