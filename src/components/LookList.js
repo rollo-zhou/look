@@ -31,6 +31,7 @@ const LookList = React.createClass({
       selectedTab: 'lookbook',
       mePage:"",
       feedPage:"",
+      pageReload:1,
     };
   },
 
@@ -47,6 +48,7 @@ const LookList = React.createClass({
 
   componentDidMount() {
     // Storage.removeItem("user");
+    console.log('List-componentDidMount');
     this.getMePage();
     RCTDeviceEventEmitter.addListener('Login',this._onNotification);
     RCTDeviceEventEmitter.addListener('Logout',this._onNotification);
@@ -54,15 +56,22 @@ const LookList = React.createClass({
   _onNotification(notification) {
     this.getMePage()
   },
+  shouldComponentUpdate: function(nextProps, nextState) {
+    console.log('list.js-shouldComponentUpdate');
+    return false;
+    // return this.state.type!=nextState.type||this.state.selectedTab!=nextState.selectedTab||this.state.pageReload!=nextState.pageReload;
+  },
   getMePage(){
     globalVariables.getUser((user)=>{
       if(user&&user.id){
         this.setState({
+          pageReload:this.state.pageReload+1,
           mePage:(<User user={user} isMe={true} navigator={this.props.navigator}/>),
           feedPage:(<LookListItem type="feed" apiTypeUrl="feed/looks" navigator={this.props.navigator} loadDate={true} />),
         });
       }else{
         this.setState({
+          pageReload:this.state.pageReload+1,
           mePage:(<Login navigator={this.props.navigator}/>),
           feedPage:(<Login navigator={this.props.navigator}/>),
         });
@@ -90,6 +99,7 @@ const LookList = React.createClass({
   //   // return JSON.stringify(nextState)!=JSON.stringify(this.state);
   // },
   render() {
+    console.log('List-render');
     return (
        <TabBarIOS
         tintColor={globalVariables.base}

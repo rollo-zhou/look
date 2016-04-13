@@ -38,7 +38,8 @@ const LookDetail = React.createClass({
   },
 
   getDataSource(comments) {
-    return this.state.dataSource.cloneWithRows(comments);
+    return false;
+    // return this.state.dataSource.cloneWithRows(comments);
   },
 
   renderFooter() {
@@ -86,6 +87,7 @@ const LookDetail = React.createClass({
     });
   },
   shouldComponentUpdate: function(nextProps, nextState) {
+    console.log('LookDetail.js.js-shouldComponentUpdate');
     return JSON.stringify(nextState)!=JSON.stringify(this.state);
   },
   renderRow(comments) {
@@ -112,6 +114,7 @@ const LookDetail = React.createClass({
   },
 
   render() {
+    console.log('LookDetail.js.js-render');
     return (
       <ListView
         dataSource={this.state.dataSource}

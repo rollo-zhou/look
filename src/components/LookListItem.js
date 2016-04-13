@@ -76,6 +76,8 @@ const LookListItem = React.createClass({
     return this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionsID, rowsID);
   },
   shouldComponentUpdate: function(nextProps, nextState) {
+    // console.log('LookListItem.js-shouldComponentUpdate');
+    // return false;
     return JSON.stringify(nextState)!=JSON.stringify(this.state);
   },
   renderFooter() {
@@ -89,7 +91,7 @@ const LookListItem = React.createClass({
 
   onEndReached() {
     if (this.state.next && !this.state.searchPending) {
-      this.setState({ searchPending: true });
+      // this.setState({ searchPending: true });
       this.queryRromServer(this.state.pageNo);
     }
   },
@@ -112,6 +114,8 @@ const LookListItem = React.createClass({
   },
 
   render() {
+    console.log('LookListItem.js-render');
+
     if (!this.state.searchPending && !this.state.looks.length) {
       return (
         <View style={styles.container}>
@@ -133,6 +137,10 @@ const LookListItem = React.createClass({
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps={false}
         showsVerticalScrollIndicator={true}
+        initialListSize={1}
+        pageSize={2}
+        scrollRenderAheadDistance={10}
+        removeClippedSubviews={true}
         refreshControl={
           <RefreshControl
           onRefresh={this.reFreshQueryRMLS}
@@ -145,10 +153,10 @@ const LookListItem = React.createClass({
   },
   reFreshQueryRMLS(page) {
     if (!this.state.searchPending) {
-      this.setState({ refreshing: true ,pageNo:1});
+      // this.setState({ refreshing: true ,pageNo:1});
       this.queryRromServer(1);
     }else{
-       this.setState({ refreshing: false });
+       // this.setState({ refreshing: false });
     }
   },
 
