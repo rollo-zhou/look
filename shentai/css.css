@@ -187,7 +187,7 @@ background-size:400px 400px;}
 }
 @-webkit-keyframes anim-badge2{
     0%{opacity:0;left:0px;}
-    100%{opacity:1;left:5px;}
+    100%{opacity:1;left:0px;}
 }
 
 
