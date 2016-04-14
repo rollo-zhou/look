@@ -138,8 +138,8 @@ const LookListItem = React.createClass({
         keyboardShouldPersistTaps={false}
         showsVerticalScrollIndicator={true}
         initialListSize={1}
-        pageSize={2}
-        scrollRenderAheadDistance={10}
+        pageSize={1}
+        scrollRenderAheadDistance={1}
         removeClippedSubviews={true}
         refreshControl={
           <RefreshControl
@@ -153,10 +153,10 @@ const LookListItem = React.createClass({
   },
   reFreshQueryRMLS(page) {
     if (!this.state.searchPending) {
-      // this.setState({ refreshing: true ,pageNo:1});
+      this.setState({ refreshing: true ,pageNo:1});
       this.queryRromServer(1);
     }else{
-       // this.setState({ refreshing: false });
+       this.setState({ refreshing: false });
     }
   },
 

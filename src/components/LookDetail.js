@@ -38,8 +38,8 @@ const LookDetail = React.createClass({
   },
 
   getDataSource(comments) {
-    return false;
-    // return this.state.dataSource.cloneWithRows(comments);
+    // return false;
+    return this.state.dataSource.cloneWithRows(comments);
   },
 
   renderFooter() {

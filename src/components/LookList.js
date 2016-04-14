@@ -58,8 +58,8 @@ const LookList = React.createClass({
   },
   shouldComponentUpdate: function(nextProps, nextState) {
     console.log('list.js-shouldComponentUpdate');
-    return false;
-    // return this.state.type!=nextState.type||this.state.selectedTab!=nextState.selectedTab||this.state.pageReload!=nextState.pageReload;
+    // return false;
+    return this.state.type!=nextState.type||this.state.selectedTab!=nextState.selectedTab||this.state.pageReload!=nextState.pageReload;
   },
   getMePage(){
     globalVariables.getUser((user)=>{

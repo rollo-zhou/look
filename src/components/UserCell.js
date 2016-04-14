@@ -59,8 +59,8 @@ var UserCell = React.createClass({
     );
   },
   shouldComponentUpdate: function(nextProps, nextState) {
-    return false;
-    // return JSON.stringify(nextState)!=JSON.stringify(this.state);
+    // return false;
+    return JSON.stringify(nextState)!=JSON.stringify(this.state);
   },
   getRightView(){
     if(this.props.needShowTime||this.state.isFaned||this.state.isMe){
