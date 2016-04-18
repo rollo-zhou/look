@@ -42,8 +42,9 @@ var LookCell = React.createClass({
     }
 
     if(this.props.userCell){
-      return (<View style={styles.item}>
-        <ActivityIndicatorIOS style={styles.spinner} />
+      return (
+        <View style={styles.item}>
+
         <UserCell user={this.props.look.user} needShowTime={this.props.needShowTime} time={this.props.look.created_at} title={this.props.look.title} onSelect={this.props.onUserSelect} navigator={this.props.navigator}/>
         <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect} style={{backgroundColor:globalVariables.textBase2}}>
           <Image source={{uri: this.props.look.photos.medium}} style={{height: (this.props.look.photo_height*width)/this.props.look.photo_width,resizeMode: 'cover'}}/>
@@ -53,7 +54,7 @@ var LookCell = React.createClass({
     }
     return (
     <View style={styles.item}>
-      <ActivityIndicatorIOS style={styles.spinner} />
+
         <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect} style={{backgroundColor:globalVariables.textBase2}}>
           <Image source={{uri: this.props.look.photos.medium}} style={{height: (this.props.look.photo_height*width)/this.props.look.photo_width,resizeMode: 'cover'}}/>
         </TouchableOpacity>
@@ -63,6 +64,7 @@ var LookCell = React.createClass({
   },
 
   onSelect() {
+    console.log(new Date()-0);
     if(this.props.onSelect){
       this.props.onSelect(this.props.look);
     }else{

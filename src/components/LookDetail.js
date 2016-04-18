@@ -114,6 +114,7 @@ const LookDetail = React.createClass({
   },
 
   render() {
+    console.log(new Date()-0);
     console.log('LookDetail.js.js-render');
     return (
       <ListView

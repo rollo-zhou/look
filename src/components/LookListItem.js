@@ -15,6 +15,8 @@ import LookListNoResults from './LookListNoResults.js';
 import globalVariables from '../globalVariables.js';
 import DoneFooter from './DoneFooter.js';
 import UserCell from './UserCell.js';
+// var Perf = require('react-addons');
+var looks  = require('./looks.js');
 
 const LookListItem = React.createClass({
   getInitialState() {
@@ -52,9 +54,18 @@ const LookListItem = React.createClass({
   },
 
   componentWillMount() {
+    // RCTJSCProfiler.RCTJSCProfilerStart();
+    // window.Perf = React.addons.Perf;
+    // React.addons.Perf.start();
     if(this.props.loadDate){
       this.queryRromServer(1);
     }
+  },
+  componentDidMount(){
+    // RCTJSCProfiler.RCTJSCProfilerStop();
+    console.log("React.addons.Perf.stop");
+    // React.addons.Perf.stop();
+    // React.addons.Perf.printWasted();
   },
   haveLoadData(){
     return !!this.state.looks.length;
@@ -108,6 +119,7 @@ const LookListItem = React.createClass({
     );
   },
   renderSectionHeader(look){
+    return false;
      return (
       <UserCell user={look.user} needShowTime={false} time={look.created_at} navigator={this.props.navigator}/>
     );
@@ -138,7 +150,7 @@ const LookListItem = React.createClass({
         keyboardShouldPersistTaps={false}
         showsVerticalScrollIndicator={true}
         initialListSize={1}
-        pageSize={1}
+        pageSize={12}
         scrollRenderAheadDistance={1}
         removeClippedSubviews={true}
         refreshControl={
@@ -161,14 +173,16 @@ const LookListItem = React.createClass({
   },
 
   queryRromServer(page) {
-    var url=globalVariables.apiServer+this.props.apiTypeUrl+'/'+(page||1)
-    if(this.props.urlPageType!="/"){
-      url=globalVariables.apiServer+this.props.apiTypeUrl+'?page='+(page||1)
-    }
-    globalVariables.queryRromServer(url,this.processsResults);
+    this.processsResults();
+    // var url=globalVariables.apiServer+this.props.apiTypeUrl+'/'+(page||1)
+    // if(this.props.urlPageType!="/"){
+    //   url=globalVariables.apiServer+this.props.apiTypeUrl+'?page='+(page||1)
+    // }
+    // globalVariables.queryRromServer(url,this.processsResults);
   },
 
   processsResults(data) {
+    data=looks;
     if (!data||!data.looks||!data.looks.length){
       this.setState({
         searchPending: false,
