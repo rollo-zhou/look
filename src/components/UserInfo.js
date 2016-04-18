@@ -57,7 +57,7 @@ const UserInfo = React.createClass({
     userFanned:null,
     user:null,
   },
-  componentDidMount() {
+  componentWillMount() {
     this.setState({user:this.props.user});
 
     globalVariables.getUser((user)=>{

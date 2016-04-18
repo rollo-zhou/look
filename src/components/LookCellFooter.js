@@ -34,7 +34,7 @@ var LookCellFooter = React.createClass({
     userHyped:null,
     user:null,
   },
-  componentDidMount() {
+  componentWillMount() {
     if(!this.props.look){
       return false;
     }

@@ -9,6 +9,7 @@ const {
   View,
   TabBarIOS,
   Dimensions,
+  RCTJSCProfiler,
 } = React;
 
 
@@ -21,6 +22,7 @@ import ScrollableTabView, { DefaultTabBar, ScrollableTabBar, } from 'react-nativ
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Storage from './Storage.js';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+
 
 const {width, height} = Dimensions.get('window');
 
@@ -42,16 +44,24 @@ const LookList = React.createClass({
   },
 
   componentWillUnmount() {
+        // RCTJSCProfiler.RCTJSCProfilerStop();
     RCTDeviceEventEmitter.removeListener('Login',this._onNotification);
     RCTDeviceEventEmitter.removeListener('Logout',this._onNotification);
   },
+  componentDidMount(){
+    console.log("React.addons.Perf.stop");
+    // React.addons.Perf.stop();
 
-  componentDidMount() {
+  },
+  componentWillMount() {
+    console.log("React.addons.Perf.start");
+    // React.addons.Perf.start()
     // Storage.removeItem("user");
     console.log('List-componentDidMount');
     this.getMePage();
     RCTDeviceEventEmitter.addListener('Login',this._onNotification);
     RCTDeviceEventEmitter.addListener('Logout',this._onNotification);
+    // RCTJSCProfiler.RCTJSCProfilerStart();
   },
   _onNotification(notification) {
     this.getMePage()

@@ -53,7 +53,7 @@ const UserLookList = React.createClass({
       needShowTime:true,
     };
   },
-  componentDidMount() {
+  componentWillMount() {
     // console.log(this.props.search);
 
     this.queryRromServer();

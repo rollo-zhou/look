@@ -40,7 +40,7 @@ var UserCell = React.createClass({
     userFanned:null,
     user:null,
   },
-  componentDidMount() {
+  componentWillMount() {
     if(!this.props.user){
       return false;
     }

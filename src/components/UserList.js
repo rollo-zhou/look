@@ -41,7 +41,7 @@ const LookDetail = React.createClass({
       navigator:""
     };
   },
-  componentDidMount() {
+  componentWillMount() {
       this.queryRromServer(1);
   },
 

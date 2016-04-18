@@ -7,7 +7,7 @@ const {
   Text,
   TextInput,
   View,
-  RefreshControl
+  RefreshControl,
 } = React;
 
 import LookCell from './LookCell.js';
@@ -51,7 +51,7 @@ const LookListItem = React.createClass({
     };
   },
 
-  componentDidMount() {
+  componentWillMount() {
     if(this.props.loadDate){
       this.queryRromServer(1);
     }
