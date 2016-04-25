@@ -9,7 +9,6 @@ const {
   View,
   TabBarIOS,
   Dimensions,
-  RCTJSCProfiler,
 } = React;
 
 

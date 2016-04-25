@@ -15,7 +15,6 @@ import LookListNoResults from './LookListNoResults.js';
 import globalVariables from '../globalVariables.js';
 import DoneFooter from './DoneFooter.js';
 import UserCell from './UserCell.js';
-// var Perf = require('react-addons');
 var looks  = require('./looks.js');
 
 const LookListItem = React.createClass({
@@ -54,7 +53,7 @@ const LookListItem = React.createClass({
   },
 
   componentWillMount() {
-    // RCTJSCProfiler.RCTJSCProfilerStart();
+    // RCTJSCProfiler.nativeProfilerStart();
     // window.Perf = React.addons.Perf;
     // React.addons.Perf.start();
     if(this.props.loadDate){
@@ -119,7 +118,7 @@ const LookListItem = React.createClass({
     );
   },
   renderSectionHeader(look){
-    return false;
+    // return false;
      return (
       <UserCell user={look.user} needShowTime={false} time={look.created_at} navigator={this.props.navigator}/>
     );
