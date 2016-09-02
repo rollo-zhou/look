@@ -1,8 +1,8 @@
-import React from 'react-native';
+import React from 'react';
 import {
   NavigatorIOS,
   StyleSheet
-} = React;
+} from 'react-native';
 
 import globalVariables from './globalVariables.js';
 import Dimensions from 'Dimensions';
