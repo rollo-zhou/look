@@ -1,5 +1,6 @@
-var React = require('react-native');
-var {
+import React form 'react';
+
+import {
   View,
   Animated,
   StyleSheet,
@@ -7,7 +8,7 @@ var {
   TouchableOpacity,
   Text,
   Platform,
-} = React;
+} from 'react-native';
 
 const TAB_HEIGHT = 40;
 

@@ -1,5 +1,5 @@
-import React from 'react-native';
-const {
+import React from 'react';
+import {
   ActivityIndicatorIOS,
   ListView,
   StyleSheet,
@@ -8,7 +8,7 @@ const {
   TextInput,
   View,
   RefreshControl,
-} = React;
+} from 'react-native';
 
 import LookCell from './LookCell.js';
 import LookListNoResults from './LookListNoResults.js';
@@ -62,7 +62,7 @@ const LookListItem = React.createClass({
   },
   componentDidMount(){
     // RCTJSCProfiler.RCTJSCProfilerStop();
-    console.log("React.addons.Perf.stop");
+    // console.log("React.addons.Perf.stop");
     // React.addons.Perf.stop();
     // React.addons.Perf.printWasted();
   },
@@ -147,11 +147,13 @@ const LookListItem = React.createClass({
         automaticallyAdjustContentInsets={false}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps={false}
-        showsVerticalScrollIndicator={true}
+        pagingEnabled={false}
         initialListSize={1}
         pageSize={12}
         scrollRenderAheadDistance={1}
-        removeClippedSubviews={true}
+        removeClippedSubviews
+        enableEmptySections
+        showsVerticalScrollIndicator
         refreshControl={
           <RefreshControl
           onRefresh={this.reFreshQueryRMLS}
@@ -172,16 +174,16 @@ const LookListItem = React.createClass({
   },
 
   queryRromServer(page) {
-    this.processsResults();
-    // var url=globalVariables.apiServer+this.props.apiTypeUrl+'/'+(page||1)
-    // if(this.props.urlPageType!="/"){
-    //   url=globalVariables.apiServer+this.props.apiTypeUrl+'?page='+(page||1)
-    // }
-    // globalVariables.queryRromServer(url,this.processsResults);
+    // this.processsResults();
+    var url=globalVariables.apiServer+this.props.apiTypeUrl+'/'+(page||1)
+    if(this.props.urlPageType!="/"){
+      url=globalVariables.apiServer+this.props.apiTypeUrl+'?page='+(page||1)
+    }
+    globalVariables.queryRromServer(url,this.processsResults);
   },
 
   processsResults(data) {
-    data=looks;
+    // data=looks;
     if (!data||!data.looks||!data.looks.length){
       this.setState({
         searchPending: false,

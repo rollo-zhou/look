@@ -1,5 +1,5 @@
-import React from 'react-native';
-const {
+import React from 'react';
+import {
   ActivityIndicatorIOS,
   ListView,
   StyleSheet,
@@ -9,7 +9,7 @@ const {
   View,
   TabBarIOS,
   Dimensions,
-} = React;
+} from 'react-native';
 
 
 import LookListItem from './LookListItem.js';
@@ -88,7 +88,7 @@ const LookList = React.createClass({
     });
   },
   onChangeTab(index,ref){
-    if(!index.i) return;
+    // if(!index.i) return;
     if(index.i==0){
       if(!this.refs.listviewHot.haveLoadData()){
         this.refs.listviewHot.queryRromServer(1);

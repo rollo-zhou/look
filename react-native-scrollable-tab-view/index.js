@@ -1,5 +1,5 @@
-const React = require('react-native');
-const {
+import React form 'react';
+import {
   Dimensions,
   View,
   Animated,
@@ -9,7 +9,7 @@ const {
   ViewPagerAndroid,
   PropTypes,
   InteractionManager,
-} = React;
+} from 'react-native';
 
 const DefaultTabBar = require('./DefaultTabBar');
 const ScrollableTabBar = require('./ScrollableTabBar');

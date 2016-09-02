@@ -1,10 +1,10 @@
-import React from 'react-native';
-const {
+import React from 'react';
+import {
   StyleSheet,
   Image,
   Text,
   View,
-} = React;
+} from 'react-native';
 
 import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');
@@ -22,10 +22,9 @@ const LookListNoResults = React.createClass({
   render() {
     return (
       <View style={styles.view}>
-        <Image source={require('../images/sad-foxy.png')} style={styles.image} />
+
         <Text style={styles.text}>
-          Oh no! There aren’t any houses
-          that match your search!
+          Oh no!
         </Text>
       </View>
     );

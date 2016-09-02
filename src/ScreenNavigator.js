@@ -1,5 +1,5 @@
 import React from 'react-native';
-const {
+import {
   NavigatorIOS,
   StyleSheet
 } = React;

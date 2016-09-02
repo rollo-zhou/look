@@ -1,7 +1,6 @@
 //🌚🌝😩😤😫
-
-import React from 'react-native';
-const {
+import React from 'react';
+import {
   StyleSheet,
   Text,
   View,
@@ -9,7 +8,7 @@ const {
   TabBarIOS,
   PixelRatio,
   StatusBar,
-} = React;
+} from 'react-native';
 
 import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');

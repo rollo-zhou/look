@@ -1,5 +1,5 @@
-import React from 'react-native';
-const {
+import React from 'react';
+import {
   ActivityIndicatorIOS,
   StyleSheet,
   Image,
@@ -8,7 +8,7 @@ const {
   ListView,
   TouchableOpacity,
   RefreshControl,
-} = React;
+} from 'react-native';
 
 import Dimensions from 'Dimensions';
 const {width, height} = Dimensions.get('window');

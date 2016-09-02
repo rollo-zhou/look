@@ -1,5 +1,5 @@
-import React from 'react-native';
-const {
+import React from 'react';
+import {
   ActivityIndicatorIOS,
   Image,
   PixelRatio,
@@ -8,7 +8,7 @@ const {
   TouchableOpacity,
   View,
   Dimensions,
-} = React;
+} from 'react-native';
 
 import globalVariables from '../globalVariables.js';
 import UserCell from './UserCell.js';
