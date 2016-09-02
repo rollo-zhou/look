@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {
   Dimensions,
   View,
@@ -7,7 +7,6 @@ import {
   Platform,
   StyleSheet,
   ViewPagerAndroid,
-  PropTypes,
   InteractionManager,
 } from 'react-native';
 

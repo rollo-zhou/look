@@ -1,6 +1,6 @@
 'use strict';
 
-import React form 'react';
+import React, {PropTypes} from 'react';
 import {
   StyleSheet,
   Text,
