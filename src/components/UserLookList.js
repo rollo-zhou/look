@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   StyleSheet,
   Image,
   Text,
@@ -72,13 +72,17 @@ const UserLookList = React.createClass({
       }
 
       this.setState({
-        dataSource:new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
+        dataSource:this.getDataSource([]),
         listRowStyle:style,
-        showImagType:showImagType,
+        showImagType:showImagType
       });
-      this.setState({
-        dataSource: this.getDataSource(this.state.looks),
+      var _this=this;
+      setTimeout(function(){
+        _this.setState({
+        dataSource: _this.getDataSource(_this.state.looks)
       });
+      }, 0);
+
     }
   },
 
@@ -89,7 +93,7 @@ const UserLookList = React.createClass({
       );
     }
 
-    return (<ActivityIndicatorIOS style={styles.scrollSpinner} />);
+    return (<ActivityIndicator style={styles.scrollSpinner} />);
   },
 
   onEndReached() {
@@ -98,9 +102,9 @@ const UserLookList = React.createClass({
       this.queryRromServer(this.state.pageNo);
     }
   },
-  shouldComponentUpdate: function(nextProps, nextState) {
-    return JSON.stringify(nextState)!=JSON.stringify(this.state);
-  },
+  // shouldComponentUpdate: function(nextProps, nextState) {
+  //   return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  // },
   renderRow(looks) {
      if(this.state.showImagType=="list"){
         return (<LookCell
@@ -220,21 +224,28 @@ const styles = StyleSheet.create({
     flex: 1,
     // paddingTop: -10,
     backgroundColor: globalVariables.background,
+    // backgroundColor: globalVariables.textBase,
   },
 
   list: {
 
   },
   thumb: {
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'flex-start',
+    alignItems: 'flex-start'
   },
 
   scrollSpinner: {
     marginVertical: 20,
     width:width,
+  },
+
+
+  row: {
+    margin: 0.5,
+    backgroundColor:globalVariables.textBase2,
   },
 });
 

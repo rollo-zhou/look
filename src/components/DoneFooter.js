@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   StyleSheet,
   Image,
   Text,
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     height:40,
     width:width,
     marginTop:20,
-    marginBottom:20,
+    marginBottom:0,
   },
   ILoveYou: {
     paddingTop:10,

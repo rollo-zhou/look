@@ -1,6 +1,6 @@
 import React from 'react-native';
 const {
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   ListView,
   StyleSheet,
   Text,

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   StyleSheet,
   Image,
   Text,
@@ -55,7 +55,7 @@ const LookDetail = React.createClass({
        <DoneFooter/>
       );
     }
-    return <ActivityIndicatorIOS style={styles.scrollSpinner} />;
+    return <ActivityIndicator style={styles.scrollSpinner} />;
   },
 
   onEndReached() {

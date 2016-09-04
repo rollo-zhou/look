@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   StyleSheet,
   Image,
   Text,
@@ -89,7 +89,7 @@ const UserInfo = React.createClass({
     }else{
       if(this.state.isFaned){
          return(<TouchableOpacity style={styles.addedUserView} onPress={this.addUser}>
-                  <Icon name="ios-checkmark-empty" size={22} color={globalVariables.background}/>
+                  <Icon name="ios-checkmark-outline" size={25} color={globalVariables.background}/>
                 </TouchableOpacity>);
       }else{
          return(<TouchableOpacity style={styles.addUserView} onPress={this.addUser}>
@@ -100,7 +100,7 @@ const UserInfo = React.createClass({
   },
   getNameView(){
     if(this.state.isMe){
-      return(<View style={[styles.cell,{height:44,marginBottom:10}]}>
+      return(<View style={styles.meName}>
           <Text style={styles.userNameTest} > {this.state.user.name}</Text>
         </View>);
     }else{
@@ -122,19 +122,19 @@ const UserInfo = React.createClass({
           <Image source={{uri:this.state.user.photo}} style={styles.avatar}/>
           <View style={styles.userInfoBody}>
             <View style={styles.userInfoHeader}>
-              <TouchableOpacity style={styles.userInfoView} onPress={() => this.toUserListPage("fans")}>
+              <TouchableOpacity style={[styles.userInfoView,{flex:2}]} onPress={() => this.toUserListPage("fans")}>
                 <Text style={styles.numText} > {this.state.user.fans_count}</Text>
                 <Text style={styles.strText} > FANS </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.userInfoView} onPress={() => this.toUserListPage("fanned")}>
+              <TouchableOpacity style={[styles.userInfoView,{flex:2}]} onPress={() => this.toUserListPage("fanned")}>
                 <Text style={styles.numText} > {this.state.user.fanned_count}</Text>
                 <Text style={styles.strText} > FANNED </Text>
               </TouchableOpacity>
-              <View style={styles.userInfoView}>
+              <View style={[styles.userInfoView,{flex:2}]}>
                 <Text style={styles.numText} > {this.state.user.looks_count}</Text>
                 <Text style={styles.strText} > LOOKS</Text>
               </View>
-              <View style={styles.userInfoView}>
+              <View style={[styles.userInfoView,{flex:2}]}>
                 <Text style={styles.numText} > {this.state.user.karma_count}</Text>
                 <Text style={styles.strText} > KARMA</Text>
               </View>
@@ -143,22 +143,22 @@ const UserInfo = React.createClass({
           </View>
         </View>
 
-        <View style={{paddingBottom: 5}}></View>
+
         <View style={styles.mainSection}>
           <TouchableOpacity activeOpacity={0.8} onPress={() => this.showImagListOrThumb("thumb")} style={styles.cell}>
-            <Icon name="grid" color={this.state.isThumb?globalVariables.base:globalVariables.textBase} size={30}/>
+            <Icon name="ios-apps-outline" color={this.state.isThumb?globalVariables.base:globalVariables.textBase} size={30}/>
           </TouchableOpacity>
 
           <TouchableOpacity activeOpacity={0.8} onPress={() => this.showImagListOrThumb("list")} style={styles.cell}>
-              <Icon name="navicon-round" color={this.state.isThumb?globalVariables.textBase:globalVariables.base} size={30}/>
+              <Icon name="ios-list-outline" color={this.state.isThumb?globalVariables.textBase:globalVariables.base} size={45}/>
           </TouchableOpacity>
 
           <TouchableOpacity activeOpacity={0.8} onPress={() => this.toLookedPage("HYPED")} style={styles.cell}>
-            <Icon name="speakerphone" color={globalVariables.textBase} size={25}/>
+            <Icon name="ios-flame-outline" color={globalVariables.textBase} size={35}/>
           </TouchableOpacity>
 
           <TouchableOpacity activeOpacity={0.8} onPress={() => this.toLookedPage("LOVED")} style={styles.cell}>
-              <Icon name="ios-heart" color={globalVariables.textBase} size={27}/>
+              <Icon name="ios-heart-outline" color={globalVariables.textBase} size={30}/>
           </TouchableOpacity>
         </View>
      </View>
@@ -264,14 +264,15 @@ const styles = StyleSheet.create({
       // 容器需要添加direction才能变成让子元素flex
       flexDirection: 'column',
       opacity:0.97,
-      padding: 5,
+      // padding: 0,
+      paddingBottom:5,
       backgroundColor: globalVariables.background,
       width:width,
       // justifyContent: 'flex-start',
       // paddingTop: 84,
   },
   mainSection: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
     // paddingBottom: 10,
     // alignItems: "center",
@@ -289,7 +290,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   userInfoView:{
-      flex:1,
+      // flex:1,
       flexDirection: "column",
       alignItems:"center",
   },
@@ -304,23 +305,31 @@ const styles = StyleSheet.create({
   },
   addUserView: {
     // width: width-200,
-    height: 25,
+    height: 30,
     borderWidth: 1,
     borderRadius: 3,
     borderColor: globalVariables.base,
     alignItems:'center',
-    margin:20,
+    // margin:20,
+    marginLeft:20,
+    marginTop:20,
+    marginBottom:20,
+    marginRight:10,
     justifyContent: "center",
   },
   addedUserView: {
     // width: width-200,
-    height: 25,
+    height: 30,
     borderWidth: 1,
     borderRadius: 3,
     backgroundColor: globalVariables.base,
     borderColor: globalVariables.base,
     alignItems:'center',
-    margin:20,
+    // margin:20,
+    marginLeft:20,
+    marginBottom:20,
+    marginTop:20,
+    marginRight:10,
     justifyContent: "center",
   },
   LogoutText:{
@@ -346,11 +355,11 @@ const styles = StyleSheet.create({
     color:globalVariables.textBase2,
   },
   avatar: {
-    borderRadius: 40,
-    width: 80,
-    height: 80,
-    marginRight: 5,
-    marginLeft:10,
+    borderRadius: 35,
+    width: 70,
+    height: 70,
+    marginRight: 0,
+    marginLeft:5,
     backgroundColor:globalVariables.textBase2,
   },
   cell: {
@@ -359,6 +368,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  meName:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height:44,
+    marginBottom:10
+  }
 });
 
 export default UserInfo;

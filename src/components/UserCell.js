@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   Image,
   PixelRatio,
   StyleSheet,
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
   },
   cellfixed: {
-    width: 55,
+    width: 65,
   },
   cell: {
     flexDirection: 'row',
@@ -192,14 +192,14 @@ const styles = StyleSheet.create({
     marginRight:5,
   },
   addUserView: {
-    flex: 1,
-    width: 55,
-    height: 25,
+    // flex: 1,
+    width: 60,
+    height: 30,
     borderWidth: 1,
     borderRadius: 3,
     borderColor: globalVariables.base,
     alignItems:'center',
-    // justifyContent: "center",
+    justifyContent: "center",
     // marginRight:10,
   },
   addUserText:{

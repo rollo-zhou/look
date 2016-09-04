@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   ListView,
   StyleSheet,
   Image,
@@ -96,7 +96,7 @@ const LookListItem = React.createClass({
        <DoneFooter/>
       );
     }
-    return <ActivityIndicatorIOS style={styles.scrollSpinner} />;
+    return <ActivityIndicator style={styles.scrollSpinner} />;
   },
 
   onEndReached() {

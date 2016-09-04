@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   ListView,
   StyleSheet,
   Image,
@@ -88,7 +88,7 @@ const LookList = React.createClass({
     });
   },
   onChangeTab(index,ref){
-    // if(!index.i) return;
+    if(!index.i) return;
     if(index.i==0){
       if(!this.refs.listviewHot.haveLoadData()){
         this.refs.listviewHot.queryRromServer(1);

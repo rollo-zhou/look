@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   Image,
   PixelRatio,
   StyleSheet,
@@ -61,14 +61,14 @@ var LookCellFooter = React.createClass({
     return (
       <View style={styles.flexContainer}>
        <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect} style={styles.cell}>
-          <Icon name="speakerphone" color={this.state.isHype?globalVariables.base:globalVariables.textBase} size={18}/>
+          <Icon name="ios-flame-outline" color={this.state.isHype?globalVariables.base:globalVariables.textBase} size={18}/>
           <Text style={styles.text}>
             {this.state.hypes_count}
           </Text>
       </TouchableOpacity>
       <View style={styles.separator} />
       <TouchableOpacity activeOpacity={0.8} onPress={this.props.onSelect} style={styles.cell}>
-          <Icon name="ios-chatbubble-outline" color={globalVariables.textBase} size={20}/>
+          <Icon name="ios-text-outline" color={globalVariables.textBase} size={20}/>
           <Text style={styles.text}>
             {this.props.look.comments_count}
           </Text>

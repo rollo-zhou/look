@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   StyleSheet,
   Image,
   Text,
@@ -45,7 +45,7 @@ const Streams = React.createClass({
        <DoneFooter/>
       );
     }
-    return <ActivityIndicatorIOS style={styles.scrollSpinner} />;
+    return <ActivityIndicator style={styles.scrollSpinner} />;
   },
   onSelect(name){
     // name=name.toLocaleLowerCase();
@@ -135,17 +135,18 @@ const styles = StyleSheet.create({
   thumb: {
     justifyContent: 'space-around',
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    alignItems: 'flex-start'
   },
   row: {
-    flex: 1,
+    // flex: 1,
     margin: 5,
     flexDirection: 'column',
     alignItems:"center",
     // backgroundColor:globalVariables.textBase2,
   },
   content:{
-    flex: 1,
+    // flex: 1,
     justifyContent: "center",
     height: 40,
     // marginBottom:10,

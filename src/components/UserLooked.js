@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   StyleSheet,
   Image,
   Text,
@@ -44,25 +44,23 @@ const UserLooked = React.createClass({
     this.setState({isThumb:isThumb});
     this.refs.UserLookList.setShowImagType(type);
   },
-  shouldComponentUpdate: function(nextProps, nextState) {
-    return JSON.stringify(nextState)!=JSON.stringify(this.state);
-  },
+  // shouldComponentUpdate: function(nextProps, nextState) {
+  //   // return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  // },
   render() {
     return(
       <View style={styles.container}>
         <View style={styles.mainSection}>
 
           <TouchableOpacity activeOpacity={0.8} onPress={() => this.showImagListOrThumb("thumb")} style={styles.cell}>
-            <Icon name="grid" color={this.state.isThumb?globalVariables.base:globalVariables.textBase} size={25}/>
+            <Icon name="ios-apps-outline" color={this.state.isThumb?globalVariables.base:globalVariables.textBase} size={30}/>
           </TouchableOpacity>
-          <View style={styles.separator} />
+
           <TouchableOpacity activeOpacity={0.8} onPress={() => this.showImagListOrThumb("list")} style={styles.cell}>
-              <Icon name="navicon-round" color={this.state.isThumb?globalVariables.textBase:globalVariables.base} size={27}/>
+              <Icon name="ios-list-outline" color={this.state.isThumb?globalVariables.textBase:globalVariables.base} size={45}/>
           </TouchableOpacity>
-          <View style={styles.separator} />
-          <View style={styles.cell} >
-              <Text style={styles.text}>{this.props.counts}</Text>
-          </View>
+
+
         </View>
         <UserLookList
           user={this.props.user}
@@ -89,7 +87,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text:{
-    color:globalVariables.base,
+    color:globalVariables.textBase2,
     fontWeight:'600',
   },
   mainSection: {
