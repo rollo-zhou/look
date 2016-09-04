@@ -1,0 +1,101 @@
+{
+  "_args": [
+    [
+      "react-native-scrollable-tab-view@^0.5.5",
+      "/Users/riipa/Code/react native/lookBook"
+    ]
+  ],
+  "_cnpm_publish_time": 1472486964256,
+  "_from": "react-native-scrollable-tab-view@>=0.5.5 <0.6.0",
+  "_id": "react-native-scrollable-tab-view@0.5.5",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/react-native-scrollable-tab-view",
+  "_nodeVersion": "6.3.1",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/react-native-scrollable-tab-view-0.5.5.tgz_1472486962195_0.9852979392744601"
+  },
+  "_npmUser": {
+    "email": "skv-headless@yandex.ru",
+    "name": "headless"
+  },
+  "_npmVersion": "3.10.3",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "react-native-scrollable-tab-view",
+    "raw": "react-native-scrollable-tab-view@^0.5.5",
+    "rawSpec": "^0.5.5",
+    "scope": null,
+    "spec": ">=0.5.5 <0.6.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npm.taobao.org/react-native-scrollable-tab-view/download/react-native-scrollable-tab-view-0.5.5.tgz",
+  "_shasum": "851f47c3db03737fa6fa7766ed31c7d09557898d",
+  "_shrinkwrap": null,
+  "_spec": "react-native-scrollable-tab-view@^0.5.5",
+  "_where": "/Users/riipa/Code/react native/lookBook",
+  "author": {
+    "name": "Brent Vatne"
+  },
+  "bugs": {
+    "url": "https://github.com/brentvatne/react-native-scrollable-tab-view/issues"
+  },
+  "dependencies": {
+    "react-static-container": "^1.0.1",
+    "react-timer-mixin": "^0.13.3"
+  },
+  "description": "[![npm version](https://badge.fury.io/js/react-native-scrollable-tab-view.svg)](https://badge.fury.io/js/react-native-scrollable-tab-view)",
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.1.1"
+  },
+  "directories": {},
+  "dist": {
+    "noattachment": false,
+    "shasum": "851f47c3db03737fa6fa7766ed31c7d09557898d",
+    "size": 9213,
+    "tarball": "http://registry.npm.taobao.org/react-native-scrollable-tab-view/download/react-native-scrollable-tab-view-0.5.5.tgz"
+  },
+  "gitHead": "c5f57813a00e76700ffb7bf9ec81c35466c7d83d",
+  "homepage": "https://github.com/brentvatne/react-native-scrollable-tab-view#readme",
+  "keywords": [
+    "react-native-component",
+    "react-component",
+    "react-native",
+    "ios",
+    "tab",
+    "scrollable"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "email": "brentvatne@gmail.com",
+      "name": "brentvatne"
+    },
+    {
+      "email": "skv-headless@yandex.ru",
+      "name": "headless"
+    }
+  ],
+  "name": "react-native-scrollable-tab-view",
+  "optionalDependencies": {},
+  "peerDependencies": {
+    "react-native": ">=0.20.0"
+  },
+  "publish_time": 1472486964256,
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brentvatne/react-native-scrollable-tab-view.git"
+  },
+  "scripts": {
+    "lint": "eslint -c .eslintrc .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.5.5"
+}
