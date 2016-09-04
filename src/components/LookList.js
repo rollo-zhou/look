@@ -90,15 +90,15 @@ const LookList = React.createClass({
   onChangeTab(index,ref){
     if(!index.i) return;
     if(index.i==0){
-      if(!this.refs.listviewHot.haveLoadData()){
+      if(this.refs.listviewHot&&!this.refs.listviewHot.haveLoadData()){
         this.refs.listviewHot.queryRromServer(1);
       }
     }else if(index.i==1){
-      if(!this.refs.listviewNew.haveLoadData()){
+      if(this.refs.listviewNew&&!this.refs.listviewNew.haveLoadData()){
         this.refs.listviewNew.queryRromServer(1);
       }
     }else if(index.i==2){
-      if(!this.refs.listviewTop.haveLoadData()){
+      if(this.refs.listviewTop&&!this.refs.listviewTop.haveLoadData()){
         this.refs.listviewTop.queryRromServer(1);
       }
     }

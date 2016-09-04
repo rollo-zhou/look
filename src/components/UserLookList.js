@@ -107,13 +107,22 @@ const UserLookList = React.createClass({
   // },
   renderRow(looks) {
      if(this.state.showImagType=="list"){
-        return (<LookCell
-            look={looks.look}
-            navigator={this.props.navigator}
-            onUserSelect={function(){}}
-            needShowTime={this.props.needShowTime}
-            userCell={true}
-          />);
+        if(this.props.from=="looks"){
+          return (<LookCell
+              look={looks.look}
+              navigator={this.props.navigator}
+              onUserSelect={function(){}}
+              needShowTime={this.props.needShowTime}
+              userCell={true}
+            />);
+        }else{
+          return (<LookCell
+              look={looks.look}
+              navigator={this.props.navigator}
+              needShowTime={this.props.needShowTime}
+              userCell={true}
+            />);
+        }
       }
      return  (
       <LookCellThumbnail look={looks.look}

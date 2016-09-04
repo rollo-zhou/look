@@ -86,10 +86,10 @@ const LookDetail = React.createClass({
       },
     });
   },
-  shouldComponentUpdate: function(nextProps, nextState) {
-    console.log('LookDetail.js.js-shouldComponentUpdate');
-    return JSON.stringify(nextState)!=JSON.stringify(this.state);
-  },
+  // shouldComponentUpdate: function(nextProps, nextState) {
+  //   console.log('LookDetail.js.js-shouldComponentUpdate');
+  //   return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  // },
   renderRow(comments) {
     if(!comments.comment||!comments.comment.user){
       return false;

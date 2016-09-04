@@ -62,7 +62,7 @@ var LookCellFooter = React.createClass({
       <View style={styles.flexContainer}>
        <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect} style={styles.cell}>
           <Icon name="ios-flame-outline" color={this.state.isHype?globalVariables.base:globalVariables.textBase} size={18}/>
-          <Text style={styles.text}>
+          <Text style={[styles.text,{color:this.state.isHype?globalVariables.base:globalVariables.textBase}]}>
             {this.state.hypes_count}
           </Text>
       </TouchableOpacity>
@@ -75,7 +75,7 @@ var LookCellFooter = React.createClass({
       </TouchableOpacity>
       <View style={styles.separator} />
       <View style={styles.cell}>
-        <Icon name="ios-heart-outline" color={this.state.isHype?globalVariables.base:globalVariables.textBase} size={20}/>
+        <Icon name="ios-heart-outline" color={globalVariables.textBase} size={20}/>
         <Text style={styles.text}>
           {this.props.look.loves_count}
         </Text>

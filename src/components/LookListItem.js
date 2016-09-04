@@ -34,7 +34,7 @@ const LookListItem = React.createClass({
      }),
       looks: [],
       searchPending: true,
-      refreshing:false,
+      refreshing:true,
       next:true,
       navigator:"",
       pageNo:1,
@@ -85,18 +85,20 @@ const LookListItem = React.createClass({
     });
     return this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionsID, rowsID);
   },
-  shouldComponentUpdate: function(nextProps, nextState) {
-    // console.log('LookListItem.js-shouldComponentUpdate');
-    // return false;
-    return JSON.stringify(nextState)!=JSON.stringify(this.state);
-  },
+  // shouldComponentUpdate: function(nextProps, nextState) {
+  //   // console.log('LookListItem.js-shouldComponentUpdate');
+  //   // return false;
+  //   return JSON.stringify(nextState)!=JSON.stringify(this.state);
+  // },
   renderFooter() {
     if (!this.state.next && !this.state.searchPending) {
       return (
        <DoneFooter/>
       );
+    }if(!this.state.refreshing){
+       return <ActivityIndicator style={styles.scrollSpinner} />;
     }
-    return <ActivityIndicator style={styles.scrollSpinner} />;
+   return (<View></View>);
   },
 
   onEndReached() {
@@ -210,11 +212,11 @@ const LookListItem = React.createClass({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: globalVariables.background,
   },
   container1: {
-    flex: 1,
+    // flex: 1,
     paddingTop: 44,
     backgroundColor: globalVariables.background,
   },
