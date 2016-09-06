@@ -25,6 +25,7 @@ const LookDetail = React.createClass({
       searchPending: true,
       next:true,
       pageNo:1,
+      animating:true
     };
   },
   getDefaultProps() {
@@ -48,7 +49,7 @@ const LookDetail = React.createClass({
        <DoneFooter/>
       );
     }
-    return <ActivityIndicator style={styles.scrollSpinner} />;
+    return <ActivityIndicator style={styles.scrollSpinner} animating={this.state.animating}/>;
   },
 
   renderHeader() {

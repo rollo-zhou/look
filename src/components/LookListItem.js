@@ -33,7 +33,7 @@ const LookListItem = React.createClass({
         getRowData: getRowData,
      }),
       looks: [],
-      searchPending: true,
+      animating: false,
       refreshing:true,
       next:true,
       navigator:"",
@@ -91,21 +91,13 @@ const LookListItem = React.createClass({
   //   return JSON.stringify(nextState)!=JSON.stringify(this.state);
   // },
   renderFooter() {
-    if (!this.state.next && !this.state.searchPending) {
+    if (!this.state.next) {
       return (
        <DoneFooter/>
       );
-    }if(!this.state.refreshing){
-       return <ActivityIndicator style={styles.scrollSpinner} />;
     }
-   return (<View></View>);
-  },
+   return <ActivityIndicator style={styles.scrollSpinner} animating={this.state.animating}/>;
 
-  onEndReached() {
-    if (this.state.next && !this.state.searchPending) {
-      // this.setState({ searchPending: true });
-      this.queryRromServer(this.state.pageNo);
-    }
   },
 
   renderRow(looks) {
@@ -129,7 +121,7 @@ const LookListItem = React.createClass({
   render() {
     console.log('LookListItem.js-render');
 
-    if (!this.state.searchPending && !this.state.looks.length) {
+    if (!this.state.looks.length && !this.state.animating && !this.state.refreshing) {
       return (
         <View style={styles.container}>
           <LookListNoResults />
@@ -166,12 +158,18 @@ const LookListItem = React.createClass({
       />
     );
   },
+
+  onEndReached() {
+    if (this.state.next && !this.state.animating&& !this.state.refreshing) {
+      this.setState({ animating: true ,refreshing:false});
+      this.queryRromServer(this.state.pageNo);
+    }
+  },
+
   reFreshQueryRMLS(page) {
-    if (!this.state.searchPending) {
-      this.setState({ refreshing: true ,pageNo:1});
+    if (!this.state.animating&& !this.state.refreshing) {
+      this.setState({ refreshing: true ,animating: false ,pageNo:1});
       this.queryRromServer(1);
-    }else{
-       this.setState({ refreshing: false });
     }
   },
 
@@ -181,14 +179,22 @@ const LookListItem = React.createClass({
     if(this.props.urlPageType!="/"){
       url=globalVariables.apiServer+this.props.apiTypeUrl+'?page='+(page||1)
     }
-    globalVariables.queryRromServer(url,this.processsResults);
+    var _this=this;
+    globalVariables.queryRromServer(url,this.processsResults,{
+      errorFunc:function(){
+        _this.setState({
+          refreshing:false,
+          animating:false,
+        });
+      }
+    });
   },
 
   processsResults(data) {
     // data=looks;
     if (!data||!data.looks||!data.looks.length){
       this.setState({
-        searchPending: false,
+        animating: false,
         refreshing:false,
         next:false,
       });
@@ -202,7 +208,7 @@ const LookListItem = React.createClass({
     }
     this.setState({
       looks: newLooks,
-      searchPending: false,
+      animating: false,
       refreshing:false,
       dataSource: this.getDataSource(newLooks),
       pageNo: this.state.pageNo+1

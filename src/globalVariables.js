@@ -44,15 +44,17 @@ module.exports = {
             body:(parameter&&parameter.body)||'',
           })
           .then((response) => {
-            parameter&&parameter.callBackHeaders&&parameter.callBackHeaders(response.headers.map);
+            parameter && parameter.callBackHeaders && parameter.callBackHeaders(response.headers.map);
             return response.json();
           })
           .then((responseText) => {
-            callBack&&callBack(responseText);
+            callBack && callBack(responseText);
           })
           .catch(function (error) {
-            console.error('An error occured');
-            console.error(error.message);
+            parameter && parameter.errorFunc && parameter.errorFunc();
+            // AlertIOS.alert("网络连接错误");
+            // console.error('An error occured');
+            // console.error(error.message);
           }
         );
       })

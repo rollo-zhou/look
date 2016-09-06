@@ -6,7 +6,8 @@ import {
   Text,
   View,
   ListView,
-  TouchableOpacity
+  TouchableOpacity,
+  RefreshControl
 } from 'react-native';
 
 import Dimensions from 'Dimensions';
@@ -21,7 +22,8 @@ const Streams = React.createClass({
       streams:[],
       dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
       next:true,
-      searchPending:true,
+      animating:false,
+      refreshing:true
     };
   },
   getDefaultProps() {
@@ -40,12 +42,13 @@ const Streams = React.createClass({
     return JSON.stringify(nextState)!=JSON.stringify(this.state);
   },
   renderFooter() {
-    if (!this.state.next && !this.state.searchPending) {
+    if (!this.state.next) {
       return (
        <DoneFooter/>
       );
     }
-    return <ActivityIndicator style={styles.scrollSpinner} />;
+    return <ActivityIndicator style={styles.scrollSpinner} animating={this.state.animating}/>;
+
   },
   onSelect(name){
     // name=name.toLocaleLowerCase();
@@ -92,33 +95,63 @@ const Streams = React.createClass({
         keyboardShouldPersistTaps={false}
         showsVerticalScrollIndicator={true}
         style={styles.container}
+        refreshControl={
+            <RefreshControl
+            onRefresh={this.reFreshQueryRMLS}
+            tintColor='#aaaaaa'
+            refreshing={this.state.refreshing}
+            progressBackgroundColor='#aaaaaa'
+          />}
       />
     );
   },
   onEndReached() {
-    if (this.state.next && !this.state.searchPending) {
-      this.setState({ searchPending: true });
+    if (this.state.next && !this.state.animating&& !this.state.refreshing) {
+      this.setState({ animating: true ,refreshing:false});
       this.queryRromServer(this.state.pageNo);
     }
   },
+
+  reFreshQueryRMLS(page) {
+    if (!this.state.animating&& !this.state.refreshing) {
+      this.setState({ refreshing: true ,animating: false ,pageNo:1});
+      this.queryRromServer(1);
+    }
+  },
+
   queryRromServer(page) {
-    globalVariables.queryRromServer(globalVariables.apiServer+"streams",this.processsResults);
+    var _this=this;
+    globalVariables.queryRromServer(globalVariables.apiServer+"streams",this.processsResults,{
+      errorFunc:function(){
+        _this.setState({
+          refreshing:false,
+          animating:false,
+        });
+      }
+    });
   },
 
   processsResults(data) {
     if (!data||!data.streams||!data.streams.length){
       this.setState({
-        searchPending: false,
+        animating: false,
+        refreshing:false,
         next:false,
       });
       return;
     }
-    var newStreams= this.state.streams.concat(data.streams);
+    var newStreams ='';
+    if(this.state.refreshing){
+      newStreams= data.streams;
+    }else{
+      newStreams= this.state.newStreams.concat(data.streams);
+    }
 
     this.setState({
       streams: newStreams,
       dataSource: this.getDataSource(newStreams),
-      searchPending: false,
+      animating: false,
+      refreshing:false,
       next:false,
     });
   }

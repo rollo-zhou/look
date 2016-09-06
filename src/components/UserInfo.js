@@ -127,7 +127,7 @@ const UserInfo = React.createClass({
                 <Text style={styles.strText} > FANS </Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.userInfoView,{flex:2}]} onPress={() => this.toUserListPage("fanned")}>
-                <Text style={styles.numText} > {this.state.user.fanned_count}</Text>
+                <Text style={styles.numText} > {this.state.user.fanned_count||0}</Text>
                 <Text style={styles.strText} > FANNED </Text>
               </TouchableOpacity>
               <View style={[styles.userInfoView,{flex:2}]}>

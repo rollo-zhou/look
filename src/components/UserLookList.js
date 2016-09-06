@@ -20,7 +20,6 @@ import LookCell from './LookCell.js';
 const UserLookList = React.createClass({
   getInitialState() {
     return {
-      searchPending: true,
       dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
       looks: [],
       uid:0,
@@ -30,6 +29,7 @@ const UserLookList = React.createClass({
       showImagType:"thumb",
       listRowStyle:styles.thumb,
       refreshing:false,
+      animating:true
     };
   },
 
@@ -87,21 +87,14 @@ const UserLookList = React.createClass({
   },
 
   renderFooter() {
-    if (!this.state.next && !this.state.searchPending) {
+    if (!this.state.next) {
       return (
        <DoneFooter/>
       );
     }
-
-    return (<ActivityIndicator style={styles.scrollSpinner} />);
+    return <ActivityIndicator style={styles.scrollSpinner} animating={this.state.animating}/>;
   },
 
-  onEndReached() {
-    // console.log('onEndReached');
-    if (this.state.next && !this.state.searchPending) {
-      this.queryRromServer(this.state.pageNo);
-    }
-  },
   // shouldComponentUpdate: function(nextProps, nextState) {
   //   return JSON.stringify(nextState)!=JSON.stringify(this.state);
   // },
@@ -185,40 +178,58 @@ const UserLookList = React.createClass({
 
   },
 
+  onEndReached() {
+    if (this.state.next && !this.state.animating&& !this.state.refreshing) {
+      this.setState({ animating: true ,refreshing:false});
+      this.queryRromServer(this.state.pageNo);
+    }
+  },
+
   reFreshQueryRMLS(page) {
-    if (!this.state.searchPending) {
-      this.setState({ refreshing: true ,pageNo:1});
+    if (!this.state.animating&& !this.state.refreshing) {
+      this.setState({ refreshing: true ,animating: false ,pageNo:1});
       if(this.refs.listview.refs.userInfo){
         this.refs.listview.refs.userInfo.queryRromServer();
       }
       this.queryRromServer(1);
-    }else{
-       this.setState({ refreshing: false });
     }
   },
 
   queryRromServer(page) {
-    globalVariables.queryRromServer(globalVariables.apiUserServer+this.props.user.id+'/'+this.props.from+'?page='+(page||1),this.processsResults);
+    var _this=this;
+    globalVariables.queryRromServer(globalVariables.apiUserServer+this.props.user.id+'/'+this.props.from+'?page='+(page||1),this.processsResults,{
+      errorFunc:function(){
+        _this.setState({
+          refreshing:false,
+          animating:false,
+        });
+      }
+    });
   },
 
   processsResults(data) {
     if (!data||!data.looks||!data.looks.length){
       this.setState({
-        searchPending: false,
+        animating: false,
         refreshing:false,
         next:false,
       });
       return;
     }
+    var newLooks ='';
+    if(this.state.refreshing){
+      newLooks= data.looks;
+    }else{
+      newLooks= this.state.looks.concat(data.looks);
+    }
 
-    const newLooks = this.state.looks.concat(data.looks);
     var next=true;
     if(this.props.listCount>0&&newLooks.length>=this.props.listCount){
       next=false;
     }
     this.setState({
       looks: newLooks,
-      searchPending: false,
+      animating: false,
       refreshing:false,
       dataSource: this.getDataSource(newLooks),
       form: data.form,
