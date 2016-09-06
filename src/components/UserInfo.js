@@ -122,19 +122,19 @@ const UserInfo = React.createClass({
           <Image source={{uri:this.state.user.photo}} style={styles.avatar}/>
           <View style={styles.userInfoBody}>
             <View style={styles.userInfoHeader}>
-              <TouchableOpacity style={[styles.userInfoView,{flex:2}]} onPress={() => this.toUserListPage("fans")}>
+              <TouchableOpacity style={[styles.userInfoView,{flex:4}]} onPress={() => this.toUserListPage("fans")}>
                 <Text style={styles.numText} > {this.state.user.fans_count}</Text>
                 <Text style={styles.strText} > FANS </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.userInfoView,{flex:2}]} onPress={() => this.toUserListPage("fanned")}>
+              <TouchableOpacity style={[styles.userInfoView,{flex:4}]} onPress={() => this.toUserListPage("fanned")}>
                 <Text style={styles.numText} > {this.state.user.fanned_count||0}</Text>
                 <Text style={styles.strText} > FANNED </Text>
               </TouchableOpacity>
-              <View style={[styles.userInfoView,{flex:2}]}>
+              <View style={[styles.userInfoView,{flex:4}]}>
                 <Text style={styles.numText} > {this.state.user.looks_count}</Text>
                 <Text style={styles.strText} > LOOKS</Text>
               </View>
-              <View style={[styles.userInfoView,{flex:2}]}>
+              <View style={[styles.userInfoView,{flex:5}]}>
                 <Text style={styles.numText} > {this.state.user.karma_count}</Text>
                 <Text style={styles.strText} > KARMA</Text>
               </View>
@@ -355,9 +355,9 @@ const styles = StyleSheet.create({
     color:globalVariables.textBase2,
   },
   avatar: {
-    borderRadius: 35,
-    width: 70,
-    height: 70,
+    borderRadius: 40,
+    width: 80,
+    height: 80,
     marginRight: 0,
     marginLeft:5,
     backgroundColor:globalVariables.textBase2,
