@@ -206,7 +206,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginLeft: 5,
     backgroundColor:globalVariables.textBase2,
-  }
+  },
+  scrollSpinner: {
+    marginVertical: 20,
+  },
 });
 
 export default LookDetail;

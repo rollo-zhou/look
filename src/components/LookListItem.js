@@ -232,7 +232,8 @@ const styles = StyleSheet.create({
     width: 30,
   },
   scrollSpinner: {
-    marginVertical: 36,
+    marginVertical: 14,
+    marginBottom:74
   },
 });
 

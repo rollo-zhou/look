@@ -148,7 +148,10 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     marginRight: 10
-  }
+  },
+  scrollSpinner: {
+    marginVertical: 20,
+  },
 });
 
 export default LookDetail;

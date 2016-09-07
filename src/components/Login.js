@@ -23,6 +23,7 @@ const Login = React.createClass({
     return {
       username: '',
       password: '',
+      animating:false
     };
   },
   getDefaultProps() {
@@ -73,15 +74,19 @@ const Login = React.createClass({
             </View>
           </TouchableOpacity>
 
+          <ActivityIndicator style={styles.scrollSpinner} animating={this.state.animating}/>
+
           </View>
       </ScrollView>
     );
   },
 
   login() {
+    this.setState({animating:true});
     const { username, password } = this.state;
     if(!username||!password){
       Vibration.vibrate();
+      this.setState({animating:false})
       return;
     }
     var body='user[email]='+username+'&user[password]='+password;
@@ -89,6 +94,7 @@ const Login = React.createClass({
       method:"POST",
       Content:"application/x-www-form-urlencoded",
       body:body,
+      errorFunc:function(){this.setState({animating:false});},
       callBackHeaders:function(data){
         if(data["set-cookie"]&&data["set-cookie"][0]){
           Storage.setItem('cookie', data["set-cookie"][0])
@@ -101,6 +107,7 @@ const Login = React.createClass({
     });
   },
   processsResults(data) {
+    this.setState({animating:false});
     if (!data||!data.status.toLocaleLowerCase()=='success'){
       Vibration.vibrate();
       return;
@@ -177,6 +184,9 @@ const styles = StyleSheet.create({
     width: width,
     height: null,
   },
+  scrollSpinner: {
+    marginVertical: 20,
+  }
 });
 
 export default Login;

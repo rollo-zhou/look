@@ -29,7 +29,7 @@ const UserLookList = React.createClass({
       showImagType:"thumb",
       listRowStyle:styles.thumb,
       refreshing:true,
-      animating:false
+      animating:true
     };
   },
 
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
   },
 
   scrollSpinner: {
-    marginVertical: 20,
+    marginVertical: 40,
     width:width,
   },
 
