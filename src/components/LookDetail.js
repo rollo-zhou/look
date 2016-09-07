@@ -23,7 +23,7 @@ const LookDetail = React.createClass({
         return dataBlob[sectionID];
     }
     var getRowData = (dataBlob, sectionID, rowID) => {
-       return dataBlob[sectionID + ':' + rowID];
+       return dataBlob[rowID];
     }
     return {
       dataSource: new ListView.DataSource({
@@ -51,21 +51,21 @@ const LookDetail = React.createClass({
   },
 
   getDataSource(comments) {
+
     var dataBlob = {};
     var sectionsID = [];
     var rowsID = [];
-    var lastIndex=0;
+    var rowID = [];
+    sectionsID.push("lastIndex");
+    dataBlob["lastIndex"]="0";
 
     comments.map((item, index)=>{
         var id = item.comment.id;
-        var rowID=[];
         dataBlob[(index)+':' + id] = item;
-        rowID.push(id);
-        rowsID.push(rowID);
+        rowID[index]=(index)+':' + id;
         lastIndex=index;
     });
-    sectionsID.push(lastIndex);
-    dataBlob[lastIndex]="0";
+    rowsID.push(rowID);
 
     return this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionsID, rowsID);
 
@@ -120,7 +120,7 @@ const LookDetail = React.createClass({
   //   console.log('LookDetail.js.js-shouldComponentUpdate');
   //   return JSON.stringify(nextState)!=JSON.stringify(this.state);
   // },
-  renderRow(comments) {
+  renderRow(rowData, sectionID, rowID) {
     if(!comments.comment||!comments.comment.user){
       return false;
     }
