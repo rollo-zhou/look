@@ -61,21 +61,21 @@ var LookCellFooter = React.createClass({
     return (
       <View style={styles.flexContainer}>
        <TouchableOpacity activeOpacity={0.8} onPress={this.onSelect} style={styles.cell}>
-          <Icon name="ios-flame-outline" color={this.state.isHype?globalVariables.base:globalVariables.textBase} size={18}/>
+          <Icon name="ios-flame-outline" color={this.state.isHype?globalVariables.base:globalVariables.textBase} size={25}/>
           <Text style={[styles.text,{color:this.state.isHype?globalVariables.base:globalVariables.textBase}]}>
             {this.state.hypes_count}
           </Text>
       </TouchableOpacity>
       <View style={styles.separator} />
       <TouchableOpacity activeOpacity={0.8} onPress={this.props.onSelect} style={styles.cell}>
-          <Icon name="ios-text-outline" color={globalVariables.textBase} size={20}/>
+          <Icon name="ios-text-outline" color={globalVariables.textBase} size={25}/>
           <Text style={styles.text}>
             {this.props.look.comments_count}
           </Text>
       </TouchableOpacity>
       <View style={styles.separator} />
       <View style={styles.cell}>
-        <Icon name="ios-heart-outline" color={globalVariables.textBase} size={20}/>
+        <Icon name="ios-heart-outline" color={globalVariables.textBase} size={23}/>
         <Text style={styles.text}>
           {this.props.look.loves_count}
         </Text>
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
       opacity:0.97,
       padding: 5,
       backgroundColor: globalVariables.background,
-      height:45,
+      height:55,
   },
   cell: {
     flexDirection: 'row',
@@ -147,14 +147,14 @@ const styles = StyleSheet.create({
   },
   text:{
     color:globalVariables.textBase,
-    fontSize:12,
+    fontSize:14,
     marginLeft:10,
   },
   separator: {
     backgroundColor: globalVariables.textBase2,
     height: 15 ,
     width:0.5,
-    marginVertical: 10,
+    marginVertical: 15,
   },
   separator2: {
     backgroundColor: globalVariables.textBase2,

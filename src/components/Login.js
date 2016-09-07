@@ -38,26 +38,27 @@ const Login = React.createClass({
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps={false} >
         <View style={styles.containerView}>
-          <Icon name="user" size={50} color={globalVariables.base} style={styles.userIcon} />
+          <Text style={styles.userIcon}>Log in to LookBook</Text>
+
           <TextInput
               style={styles.style_user_input}
               placeholder='UserId'
               numberOfLines={1}
               autoFocus={true}
-              textAlign='center'
               ref="username"
               clearButtonMode='while-editing'
               keyboardType='email-address'
               value={this.state.username}
               autoCapitalize="none"
               autoCorrect={false}
+              enablesReturnKeyAutomatically={true}
               onChangeText={username => this.setState({username})} />
           <TextInput
               style={styles.style_user_input}
               placeholder='Password'
               numberOfLines={1}
               secureTextEntry={true}
-              textAlign='center'
+              enablesReturnKeyAutomatically={true}
               ref="password"
               clearButtonMode='while-editing'
               value={this.state.password}
@@ -66,11 +67,12 @@ const Login = React.createClass({
 
           <TouchableOpacity onPress={this.login} >
             <View style={styles.style_view_commit} >
-              <Text style={{color: globalVariables.base}}>
+              <Text style={{color: 'white'}}>
                  Log In
               </Text>
             </View>
           </TouchableOpacity>
+
           </View>
       </ScrollView>
     );
@@ -124,13 +126,13 @@ const Login = React.createClass({
 
 const styles = StyleSheet.create({
   container:{
-    paddingTop: 44,
+    paddingTop: 64,
     backgroundColor:globalVariables.background,
     flex:1,
 
   },
   containerView:{
-    marginTop:80,
+    marginTop:10,
     marginLeft:40,
     marginRight:40,
   },
@@ -139,31 +141,41 @@ const styles = StyleSheet.create({
     // height:70,
     // width:70,
     alignSelf:'center',
+    marginBottom:25,
+    fontSize:25,
+    color: globalVariables.base,
+    fontWeight:"200",
   },
   style_user_input:{
       // backgroundColor:'#fff',
       marginTop:20,
-      height:40,
+      height:45,
       borderColor: globalVariables.base,
-      borderWidth: 1,
+      borderWidth: 0.5,
       borderRadius:3,
       fontSize:14,
-  },
-   style_pwd_input:{
-      // backgroundColor:'#fff',
-      height:40,
-      borderColor: globalVariables.base,
-      borderWidth: 1,
-       borderRadius:3,
+      backgroundColor:'white',
+      // backgroundColor:"#EEEEEE",
+      // opacity:0.1,
+       textAlign:"center",
+       color: globalVariables.base
   },
    style_view_commit:{
-      marginTop:25,
-      borderColor:globalVariables.base,
-      borderWidth:1,
-      height:40,
+      marginTop:30,
+      // borderColor:globalVariables.base,
+      // borderWidth:1,
+      height:45,
       borderRadius:3,
       justifyContent: 'center',
       alignItems: 'center',
+      backgroundColor:globalVariables.base,
+  },
+  image: {
+    flex: 1,
+    opacity:0.7,
+    resizeMode: 'cover',
+    width: width,
+    height: null,
   },
 });
 

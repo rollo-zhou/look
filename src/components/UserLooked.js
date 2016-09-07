@@ -77,7 +77,7 @@ const UserLooked = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 44,
+    paddingTop: 64,
     backgroundColor: globalVariables.background,
   },
   cell: {

@@ -28,8 +28,8 @@ const UserLookList = React.createClass({
       pageNo:1,
       showImagType:"thumb",
       listRowStyle:styles.thumb,
-      refreshing:false,
-      animating:true
+      refreshing:true,
+      animating:false
     };
   },
 

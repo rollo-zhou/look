@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 
 import LookCell from './LookCell.js';
-import LookListNoResults from './LookListNoResults.js';
 import globalVariables from '../globalVariables.js';
 import DoneFooter from './DoneFooter.js';
 import UserCell from './UserCell.js';
@@ -121,13 +120,13 @@ const LookListItem = React.createClass({
   render() {
     console.log('LookListItem.js-render');
 
-    if (!this.state.looks.length && !this.state.animating && !this.state.refreshing) {
-      return (
-        <View style={styles.container}>
-          <LookListNoResults />
-        </View>
-      );
-    }
+    // if (!this.state.looks.length && !this.state.animating && !this.state.refreshing) {
+    //   return (
+    //     <View style={styles.container}>
+    //       <DoneFooter/>
+    //     </View>
+    //   );
+    // }
 
     return (
       <ListView
@@ -223,7 +222,7 @@ const styles = StyleSheet.create({
   },
   container1: {
     // flex: 1,
-    paddingTop: 44,
+    paddingTop: 64,
     backgroundColor: globalVariables.background,
   },
   centerText: {

@@ -185,8 +185,8 @@ const styles = StyleSheet.create({
     // marginBottom:10,
   },
   contentText:{
-    fontWeight: "600",
-    // fontSize:16,
+    fontWeight: "300",
+    fontSize:16,
     color:globalVariables.base,
   },
   scrollSpinner: {

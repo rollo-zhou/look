@@ -20,7 +20,6 @@ import Login from './Login.js';
 const UserInfo = React.createClass({
   getInitialState() {
     return {
-      searchPending: true,
       user:{
         id:0,
         photo:"",
@@ -100,9 +99,17 @@ const UserInfo = React.createClass({
   },
   getNameView(){
     if(this.state.isMe){
-      return(<View style={styles.meName}>
-          <Text style={styles.userNameTest} > {this.state.user.name}</Text>
-        </View>);
+      return(
+         <View style={styles.hearder}>
+         <View style={{flex:1}}></View>
+          <View style={styles.meName}>
+            <Text style={styles.userNameTest} > {this.state.user.name}</Text>
+          </View>
+          <TouchableOpacity style={styles.more} onPress={this.toMore}>
+            <Icon name="ios-more-outline" size={35} color={globalVariables.textBase}/>
+          </TouchableOpacity>
+        </View>
+        );
     }else{
       return false;
     }
@@ -116,7 +123,7 @@ const UserInfo = React.createClass({
       return false;
     }
     return (
-      <View  style={[styles.flexContainer,{paddingTop: this.state.isMe?0:54}]}>
+      <View  style={[styles.flexContainer,{paddingTop: this.state.isMe?0:74}]}>
         {this.getNameView()}
         <View style={styles.mainSection}>
           <Image source={{uri:this.state.user.photo}} style={styles.avatar}/>
@@ -206,6 +213,9 @@ const UserInfo = React.createClass({
   });
   },
 
+  toMore(){
+
+  },
 
   addUserProcesssResults(data) {
     if(!data) return;
@@ -231,14 +241,10 @@ const UserInfo = React.createClass({
   },
   processsResults(data) {
     if (!data) {
-      this.setState({
-        searchPending: false,
-      });
       return;
     }
     this.setState({
       user: data.user,
-      searchPending: false,
       uid:data.id
     });
     if(this.state.isMe){
@@ -301,7 +307,7 @@ const styles = StyleSheet.create({
   },
   strText: {
     color:globalVariables.textBase,
-    fontSize:10,
+    fontSize:12,
   },
   addUserView: {
     // width: width-200,
@@ -369,9 +375,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   meName:{
-    flexDirection: 'row',
+     flex: 4,
+    // flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    // height:44,
+    // marginBottom:10
+  },
+  more:{
+    flex: 1,
+    alignItems:'center',
+    justifyContent: 'center',
+  },
+  hearder:{
+    // flex: 1,
+    // 容器需要添加direction才能变成让子元素flex
+    flexDirection: 'row',
+    backgroundColor: globalVariables.background,
+    // alignItems: 'center',
+    // justifyContent: 'center',
     height:44,
     marginBottom:10
   }

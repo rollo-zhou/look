@@ -66,7 +66,7 @@ var UserCell = React.createClass({
     if(this.props.needShowTime||this.state.isFaned||this.state.isMe){
       return(
           <View style={styles.timeView} >
-            <Icon name="ios-clock-outline" color={globalVariables.textBase} size={15}/>
+            <Icon name="ios-clock-outline" color={globalVariables.textBase} size={20}/>
             <Text style={styles.timeText}> {globalVariables.formatDateToString(this.props.time)}</Text>
           </View>
         );
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
   },
   timeText:{
     color:globalVariables.textBase,
-    fontSize:12,
+    fontSize:14,
     marginLeft:3,
   },
   userName: {
