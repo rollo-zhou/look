@@ -86,6 +86,7 @@ const LookDetail = React.createClass({
         keyboardShouldPersistTaps={false}
         showsVerticalScrollIndicator={true}
         style={styles.container}
+        enableEmptySections = {true}
       />
     );
   },

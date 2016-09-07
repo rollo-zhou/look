@@ -150,6 +150,7 @@ const UserLookList = React.createClass({
             tintColor='#aaaaaa'
             refreshing={this.state.refreshing}
             progressBackgroundColor='#aaaaaa'
+            enableEmptySections = {true}
           />}
           />
       );
@@ -172,6 +173,7 @@ const UserLookList = React.createClass({
           keyboardShouldPersistTaps={false}
           showsVerticalScrollIndicator={true}
           style={styles.container}
+          enableEmptySections = {true}
         />
     );
     }
