@@ -19,13 +19,25 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const LookDetail = React.createClass({
   getInitialState() {
+     var getSectionData = (dataBlob, sectionID) => {
+        return dataBlob[sectionID];
+    }
+    var getRowData = (dataBlob, sectionID, rowID) => {
+       return dataBlob[sectionID + ':' + rowID];
+    }
     return {
-      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2,
+        sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
+        getSectionHeaderData: getSectionData,
+        getRowData: getRowData,
+      }),
       comments: [],
       searchPending: true,
       next:true,
       pageNo:1,
-      animating:true
+      animating:true,
+      username:""
     };
   },
   getDefaultProps() {
@@ -39,8 +51,25 @@ const LookDetail = React.createClass({
   },
 
   getDataSource(comments) {
-    // return false;
-    return this.state.dataSource.cloneWithRows(comments);
+    var dataBlob = {};
+    var sectionsID = [];
+    var rowsID = [];
+    var lastIndex=0;
+
+    comments.map((item, index)=>{
+        var id = item.comment.id;
+        var rowID=[];
+        dataBlob[(index)+':' + id] = item;
+        rowID.push(id);
+        rowsID.push(rowID);
+        lastIndex=index;
+    });
+    sectionsID.push(lastIndex);
+    dataBlob[lastIndex]="0";
+
+    return this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionsID, rowsID);
+
+    // return this.state.dataSource.cloneWithRows(comments);
   },
 
   renderFooter() {
@@ -114,6 +143,14 @@ const LookDetail = React.createClass({
     );
   },
 
+  renderSectionHeader(sectionData, sectionID){
+        return(
+            <View style={styles.rowTite}>
+                <TextInput/>
+            </View>
+        )
+  },
+
   render() {
     console.log(new Date()-0);
     console.log('LookDetail.js.js-render');
@@ -130,6 +167,7 @@ const LookDetail = React.createClass({
         keyboardShouldPersistTaps={false}
         showsVerticalScrollIndicator={true}
         style={styles.container}
+        renderSectionHeader={this.renderSectionHeader}
       />
     );
   },
