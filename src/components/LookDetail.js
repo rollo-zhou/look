@@ -6,7 +6,8 @@ import {
   Text,
   View,
   ListView,
-  TouchableOpacity
+  TouchableOpacity,
+  TextInput
 } from 'react-native';
 
 import Dimensions from 'Dimensions';
@@ -29,11 +30,10 @@ const LookDetail = React.createClass({
       dataSource: new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 !== r2,
         sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-        getSectionHeaderData: getSectionData,
+        getSectionData: getSectionData,
         getRowData: getRowData,
       }),
       comments: [],
-      searchPending: true,
       next:true,
       pageNo:1,
       animating:true,
@@ -44,6 +44,7 @@ const LookDetail = React.createClass({
     return {
       look:{},
       navigator:"",
+      comment:""
     };
   },
   componentWillMount() {
@@ -57,7 +58,7 @@ const LookDetail = React.createClass({
     var rowsID = [];
     var rowID = [];
     sectionsID.push("lastIndex");
-    dataBlob["lastIndex"]="0";
+    dataBlob["lastIndex"]="a";
 
     comments.map((item, index)=>{
         var id = item.comment.id;
@@ -73,7 +74,7 @@ const LookDetail = React.createClass({
   },
 
   renderFooter() {
-    if (!this.state.next && !this.state.searchPending) {
+     if (!this.state.next) {
       return (
        <DoneFooter/>
       );
@@ -99,8 +100,8 @@ const LookDetail = React.createClass({
       return;
     }
 
-    if (this.state.next && !this.state.searchPending) {
-      this.setState({ searchPending: true });
+    if (this.state.next && !this.state.animating) {
+      this.setState({ animating: true });
       this.queryRromServer(this.state.pageNo);
     }
   },
@@ -120,7 +121,7 @@ const LookDetail = React.createClass({
   //   console.log('LookDetail.js.js-shouldComponentUpdate');
   //   return JSON.stringify(nextState)!=JSON.stringify(this.state);
   // },
-  renderRow(rowData, sectionID, rowID) {
+  renderRow(comments, sectionID, rowID) {
     if(!comments.comment||!comments.comment.user){
       return false;
     }
@@ -145,17 +146,17 @@ const LookDetail = React.createClass({
 
   renderSectionHeader(sectionData, sectionID){
         return(
-            <View style={styles.rowTite}>
-                <TextInput/>
+            <View >
+
             </View>
         )
   },
 
   render() {
-    console.log(new Date()-0);
-    console.log('LookDetail.js.js-render');
+
     return (
       <ListView
+      ref="commentsListView"
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
         onEndReached={this.onEndReached}
@@ -165,7 +166,6 @@ const LookDetail = React.createClass({
         automaticallyAdjustContentInsets={false}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps={false}
-        showsVerticalScrollIndicator={true}
         style={styles.container}
         renderSectionHeader={this.renderSectionHeader}
       />
@@ -179,7 +179,7 @@ const LookDetail = React.createClass({
   processsResults(data) {
     if (!data||!data.comments||!data.comments.length) {
       this.setState({
-        searchPending: false,
+        animating: false,
         next:false,
       });
       return;
@@ -188,7 +188,7 @@ const LookDetail = React.createClass({
     var next=newComments.length>=this.props.look.comments_count?false:true;
     this.setState({
       comments: newComments,
-      searchPending: false,
+      animating: false,
       dataSource: this.getDataSource(newComments),
       pageNo: this.state.pageNo+1,
       next:next,
@@ -247,6 +247,19 @@ const styles = StyleSheet.create({
   },
   scrollSpinner: {
     marginVertical: 20,
+  },
+
+  style_user_input:{
+      // backgroundColor:'#fff',
+      height:45,
+      borderColor: globalVariables.base,
+      borderWidth: 0.5,
+      borderRadius:3,
+      fontSize:14,
+      backgroundColor:'white',
+      // backgroundColor:"#EEEEEE",
+      // opacity:0.1,
+       textAlign:"center",
   },
 });
 
