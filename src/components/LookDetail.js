@@ -6,8 +6,7 @@ import {
   Text,
   View,
   ListView,
-  TouchableOpacity,
-  TextInput
+  TouchableOpacity
 } from 'react-native';
 
 import Dimensions from 'Dimensions';
@@ -20,31 +19,18 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const LookDetail = React.createClass({
   getInitialState() {
-     var getSectionData = (dataBlob, sectionID) => {
-        return dataBlob[sectionID];
-    }
-    var getRowData = (dataBlob, sectionID, rowID) => {
-       return dataBlob[rowID];
-    }
     return {
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 !== r2,
-        sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-        getSectionData: getSectionData,
-        getRowData: getRowData,
-      }),
+      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
       comments: [],
       next:true,
       pageNo:1,
-      animating:true,
-      username:""
+      animating:true
     };
   },
   getDefaultProps() {
     return {
       look:{},
       navigator:"",
-      comment:""
     };
   },
   componentWillMount() {
@@ -52,29 +38,12 @@ const LookDetail = React.createClass({
   },
 
   getDataSource(comments) {
-
-    var dataBlob = {};
-    var sectionsID = [];
-    var rowsID = [];
-    var rowID = [];
-    sectionsID.push("lastIndex");
-    dataBlob["lastIndex"]="a";
-
-    comments.map((item, index)=>{
-        var id = item.comment.id;
-        dataBlob[(index)+':' + id] = item;
-        rowID[index]=(index)+':' + id;
-        lastIndex=index;
-    });
-    rowsID.push(rowID);
-
-    return this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionsID, rowsID);
-
-    // return this.state.dataSource.cloneWithRows(comments);
+    // return false;
+    return this.state.dataSource.cloneWithRows(comments);
   },
 
   renderFooter() {
-     if (!this.state.next) {
+    if (!this.state.next) {
       return (
        <DoneFooter/>
       );
@@ -104,6 +73,7 @@ const LookDetail = React.createClass({
       this.setState({ animating: true });
       this.queryRromServer(this.state.pageNo);
     }
+
   },
 
   onSelectUser(user) {
@@ -121,7 +91,7 @@ const LookDetail = React.createClass({
   //   console.log('LookDetail.js.js-shouldComponentUpdate');
   //   return JSON.stringify(nextState)!=JSON.stringify(this.state);
   // },
-  renderRow(comments, sectionID, rowID) {
+  renderRow(comments) {
     if(!comments.comment||!comments.comment.user){
       return false;
     }
@@ -144,19 +114,11 @@ const LookDetail = React.createClass({
     );
   },
 
-  renderSectionHeader(sectionData, sectionID){
-        return(
-            <View >
-
-            </View>
-        )
-  },
-
   render() {
-
+    console.log(new Date()-0);
+    console.log('LookDetail.js.js-render');
     return (
       <ListView
-      ref="commentsListView"
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
         onEndReached={this.onEndReached}
@@ -166,8 +128,8 @@ const LookDetail = React.createClass({
         automaticallyAdjustContentInsets={false}
         keyboardDismissMode='on-drag'
         keyboardShouldPersistTaps={false}
+        showsVerticalScrollIndicator={true}
         style={styles.container}
-        renderSectionHeader={this.renderSectionHeader}
       />
     );
   },
@@ -247,19 +209,6 @@ const styles = StyleSheet.create({
   },
   scrollSpinner: {
     marginVertical: 20,
-  },
-
-  style_user_input:{
-      // backgroundColor:'#fff',
-      height:45,
-      borderColor: globalVariables.base,
-      borderWidth: 0.5,
-      borderRadius:3,
-      fontSize:14,
-      backgroundColor:'white',
-      // backgroundColor:"#EEEEEE",
-      // opacity:0.1,
-       textAlign:"center",
   },
 });
 
