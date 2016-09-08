@@ -6,7 +6,7 @@ const {
   View,
   Animated,
 } = ReactNative;
-const Button = require('./Button');
+// const Button = require('./Button');
 
 const DefaultTabBar = React.createClass({
   propTypes: {
@@ -37,7 +37,7 @@ const DefaultTabBar = React.createClass({
   renderTabOption(name, page) {
     const isTabActive = this.props.activeTab === page;
 
-    return <Button
+    return <View
       style={{flex: 1, }}
       key={name}
       accessible={true}
@@ -46,7 +46,7 @@ const DefaultTabBar = React.createClass({
       onPress={() => this.props.goToPage(page)}
     >
       {this.renderTabName(name, page, isTabActive)}
-    </Button>;
+    </View>;
   },
 
   renderTabName(name, page, isTabActive) {
@@ -56,7 +56,7 @@ const DefaultTabBar = React.createClass({
 
     return <View style={[styles.tab, this.props.tabStyle, ]}>
       <Text style={[{color: textColor, fontWeight, }, textStyle, ]}>
-        {name}
+        {}
       </Text>
     </View>;
   },
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   tabs: {
-    height: 40,
+    height: 2,
     flexDirection: 'row',
     justifyContent: 'space-around',
     borderWidth: 0,

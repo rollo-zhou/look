@@ -57,7 +57,8 @@ const Streams = React.createClass({
         backButtonTitle:' ',
         title: name,
         passProps: {
-          apiTypeUrl:"streams/"+name,
+          type:"streams",
+          apiTypeUrl:"streams_v2/"+name,
           urlPageType:"?",
           loadDate:{true},
           needPaddingTop:{true},
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
     marginBottom:44,
   },
   thumb: {
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start'

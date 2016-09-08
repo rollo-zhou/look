@@ -28,6 +28,7 @@ var UserCell = React.createClass({
       needShowTime:true,
       title:"",
       time:"",
+      needCenterView:false
     };
   },
   getInitialState() {
@@ -79,6 +80,19 @@ var UserCell = React.createClass({
         </TouchableOpacity>);
     }
   },
+
+  getCenterView(){
+    if(this.props.needCenterView){
+      return(
+    <View style={styles.karmaView}>
+    <Icon name="ios-flame-outline" color={globalVariables.base} size={20}/>
+          <Text style={[styles.timeText,{color:globalVariables.base}]}> {this.props.user.karma_gain}</Text>
+    </View>
+     );
+    }
+
+  },
+
   render() {
     if(!this.props.user){
       return false;
@@ -93,6 +107,7 @@ var UserCell = React.createClass({
             </Text>
           </View>
         </View>
+        {this.getCenterView()}
         {this.getRightView()}
       </TouchableOpacity>
     );
@@ -189,7 +204,14 @@ const styles = StyleSheet.create({
     // width: 50,
     alignItems:'center',
     flexDirection: 'row',
-    marginRight:5,
+    marginRight:25,
+  },
+  karmaView:{
+    // flex: 1,
+    // width: 50,
+    alignItems:'center',
+    flexDirection: 'row',
+    paddingRight:15,
   },
   addUserView: {
     // flex: 1,

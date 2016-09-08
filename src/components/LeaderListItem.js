@@ -6,7 +6,8 @@ import {
   Text,
   View,
   ListView,
-  TouchableOpacity
+  TouchableOpacity,
+  RefreshControl
 } from 'react-native';
 
 import Dimensions from 'Dimensions';
@@ -15,12 +16,12 @@ import globalVariables from '../globalVariables.js';
 import UserCell from './UserCell.js';
 import DoneFooter from './DoneFooter.js';
 
-const UserList = React.createClass({
+const LeaderListItem = React.createClass({
   getInitialState() {
     return {
       dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
       users: [],
-      animating: true,
+      refreshing: true,
       next:true,
       pageNo:1,
     };
@@ -55,19 +56,20 @@ const UserList = React.createClass({
        <DoneFooter/>
       );
     }
-    return <ActivityIndicator style={styles.scrollSpinner} />;
   },
 
   onEndReached() {
-    if (this.state.next && !this.state.animating) {
-      this.setState({ animating: true });
-      this.queryRromServer(this.state.pageNo);
-    }
+    // if (this.state.next && !this.state.refreshing) {
+    //   this.setState({ refreshing: true });
+    //   this.queryRromServer(this.state.pageNo);
+    // }
   },
-
+  haveLoadData(){
+    return !!this.state.users.length;
+  },
   renderRow(users) {
     return (
-      <UserCell user={users.user} needShowTime={false} time={users.user.created_at} navigator={this.props.navigator}/>
+      <UserCell user={users.user} needShowTime={false} needCenterView={true} time={users.user.created_at} navigator={this.props.navigator}/>
     );
   },
   // shouldComponentUpdate: function(nextProps, nextState) {
@@ -78,7 +80,6 @@ const UserList = React.createClass({
       <ListView
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
-        onEndReached={this.onEndReached}
         renderFooter={this.renderFooter}
         onEndReachedThreshold={10}
         automaticallyAdjustContentInsets={false}
@@ -87,26 +88,40 @@ const UserList = React.createClass({
         showsVerticalScrollIndicator={true}
         style={styles.container}
         enableEmptySections = {true}
+        refreshControl={
+          <RefreshControl
+          onRefresh={this.queryRromServer}
+          tintColor='#aaaaaa'
+          refreshing={this.state.refreshing}
+          progressBackgroundColor='#aaaaaa'
+        />}
       />
     );
   },
 
   queryRromServer(page) {
-    globalVariables.queryRromServer(globalVariables.apiUserServer+this.props.user.id+'/'+this.props.from+'?page='+(page||1),this.processsResults);
+    globalVariables.queryRromServer(globalVariables.apiServer+this.props.apiTypeUrl,this.processsResults);
   },
 
   processsResults(data) {
-    if (!data||!data.users||!data.users.length) {
+    if ((!data||!data.guys||!data.guys.length)&&(!data.girls||!data.girls.length)) {
       this.setState({
-        animating: false,
+        refreshing: false,
         next:false,
       });
       return;
     }
-    var newUsers= this.state.users.concat(data.users);
+
+    var newUsers=data.girls.concat(data.guys)
+    newUsers=newUsers.sort(function(a,b){
+      return b.user.karma_gain-a.user.karma_gain;
+    });
+    // newUsers=this.state.users.concat(newUsers);
+
     this.setState({
       users: newUsers,
-      animating: false,
+      refreshing: false,
+      next:false,
       dataSource: this.getDataSource(newUsers),
       pageNo: this.state.pageNo+1
     });
@@ -116,7 +131,6 @@ const UserList = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 64,
     backgroundColor: globalVariables.background,
   },
   commentContent: {
@@ -155,4 +169,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserList;
+export default LeaderListItem;

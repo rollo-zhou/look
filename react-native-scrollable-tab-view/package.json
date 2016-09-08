@@ -2,7 +2,7 @@
   "_args": [
     [
       "react-native-scrollable-tab-view@^0.5.5",
-      "/Users/riipa/Code/react native/lookBook"
+      "/Users/rollo/工作/CODE/react native/lookBook"
     ]
   ],
   "_cnpm_publish_time": 1472486964256,
@@ -37,7 +37,7 @@
   "_shasum": "851f47c3db03737fa6fa7766ed31c7d09557898d",
   "_shrinkwrap": null,
   "_spec": "react-native-scrollable-tab-view@^0.5.5",
-  "_where": "/Users/riipa/Code/react native/lookBook",
+  "_where": "/Users/rollo/工作/CODE/react native/lookBook",
   "author": {
     "name": "Brent Vatne"
   },

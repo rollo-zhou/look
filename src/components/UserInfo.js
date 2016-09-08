@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Storage from './Storage.js';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import Login from './Login.js';
-import List from './LookListNoResults.js';
+import List from './LeaderList.js';
 
 
 const UserInfo = React.createClass({

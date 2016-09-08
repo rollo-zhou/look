@@ -21,7 +21,8 @@ import ScrollableTabView, { DefaultTabBar, ScrollableTabBar, } from 'react-nativ
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Storage from './Storage.js';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
-
+import HomeTabBar from './DefaultTabBar.js';
+import LeaderList from './LeaderList.js';
 
 const {width, height} = Dimensions.get('window');
 
@@ -130,6 +131,7 @@ const LookList = React.createClass({
             initialPage={1}
             onChangeTab={this.onChangeTab}
             tabBarUnderlineColor={globalVariables.base}
+            renderTabBar={() => <HomeTabBar/>}
             >
             <View tabLabel='NEW' style={styles.container}>
               <LookListItem ref='listviewNew' type="new" apiTypeUrl="look/new" navigator={this.props.navigator} loadDate={false}/>
@@ -158,7 +160,22 @@ const LookList = React.createClass({
           </View>
         </Icon.TabBarItemIOS>
         <Icon.TabBarItemIOS
-          title="Streams"
+          title="Leader"
+          iconName="black-tie"
+          selectedIconName="black-tie"
+          iconSize={23}
+          selected={this.state.selectedTab === 'leader'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'leader',
+            });
+          }}>
+          <View style={styles.container}>
+            <LeaderList  navigator={this.props.navigator}/>
+          </View>
+        </Icon.TabBarItemIOS>
+        <Icon.TabBarItemIOS
+          title="Explore"
           iconName="safari"
           selectedIconName="safari"
           iconSize={23}

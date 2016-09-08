@@ -32,8 +32,8 @@ const LookListItem = React.createClass({
         getRowData: getRowData,
      }),
       looks: [],
-      animating: false,
-      refreshing:true,
+      animating: this.props.type=='streams'?true:false,
+      refreshing:this.props.type=='streams'?false:true,
       next:true,
       navigator:"",
       pageNo:1,
@@ -127,6 +127,29 @@ const LookListItem = React.createClass({
     //     </View>
     //   );
     // }
+    if(this.props.type=='streams'){
+        return (
+      <ListView
+       style={this.props.needPaddingTop?styles.container1:styles.container}
+        dataSource={this.state.dataSource}
+        renderRow={this.renderRow}
+        onEndReached={this.onEndReached}
+        renderFooter={this.renderFooter}
+        renderSectionHeader={this.renderSectionHeader}
+        onEndReachedThreshold={10}
+        automaticallyAdjustContentInsets={false}
+        keyboardDismissMode='on-drag'
+        keyboardShouldPersistTaps={false}
+        pagingEnabled={false}
+        initialListSize={1}
+        pageSize={12}
+        scrollRenderAheadDistance={1}
+        removeClippedSubviews
+        enableEmptySections
+        showsVerticalScrollIndicator
+      />
+    );
+      }
 
     return (
       <ListView
