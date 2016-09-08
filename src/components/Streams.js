@@ -121,7 +121,7 @@ const Streams = React.createClass({
 
   queryRromServer(page) {
     var _this=this;
-    globalVariables.queryRromServer(globalVariables.apiServer+"streams",this.processsResults,{
+    globalVariables.queryRromServer(globalVariables.apiServer+"streams_v2",this.processsResults,{
       errorFunc:function(){
         _this.setState({
           refreshing:false,

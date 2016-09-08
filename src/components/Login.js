@@ -112,7 +112,8 @@ const Login = React.createClass({
       Vibration.vibrate();
       return;
     }
-
+    //
+    this.saveToken(data);
     globalVariables.saveMeInfo(
       {
         hypedLookIds:data.hyped_look_ids||[],
@@ -125,6 +126,16 @@ const Login = React.createClass({
           this.props.navigator.pop();
         }
       });
+  },
+  saveToken(data){
+    if(data&&data.access_token){
+      Storage.setItem('access_token', 'Token token="'+data.access_token+'"')
+          .then(()=>{
+              return "";
+            }
+          ).catch(function (error) {});
+      }
+
   },
   _sendNotification() {
     RCTDeviceEventEmitter.emit('Login');
