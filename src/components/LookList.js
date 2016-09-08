@@ -160,21 +160,6 @@ const LookList = React.createClass({
           </View>
         </Icon.TabBarItemIOS>
         <Icon.TabBarItemIOS
-          title="Leader"
-          iconName="black-tie"
-          selectedIconName="black-tie"
-          iconSize={23}
-          selected={this.state.selectedTab === 'leader'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'leader',
-            });
-          }}>
-          <View style={styles.container}>
-            <LeaderList  navigator={this.props.navigator}/>
-          </View>
-        </Icon.TabBarItemIOS>
-        <Icon.TabBarItemIOS
           title="Explore"
           iconName="safari"
           selectedIconName="safari"
@@ -189,6 +174,22 @@ const LookList = React.createClass({
             <Streams  navigator={this.props.navigator}/>
           </View>
         </Icon.TabBarItemIOS>
+        <Icon.TabBarItemIOS
+          title="Leader"
+          iconName="black-tie"
+          selectedIconName="black-tie"
+          iconSize={23}
+          selected={this.state.selectedTab === 'leader'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'leader',
+            });
+          }}>
+          <View style={styles.container}>
+            <LeaderList  navigator={this.props.navigator}/>
+          </View>
+        </Icon.TabBarItemIOS>
+
         <Icon.TabBarItemIOS
           title="Me"
           iconName="user"
